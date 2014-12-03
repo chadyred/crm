@@ -1,0 +1,127 @@
+<?php
+/*+**********************************************************************************
+ * The contents of this file are subject to the vtiger CRM Public License Version 1.0
+ * ("License"); You may not use this file except in compliance with the License
+ * The Original Code is:  vtiger CRM Open Source
+ * The Initial Developer of the Original Code is vtiger.
+ * Portions created by vtiger are Copyright (C) vtiger.
+ * All Rights Reserved.
+ ************************************************************************************/
+$languageStrings = array(
+	'Reports'                      => 'Reports'                     , // TODO: Review
+	'SINGLE_Reports'               => 'Report'                      , // TODO: Review
+	'LBL_FOLDER_NOT_EMPTY'         => 'Dossier n\'est pas vide'         ,
+	'LBL_MOVE_REPORT'              => 'Déplacer'                   ,
+	'LBL_CUSTOMIZE'                => 'Personnaliser'               ,
+	'LBL_REPORT_EXPORT_EXCEL'      => 'Export Excel'                ,
+	'LBL_REPORT_PRINT'             => 'Imprimer'                    ,
+	'LBL_STEP_1'                   => 'Step 1'                      ,
+	'LBL_STEP_2'                   => 'Step 2'                      ,
+	'LBL_STEP_3'                   => 'Step 3'                      ,
+	'LBL_REPORT_DETAILS'           => 'Détails'                    ,
+	'LBL_SELECT_COLUMNS'           => 'Colonnes'                    ,
+	'LBL_FILTERS'                  => 'Filtres'                     ,
+	'LBL_FOLDERS'                  => 'Folders'                     ,
+	'LBL_ADD_NEW_FOLDER'           => 'Nouveau dossier'             ,
+	'LBL_FOLDER_NAME'              => 'Nom du dossier'                 ,
+	'LBL_FOLDER_DESCRIPTION'       => 'Dossier Description'          ,
+	'LBL_WRITE_YOUR_DESCRIPTION_HERE' => 'Entrez description'           ,
+	'LBL_DUPLICATES_EXIST'         => 'Duplicate Exists'            ,
+	'LBL_FOLDERS_LIST'             => 'Liste des dossiers'                ,
+	'LBL_DENIED_REPORTS'           => 'Denied Reports'              ,
+	'LBL_NO_OF_RECORDS'            => 'Total des fichiers : '           , // TODO: Review
+	'LBL_MORE_RECORDS_TXT'		   => '1000 enregistrements sont présentés ci-dessous. S\'il vous plaît exporter pour voir tous les dossiers',
+	'LBL_ADD_RECORD'               => 'Ajouter un rapport'                  ,
+	'LBL_ADD_FOLDER'               => 'Ajouter un dossier'                  ,
+	'LBL_REPORT_DELETE_DENIED'     => 'Autorisation refusée pour supprimer le rapport',
+	'LBL_FOLDER_CAN_NOT_BE_DELETED' => 'Ce dossier ne peut pas être supprimé',
+	'LBL_REPORTS_LIST'             => 'Liste des rapports'                ,
+	'LBL_REPORT_NAME'              => 'Nom'                         ,
+	'LBL_REPORT_FOLDER'            => 'Dossier'                     ,
+	'LBL_DESCRIPTION'              => 'Description'                 ,
+	'PRIMARY_MODULE'               => 'Primary Module'              ,
+	'LBL_SELECT_RELATED_MODULES'   => 'Sélectionnez les modules connexes'      ,
+	'LBL_MAX'                      => 'Valeur max'                  ,
+	'LBL_NEXT'                     => 'Suivant'                     ,
+	'LBL_REPORTS'                  => 'Liste des rapports'                ,
+	'LBL_GROUP_BY'                 => 'Groupe par'                    ,
+	'LBL_SORT_ORDER'               => 'Ordre de tri'                  ,
+	'LBL_ASCENDING'                => 'Ascendant'                   ,
+	'LBL_DESCENDING'               => 'Descendant'                  ,
+	'LBL_CALCULATIONS'             => 'Calculs'                     ,
+	'LBL_COLUMNS'                  => 'Colonnes'                    ,
+	'LBL_SUM_VALUE'                => 'Somme'                       ,
+	'LBL_AVERAGE'                  => 'Moyenne'                     ,
+	'LBL_LOWEST_VALUE'             => 'Valeur la plus basse'        ,
+	'LBL_HIGHEST_VALUE'            => 'Valeur la plus élevée'               ,
+	'LBL_GENERATE_REPORT'          => 'Générer un rapport'             ,
+	'LBL_SUM'                      => 'Somme'                       ,
+	'LBL_AVG'                      => 'Moyenne'                     ,
+	'LBL_MIN'                      => 'Valeur min'                  ,
+	'LBL_FIELD_NAMES'              => 'Totaux'                      ,
+	'LBL_REPORT_CSV'               => 'Export CSV'                  ,
+	'LBL_VIEW_DETAILS'             => 'Afficher Détails'           ,
+	'LBL_GENERATE_NOW'             => 'Generer maintenant'                , // TODO: Review
+	'Report Name'                  => 'Nom'                         ,
+	'Account and Contact Reports'  => 'Comptes et contacts'         ,
+	'Lead Reports'                 => 'Prospects'                   ,
+	'Potential Reports'            => 'Affaires'                    ,
+	'Activity Reports'             => 'Activités'                  ,
+	'HelpDesk Reports'             => 'Tickets'                     ,
+	'Product Reports'              => 'Produits'                    ,
+	'Quote Reports'                => 'Devis'                       ,
+	'PurchaseOrder Reports'        => 'Commandes'                   ,
+	'SalesOrder Reports'           => 'Ventes'                      ,
+	'Invoice Reports'              => 'Factures'                    ,
+	'Campaign Reports'             => 'Campagnes'                   ,
+	'Contacts by Accounts'         => 'Contacts par compte'         ,
+	'Contacts without Accounts'    => 'Contacts sans compte'        ,
+	'Contacts by Potentials'       => 'Contacts par affaires'       ,
+	'Contacts related to Accounts' => 'Contacts en relation avec un compte',
+	'Contacts not related to Accounts' => 'Contacts isolés'            ,
+	'Contacts related to Potentials' => 'Contacts en relation avec une affaire',
+	'Lead by Source'               => 'Prospects par origine'       ,
+	'Lead Status Report'           => 'Prospects par statut'        ,
+	'Potential Pipeline'           => 'Pipeline'                    ,
+	'Closed Potentials'            => 'Affaire gagnée'             ,
+	'Potential that have Won'      => 'Affaire remportée'          ,
+	'Tickets by Products'          => 'Tickets par produits'        ,
+	'Tickets by Priority'          => 'Tickets par priorité'       ,
+	'Open Tickets'                 => 'Tickets ouverts'             ,
+	'Tickets related to Products'  => 'Tickets relatifs à un produit',
+	'Tickets that are Open'        => 'Tous les tickets ouverts'    ,
+	'Product Details'              => 'Détails produits'           ,
+	'Products by Contacts'         => 'Produits par contacts'       ,
+	'Product Detailed Report'      => 'Produit & contact'           ,
+	'Products related to Contacts' => 'Produits en relation avec des contacts',
+	'Open Quotes'                  => 'Devis en cours'              ,
+	'Quotes Detailed Report'       => 'Rapport devis en cours'      ,
+	'Quotes that are Open'         => 'Les devis en cours'          ,
+	'PurchaseOrder by Contacts'    => 'Commandes par contact'       ,
+	'PurchaseOrder Detailed Report' => 'Rapport détaillé des commandes',
+	'PurchaseOrder related to Contacts' => 'Commande liée aux contacts' ,
+	'Invoice Detailed Report'      => 'Rapport détaillé des factures',
+	'Last Month Activities'        => 'Activité du mois dernier'   ,
+	'This Month Activities'        => 'Activité du mois en cours'  ,
+	'Campaign Expectations and Actuals' => 'Prévisionnel campagne'      ,
+	'SalesOrder Detailed Report'   => 'Rapport détaillé des ventes',
+	'Email Reports'                => 'Rapports par e-mail'               ,
+	'Contacts Email Report'        => 'Contacts Email Rapport'       ,
+	'Accounts Email Report'        => 'Organisations Email Rapport'  ,
+	'Leads Email Report'           => 'Conduit Email Rapport'          ,
+	'Vendors Email Report'         => 'Fournisseurs Email Rapport'        ,
+	'Emails sent to Contacts'      => 'E-mails envoyés aux contacts'     ,
+	'Emails sent to Organizations' => 'Les e-mails envoyés à des organisations',
+	'Emails sent to Leads'         => 'Les courriels envoyés à Leads'        ,
+	'Emails sent to Vendors'       => 'Les e-mails envoyés à des fournisseurs'      ,
+	'LBL_PRINT_REPORT'             => 'Imprimer Rapport'                , // TODO: Review
+	'LBL_RECORDS'                  => 'Archives'                     , // TODO: Review
+	'LBL_LIMIT_EXCEEDED'           => 'Seulement 1000 + enregistrements sont affichés. Utilisez CSV ou Excel Export pour voir tous les dossiers', // TODO: Review
+	'LBL_TOP'                      => 'Haut'                         , // TODO: Review
+	'LBL_ALL_REPORTS'              => 'Tous les rapports'                 , // TODO: Review
+	'LBL_CALCULATION_CONVERSION_MESSAGE' => 'Calcul sont basées sur la devise de base de votre CRM', // TODO: Review
+);
+$jsLanguageStrings = array(
+	'JS_DUPLICATE_RECORD'          => 'Rapport double'            , // TODO: Review
+	'JS_CALCULATION_LINE_ITEM_FIELDS_SELECTION_LIMITATION' => 'Limitation: Domaines ligne d\'objets (Prix, Discount et quantité) ne peuvent être utilisés lorsque les autres champs de calcul ne sont pas sélectionnés.', // TODO: Review
+);
