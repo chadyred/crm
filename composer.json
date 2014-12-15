@@ -16,7 +16,10 @@
     ],
     "require": {
         "oro/platform": "1.4.*",
-        "oro/crm": "1.4.*"
+        "oro/crm": "1.4.*",
+        "egeloen/ckeditor-bundle": "2.*",
+        "helios-ag/fm-elfinder-bundle": "2.*",
+        "friendsofsymfony/jsrouting-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [

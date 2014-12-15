@@ -12,6 +12,9 @@ _imagine:
     resource: .
     type:     imagine
 
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
 #
 # ORO routes
 #

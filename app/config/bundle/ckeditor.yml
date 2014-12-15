@@ -1,0 +1,49 @@
+ivory_ck_editor:
+#    base_path: bundles/enigmaticcms/ckeditor/
+#    plugins:
+#        wordcount:
+#            path:                       "/bundles/enigmaticcms/wordcount/"
+#            filename:                   "plugin.js"
+#        video:
+#            path:                       '/bundles/enigmaticcms/video/'
+#            filename:                   'plugin.js'
+    configs:
+        normal:
+            language:                   %locale%
+            toolbar:                   [ [ 'Styles', 'Source','-','Preview','-' ], [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ], [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ], [ "About" ], "/", [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript','-','RemoveFormat' ], [ 'NumberedList','BulletedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink','Anchor' ], [ 'Image', 'Table','SpecialChar','Iframe' ], '/', [ 'Format','Font','FontSize' ], [ 'TextColor','BGColor' ], [ 'Maximize' ] ]
+            uiColor:                    "#FCFCFC"
+            filebrowserBrowseRoute:     elfinder
+            filebrowserBrowseRouteParameters:
+                instance: ckeditor
+#            extraPlugins:               'video'
+            removePlugins:              'elementspath'
+            stylesSet:                  'my_styles'
+    styles:
+        my_styles:
+            - { name: "Titre bleu", element: "h2",  styles: { color: "#0075b9" }}
+            - { name: "Texte bleu", element: "span", styles: { color: "#0075b9" }}
+            - { name: "Titre orange", element: "h2", styles: { color: "#EE7624" }}
+            - { name: "Texte orange", element: "span", styles: { color: "#EE7624" }}
+            - { name: "Titre orange clair", element: "h2", styles: { color: "#F28724" }}
+            - { name: "Texte orange clair", element: "span", styles: { color: "#F28724" }}
+            - { name: "Titre jaune", element: "h2", styles: { color: "#FD9F28" }}
+            - { name: "Texte jaune", element: "span", styles: { color: "#FD9F28" }}
+            - { name: "fond gris", element: "span", styles: { background: "#F3F3F3", padding:0px 5px; }}
+            - { name: "fleche", element: "p", attributes: { class: "ckefleche" }}
+
+fm_elfinder:
+    instances:
+        ckeditor:
+            locale:           %locale%
+            editor:           ckeditor
+            fullscreen:       false
+            include_assets:   true
+            connector:
+                debug:        false
+                roots:
+                    uploads:
+                        driver:           LocalFileSystem
+                        path:             cms/racine
+                        upload_allow:     ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'application/zip', 'audio/mpeg', 'text/csv', 'video/mp4', 'video/webm', 'application/pdf']
+                        upload_deny:      ['all']
+                        upload_max_size:  8M

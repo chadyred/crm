@@ -25,5 +25,5 @@ oro_assetic:
     css_debug:      ~
     css_debug_all:  false
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    delivery_address: rp@enigmatic.fr

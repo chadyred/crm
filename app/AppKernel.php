@@ -9,7 +9,11 @@ class AppKernel extends OroKernel
     public function registerBundles()
     {
         $bundles = array(
-        //bundles
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new FM\ElfinderBundle\FMElfinderBundle(),
+//            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+
+            new Enigmatic\MailerBundle\EnigmaticMailerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev'))) {

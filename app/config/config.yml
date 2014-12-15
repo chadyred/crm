@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: bundle/ckeditor.yml }
     - { resource: security.yml }
 
 framework:
@@ -18,7 +19,7 @@ framework:
     session:
         name:                 CRMID
         handler_id:           %session_handler%
-        save_path:            %kernel.root_dir%/cache/sessions
+        save_path:            %kernel.root_dir%/sessions
         gc_maxlifetime:       3600
         cookie_httponly:      true
     fragments:
@@ -96,13 +97,27 @@ doctrine:
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport:                "%mailer_transport%"
-    host:                     "%mailer_host%"
-    port:                     "%mailer_port%"
-    encryption:               "%mailer_encryption%"
-    username:                 "%mailer_user%"
-    password:                 "%mailer_password%"
-    spool:                    { type: memory }
+    default_mailer: default
+    mailers:
+        default:
+            transport:            "%mailer_transport%"
+            host:                 "%mailer_host%"
+            port:                 "%mailer_port%"
+            encryption:           "%mailer_encryption%"
+            username:             "%mailer_user%"
+            password:             "%mailer_password%"
+            spool:                { type: memory }
+        mailing:
+            transport:            "%mailer_transport%"
+            host:                 "%mailer_host%"
+            port:                 "%mailer_port%"
+            encryption:           "%mailer_encryption%"
+            username:             "%mailer_user%"
+            password:             "%mailer_password%"
+            spool:
+                type: file
+                path: "%kernel.root_dir%/spool"
+
 
 fos_rest:
     view:

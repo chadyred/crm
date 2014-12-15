@@ -70,6 +70,7 @@ security:
                 lifetime:                   1209600   # stay logged for two weeks
                 httponly:                   true
             anonymous:                      false
+            switch_user:                    { role: ROLE_ADMINISTRATOR, parameter: _user }
 
     access_control:
         - { path: ^/admin/, role: ROLE_ADMIN }
