@@ -1,0 +1,22 @@
+parameters:
+    enigmatic_mailer.email_from: contact@enigmatic.fr
+    enigmatic_mailer.email_sender: Enigmatic
+
+services:
+    enigmatic_mailer:
+        class: Enigmatic\MailerBundle\Services\MailerService
+        arguments: [@enigmatic_mailer.transports]
+
+    enigmatic_mailer.test:
+        class: Enigmatic\MailerBundle\Services\MailerTestService
+        arguments: [@enigmatic_mailer, @templating]
+
+    enigmatic_mailer.transports:
+        class: Enigmatic\MailerBundle\Services\TransportsService
+        arguments: [@logger]
+
+    enigmatic_mailer.transport.default:
+        class: Enigmatic\MailerBundle\Model\Transport
+        arguments: [@mailer, %enigmatic_mailer.email_from%, %enigmatic_mailer.email_sender%]
+        tags:
+            -  { name: enigmatic_mailer.transport, alias: default }

@@ -1,0 +1,16 @@
+parameters:
+#    enigmatic_oro_mailing.example.class: Enigmatic\OROMailingBundle\Example
+
+services:
+
+    enigmatic_oro_mailing.form.campaign:
+        class: Enigmatic\OROMailingBundle\Form\CampaignType
+        tags:
+            - { name: form.type, alias: enigmatic_oro_mailingbundle_campaign }
+        arguments: []
+
+    enigmatic_oro_mailing.form.campaign_account:
+        class: Enigmatic\OROMailingBundle\Form\CampaignContactType
+        tags:
+            - { name: form.type, alias: enigmatic_oro_mailingbundle_campaign_contact }
+        arguments: []

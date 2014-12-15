@@ -1,0 +1,22 @@
+oro_menu_config:
+    items:
+        marketing_tab:
+            label: 'orocrm.campaign.menu.marketing_tab.label'
+            uri:   '#'
+            extras:
+                position: 300
+        enigmatic_oro_marketing_mailing_link:
+            label: Mailling
+            route: enigmatic_oro_marketing_mailing_home
+            extras:
+                routes: ['/^enigmatic_oro_marketing_mailing_home/']
+                description: Mailling
+    tree:
+        application_menu:
+            children:
+                marketing_tab:
+                    children:
+                        enigmatic_oro_marketing_mailing_link: ~
+
+oro_titles:
+    enigmatic_oro_marketing_mailing_home: Mailling
