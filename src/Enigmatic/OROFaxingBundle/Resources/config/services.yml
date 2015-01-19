@@ -1,0 +1,22 @@
+parameters:
+    enigmatic_oro_faxing.login: ~
+    enigmatic_oro_faxing.password: ~
+
+services:
+    enigmatic_oro_faxing.form.campaign:
+        class: Enigmatic\OROFaxingBundle\Form\CampaignType
+        tags:
+            - { name: form.type, alias: enigmatic_oro_faxingbundle_campaign }
+        arguments: []
+
+    enigmatic_oro_faxing.form.campaign_fax:
+        class: Enigmatic\OROFaxingBundle\Form\CampaignFaxType
+        tags:
+            - { name: form.type, alias: enigmatic_oro_faxingbundle_campaign_fax }
+        arguments: []
+
+    enigmatic_oro_faxing.form.campaign_account:
+        class: Enigmatic\OROFaxingBundle\Form\CampaignContactType
+        tags:
+            - { name: form.type, alias: enigmatic_oro_faxingbundle_campaign_contact }
+        arguments: []

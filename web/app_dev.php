@@ -1,5 +1,9 @@
 <?php
 
+apc_clear_cache();
+apc_clear_cache('user');
+apc_clear_cache('opcode');
+
 // Need to trace all kind of errors
 error_reporting(-1);
 ini_set('display_errors', 'On');

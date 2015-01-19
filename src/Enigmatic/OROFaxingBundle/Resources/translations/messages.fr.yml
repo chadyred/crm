@@ -1,0 +1,24 @@
+enigmatic:
+    oro:
+        faxing:
+            campaign:
+                name:
+                    label: Nom de la campagne
+                date_sended:
+                    label: Date d'envois
+                state:
+                    label: Configurer l'envoi du faxing
+                    locked:
+                        label: Ne pas envoyer pour le moment
+                    waiting:
+                        label: Envoyer à la date indiquée
+                file:
+                    label: Fax (format PDF)
+
+Feb: Fév
+June: Juin
+Jul: Juil
+Dec: Déc
+May: Mai
+Aug: Août
+Apr: Avr

@@ -8,21 +8,26 @@ class MailerService
     protected $mailers;
     protected $logger;
 
+    protected $attachs;
+
     public function __construct(TransportsService $mailers)
     {
         $this->mailers = $mailers;
+        $this->attachs = array();
+    }
+
+    public function addAttach($attach_path = null, $attach_filename = null) {
+        $this->attachs[] = \Swift_Attachment::fromPath($attach_path)->setFilename($attach_filename);
     }
 
     /**
      * @param $email_to
      * @param $rendered_template
      * @param string $mailer_alias
-     * @param null $attach_path
-     * @param null $attach_filename
      * @return bool
      * @throws \Exception
      */
-    public function sendMail($email_to, $rendered_template, $mailer_alias = 'default', $attach_path = null, $attach_filename = null)
+    public function sendMail($email_to, $rendered_template, $mailer_alias = 'default')
     {
         $mailer = $this->mailers->getTransport($mailer_alias);
         if (!$mailer instanceof Transport)
@@ -45,8 +50,8 @@ class MailerService
             ->setTo($email_to)
             ->setBody($body, 'text/html');
 
-        if ($attach_path) {
-            $message->attach(\Swift_Attachment::fromPath($attach_path)->setFilename($attach_filename));
+        foreach ($this->attachs as $attach) {
+            $message->attach($attach);
         }
 
         $errors = null;

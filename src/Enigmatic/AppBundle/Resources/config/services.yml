@@ -1,6 +1,6 @@
 services:
     enigmatic_mailer.transport.spool:
         class: Enigmatic\MailerBundle\Model\Transport
-        arguments: [@swiftmailer.mailer.mailing, %enigmatic_mailer.email_from%, 'Spooool']
+        arguments: [@swiftmailer.mailer.mailing, %enigmatic_mailer.email_from%, 'Enigmatic (spool)']
         tags:
             -  { name: enigmatic_mailer.transport, alias: spool }

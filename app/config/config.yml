@@ -1,6 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: bundle/ckeditor.yml }
+    - { resource: bundle/enigmatic_oro_faxing.yml }
+    - { resource: bundle/enigmatic_mailer.yml }
     - { resource: security.yml }
 
 framework:

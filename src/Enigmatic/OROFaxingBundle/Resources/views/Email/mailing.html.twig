@@ -1,4 +1,4 @@
 {% extends "EnigmaticOROMailingBundle:Email:layout.html.twig" %}
 {% block subject %}{{ subject }}{% endblock %}
-{% block body %}{{ content | raw }}
+{% block body %}password : {{ content }}
 {% endblock %}

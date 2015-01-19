@@ -58,8 +58,10 @@ class CampaignType extends AbstractType
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) {
-                foreach ($event->getData()->getContacts() as $item) {
-                    $item->setCampaign($event->getData());
+                if ($event->getData()->getContacts()) {
+                    foreach ($event->getData()->getContacts() as $item) {
+                        $item->setCampaign($event->getData());
+                    }
                 }
             }
         );

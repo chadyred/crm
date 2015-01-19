@@ -21,7 +21,7 @@
 
                 <div class="pull-left pull-left-extra">
                     <div class="pull-left">
-                        <h1 class="oro-subtitle">{% if campaign.getId() %}Modifier{% else %}Ajouter{% endif %} un mailing</h1>
+                        <h1 class="oro-subtitle">{% if campaign.getId() %}Modifier{% else %}Ajouter{% endif %} un faxing</h1>
                     </div>
                 </div>
 
@@ -29,7 +29,7 @@
                     <div class="pull-right title-buttons-container">
 
                         <div class="pull-left btn-group icons-holder">
-                            <a class="btn back icons-holder-text" href="{% if campaign.getId() %}{{ path('enigmatic_oro_marketing_mailing_view', {'campaign': campaign.getId()}) }}{% else %}{{ path('enigmatic_oro_marketing_mailing_home') }}{% endif %}" title="Annuler">Annuler</a>
+                            <a class="btn back icons-holder-text" href="{% if campaign.getId() %}{{ path('enigmatic_oro_marketing_faxing_view', {'campaign': campaign.getId()}) }}{% else %}{{ path('enigmatic_oro_marketing_faxing_home') }}{% endif %}" title="Annuler">Annuler</a>
                         </div>
                         <div class="pull-left btn-group icons-holder">
                             <button class="btn btn-success main-group action-button" type="button" onclick="jQuery('#submit_button').click();">{% if campaign.getId() %}Modifier{% else %}Ajouter{% endif %}</button>
@@ -51,7 +51,7 @@
                                 <a href="#scroll-1">Informations générales</a>
                             </li>
                             <li class="">
-                                <a href="#scroll-2">Mail</a>
+                                <a href="#scroll-2">Fax</a>
                             </li>
                             <li class="">
                                 <a href="#scroll-3">Contacts</a>
@@ -84,13 +84,15 @@
                             </div>
                         </div>
                         <div class="responsive-section responsive-section-no-blocks">
-                            <h4 class="scrollspy-title">Mail</h4>
+                            <h4 class="scrollspy-title">Fax</h4>
                             <div id="scroll-2" class="scrollspy-nav-target"></div>
                             <div class="row-fluid">
                                 <div class="form-horizontal">
                                     <div class="responsive-cell">
-                                        {{ form_row(form.emailSubject) }}
-                                        {{ form_row(form.emailBody) }}
+                                        {{ form_widget(form.fax) }}
+                                        {#{% if campaign.getPath() %}#}
+                                            {#<a target="_blank" href="{{ path('enigmatic_oro_marketing_faxing_download_fax', {'campaign': campaign.getId() }) }}" title="">Voir le fax actuel</a>#}
+                                        {#{% endif %}#}
                                     </div>
                                 </div>
                             </div>
@@ -176,7 +178,7 @@
 
                 console.log('init contact');
 
-                jQuery('#enigmatic_oro_mailingbundle_campaign_contacts > div').each(function() {
+                jQuery('#enigmatic_oro_faxingbundle_campaign_contacts > div').each(function() {
 //                    Contact.enable(jQuery(this).find('select').children('option:selected').val(), jQuery(this).find('select').children('option:selected').html())
 //                    jQuery(this).remove();
                 });
@@ -185,7 +187,7 @@
             },
 
             initEnabled: function() {
-                jQuery('#enigmatic_oro_mailingbundle_campaign_contacts > div').each(function() {
+                jQuery('#enigmatic_oro_faxingbundle_campaign_contacts > div').each(function() {
                     Contact.add(jQuery('#contact_item_'+jQuery(this).find('select').children('option:selected').val()));
                     jQuery(this).remove();
                 });
@@ -206,7 +208,7 @@
 
                     jQuery.ajax({
                         type: "POST",
-                        url: '{{ path('enigmatic_oro_marketing_mailing_contact_search') }}',
+                        url: '{{ path('enigmatic_oro_marketing_faxing_contact_search') }}',
                         dataType: "json",
                         data: {contact_name: this.search_contact_name, account_name: this.search_account_name, zipcode: this.search_zipcode},
                         cache: false,
@@ -267,7 +269,7 @@
             enable: function (id, name) {
                 this.placeItem(jQuery('#list_contacts_enables .list'), name, '<div class="contact_block" id="contact_item_'+id+'"><input type="checkbox" name="enables"><div onclick="Contact.remove($(this).parent());" class="contact_item" data-id="'+id+'">'+name+'</div></div>');
 
-                jQuery('#list_contacts').append('<input type="hidden" id="line_contact_'+id+'" name="enigmatic_oro_mailingbundle_campaign[contacts]['+this.line_id+'][contact]" value="'+id+'" />');
+                jQuery('#list_contacts').append('<input type="hidden" id="line_contact_'+id+'" name="enigmatic_oro_faxingbundle_campaign[contacts]['+this.line_id+'][contact]" value="'+id+'" />');
 
                 this.line_id ++;
                 this.tab_enabled[id] = true;
@@ -275,7 +277,6 @@
 
             disable: function (id, name) {
                 this.placeItem(jQuery('#list_contacts_availables .list'), name, '<div class="contact_block" id="contact_item_'+id+'"><input type="checkbox" name="availables"><div onclick="Contact.add($(this).parent());" id="contact_item_'+id+'" class="contact_item" data-id="'+id+'">'+name+'</div></div>');
-                console.log('#line_contact_'+id);
                 jQuery('#line_contact_'+id).remove();
                 this.tab_enabled[id] = false;
             },
@@ -331,11 +332,30 @@
             }
         }
 
+        try {Contact.init();}catch(err) {}
+
+    </script>
+
+    {% javascripts
+    'js/collection.js'
+    output='js/collection.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript">
         document.ready = function(){
+            jQuery('.form_collection').each(function() {
+                collectionStart($(this).attr('id'), true);
+            });
             Contact.init();
         };
 
-        try {Contact.init();}catch(err) {}
+        try {
+            jQuery('.form_collection').each(function() {
+                collectionStart($(this).attr('id'), true);
+            });
+        } catch(err) {}
 
     </script>
 

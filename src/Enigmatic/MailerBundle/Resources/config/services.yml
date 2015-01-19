@@ -1,6 +1,6 @@
 parameters:
-    enigmatic_mailer.email_from: contact@enigmatic.fr
-    enigmatic_mailer.email_sender: Enigmatic
+    enigmatic_mailer.email_from: ~
+    enigmatic_mailer.email_sender: ~
 
 services:
     enigmatic_mailer:

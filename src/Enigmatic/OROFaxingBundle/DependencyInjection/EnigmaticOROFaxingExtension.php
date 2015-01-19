@@ -1,6 +1,6 @@
 <?php
 
-namespace Enigmatic\MailerBundle\DependencyInjection;
+namespace Enigmatic\OROFaxingBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class EnigmaticMailerExtension extends Extension
+class EnigmaticOROFaxingExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -25,7 +25,7 @@ class EnigmaticMailerExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->setParameter('enigmatic_mailer.email_from', $config['email_from']);
-        $container->setParameter('enigmatic_mailer.email_sender', $config['email_sender']);
+        $container->setParameter('enigmatic_oro_faxing.login', $config['login']);
+        $container->setParameter('enigmatic_oro_faxing.password', $config['password']);
     }
 }

@@ -22,3 +22,10 @@ parameters:
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
     installed:         ~
+
+    enigmatic_oro_faxing.login: ~
+    enigmatic_oro_faxing.password: ~
+
+    enigmatic_mailer.email_from: ~
+    enigmatic_mailer.email_sender: ~
+

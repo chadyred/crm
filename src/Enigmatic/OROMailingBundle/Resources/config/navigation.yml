@@ -1,7 +1,7 @@
 oro_menu_config:
     items:
         marketing_tab:
-            label: 'orocrm.campaign.menu.marketing_tab.label'
+            label: 'Mailing & Faxing'
             uri:   '#'
             extras:
                 position: 300

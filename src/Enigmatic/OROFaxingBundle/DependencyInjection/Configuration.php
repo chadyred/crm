@@ -1,6 +1,6 @@
 <?php
 
-namespace Enigmatic\MailerBundle\DependencyInjection;
+namespace Enigmatic\OROFaxingBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,10 +18,10 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enigmatic_mailer')
+        $rootNode = $treeBuilder->root('enigmatic_oro_faxing')
             ->children()
-            ->scalarNode('email_from')->isRequired()->end()
-            ->scalarNode('email_sender')->isRequired()->end()
+            ->scalarNode('login')->isRequired()->end()
+            ->scalarNode('password')->isRequired()->end()
             ->end()
             ->end();
 
