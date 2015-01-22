@@ -1,13 +1,95 @@
+{#{% spaceless %}#}
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock %}</title>
+
+    <meta name='description' content="{% block meta_description %}{% endblock %}" />
+    <meta name='keywords' content="{% block meta_keywords %}{% endblock %}" />
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    {% block font %}{% endblock %}
+    {% block stylesheets %}{% endblock %}
+
+    {% block javascripts_head %}{% endblock %}
+
+
+
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+{% block body %}
+
+    {% block alert_message %}
+        <div id="alert_message">
+
+            <noscript>
+                {% block noscript %}
+                    <div class="alert_message alert_message_warning">
+                        {% trans %}enigmatic.app.alert.warning.javascript_not_enabled{% endtrans %}<br/>
+                    </div>
+                {% endblock %}
+            </noscript>
+
+            {% for flashMessage in app.session.flashbag.get('error') %}
+                {% if loop.first %}
+                    <div class="alert_message alert_message_error">
+                {% endif %}
+                {{ flashMessage|raw }}
+                <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+                {% if loop.last %}</div>{% endif %}
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('warning') %}
+                {% if loop.first %}
+                    <div class="alert_message alert_message_warning">
+                {% endif %}
+                {{ flashMessage|raw }}
+
+                {% if loop.last %}</div>{% endif %}
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                {% if loop.first %}
+                    <div class="alert_message alert_message_success">
+                {% endif %}
+                {{ flashMessage|raw }}
+                <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+                {% if loop.last %}</div>{% endif %}
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
+                {% if loop.first %}
+                    <div class="alert_message alert_message_success">
+                {% endif %}
+                {{ flashMessage|trans({}, 'FOSUserBundle') }}
+                <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+                {% if loop.last %}</div>{% endif %}
+            {% endfor %}
+
+            {% for flashMessage in app.session.flashbag.get('info') %}
+                {% if loop.first %}
+                    <div class="alert_message alert_message_info">
+                {% endif %}
+                {{ flashMessage|raw }}
+                <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+                {% if loop.last %}</div>{% endif %}
+            {% endfor %}
+
+        </div>
+    {% endblock %}
+
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
+{#{% endspaceless %}#}
