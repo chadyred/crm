@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: bundles/avalanche_imagine.yml }
+    - { resource: bundles/fos_user.yml }
     - { resource: bundles/fos_js_routing.yml }
     - { resource: bundles/ckeditor.yml }
     - { resource: bundles/ornicar_apc.yml }

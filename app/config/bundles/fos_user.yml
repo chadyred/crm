@@ -1,0 +1,16 @@
+fos_user:
+    db_driver:          orm
+    firewall_name:      main
+    user_class:         UserBundle\Entity\User
+    from_email:
+        address:        %email.from%
+        sender_name:    %email.sender%
+    service:
+        mailer:         fos_user.mailer.twig_swift
+#    registration:
+#        confirmation:
+#            enabled:    true
+#            template:   EnigmaticDefaultBundle:Email:inscription.html.twig
+    resetting:
+        email:
+            template:   UserBundle:Email:accountResetting.html.twig

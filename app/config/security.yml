@@ -1,12 +1,47 @@
 security:
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface:
+            algorithm:            pbkdf2
+            hash_algorithm:       sha512
+            encode_as_base64:     true
+            iterations:           1000
+
+    role_hierarchy:
+        CA:                 [ROLE_USER]
+        RCA:                [ROLE_USER]
+        RS:                 [ROLE_USER]
+        ADMIN:              [ROLE_USER]
+        SUPER_ADMIN:        [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_manager
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt|error)|css|images|js)/
             security: false
 
-        default:
-            anonymous: ~
+        main:
+            pattern:                                ^/
+            form_login:
+                login_path:                         login
+                check_path:                         login_check
+                provider:                           fos_userbundle
+                remember_me:                        true
+            remember_me:
+                key:                                "%secret%"
+                lifetime:                           604800 # 1 semaine
+                path:                               /
+                domain:                             ~
+            anonymous:                              true
+            logout:
+                path:                               logout
+                target:                             enigmatic_home
+                invalidate_session:                 false
+            switch_user:                            { role: ROLE_SUPER_ADMIN, parameter: _user }
+
+    access_control:
+        - { path: ^/admin/, roles: ROLE_ADMIN, requires_channel: http }
+        - { path: ^/*$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: http }
