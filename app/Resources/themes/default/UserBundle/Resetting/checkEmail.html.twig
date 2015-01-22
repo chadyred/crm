@@ -1,0 +1,6 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block content %}
+    <h1>{% trans %}user.resetting.title{% endtrans %}</h1>
+    <p>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</p>
+{% endblock %}
