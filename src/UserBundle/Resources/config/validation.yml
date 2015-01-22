@@ -1,0 +1,17 @@
+Enigmatic\SecurityBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: {fields:email, message:"fos_user.email.already_used"}
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: {fields:username, message:"fos_user.username.already_used"}
+    properties:
+        email:
+            - NotBlank:     { groups: [Default], message: fos_user.email.blank }
+            - Length:       { groups: [Default], min: 2, minMessage: fos_user.email.short, max: 255, maxMessage: fos_user.email.long }
+            - Email:        { groups: [Default], checkMX: true, checkHost: false, message: fos_user.email.invalid }
+        username:
+#            - NotBlank:     { message: fos_user.username.blank }
+            - Length:       { groups: [Default], min: 2, minMessage: fos_user.username.short, max: 255, maxMessage: fos_user.username.long}
+        plainPassword :
+            - NotBlank:     { groups: [Registration], message: fos_user.password.blank }
+            - Length:       { groups: [Default], min: 6, minMessage: fos_user.password.short }
+        date_created:
+            - DateTime:     { groups: [Default] }

@@ -1,0 +1,11 @@
+user_security:
+    resource: "@UserBundle/Resources/config/routing/security.yml"
+    prefix:   /
+
+user_resetting:
+    resource: "@UserBundle/Resources/config/routing/resetting.yml"
+    prefix: /mot-de-passe-oublie
+
+user_change:
+    resource: "@UserBundle/Resources/config/routing/change_password.yml"
+    prefix: /modifier-mot-de-passe

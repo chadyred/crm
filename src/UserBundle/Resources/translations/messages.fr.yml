@@ -1,0 +1,7 @@
+user:
+    change_password:
+        title: Modification du mot de passe
+    login:
+        title: Connexion
+    resetting:
+        title: Envoyer

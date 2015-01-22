@@ -1,0 +1,6 @@
+services:
+    user.form:
+        class: UserBundle\Form\UserType
+        tags:
+            - { name: form.type, alias: userbundle_user }
+        arguments: []
