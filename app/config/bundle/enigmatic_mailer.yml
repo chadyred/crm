@@ -1,3 +1,0 @@
-enigmatic_mailer:
-    email_from: %enigmatic_mailer.email_from%
-    email_sender: %enigmatic_mailer.email_sender%

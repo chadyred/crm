@@ -1,9 +1,0 @@
-oro_dashboard_config:
-    widgets:
-        enigmatic_test:
-            label:       test
-            route:       enigmatic_app_dashboard_test
-            acl:         orocrm_campaign_view
-            description: test
-            icon:        bundles/orocrmcampaign/img/Lead-generation-of-most-recently-created-campaigns.png
-            applicable:  @orocrm_sales.provider.enitity_state->isEntityLeadEnabled()
