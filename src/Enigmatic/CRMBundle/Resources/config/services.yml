@@ -1,0 +1,4 @@
+services:
+#    enigmatic_crm.example:
+#        class: Enigmatic\CRMBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

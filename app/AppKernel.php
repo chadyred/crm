@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Liip\ThemeBundle\LiipThemeBundle(),
             new BCC\CronManagerBundle\BCCCronManagerBundle(),
             new UserBundle\UserBundle(),
+            new Enigmatic\CRMBundle\EnigmaticCRMBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

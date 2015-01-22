@@ -1,0 +1,3 @@
+enigmatic_crm_home:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:Default:index }
