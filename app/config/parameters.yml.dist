@@ -18,3 +18,12 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    host_name:         ~
+    theme:             default
+
+    email_super_admin:  ~
+    email_admin:        ~
+    email_error:        ~
+    email_sender:       ~
+    email_from:         ~

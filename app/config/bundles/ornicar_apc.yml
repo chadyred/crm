@@ -1,0 +1,4 @@
+ornicar_apc:
+    host:     %host_name%
+    web_dir:  %kernel.root_dir%/../web
+    mode:     curl

@@ -17,7 +17,26 @@
         "symfony/monolog-bundle": "~2.4",
         "sensio/distribution-bundle": "~3.0.12",
         "sensio/framework-extra-bundle": "~3.0",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+        "jms/security-extra-bundle": "*",
+        "jms/di-extra-bundle": "*",
+        "friendsofsymfony/jsrouting-bundle": "*",
+        "friendsofsymfony/user-bundle": "*",
+        "doctrine/doctrine-fixtures-bundle": "v2.2.0",
+        "doctrine/migrations": "dev-master",
+        "doctrine/doctrine-migrations-bundle": "dev-master",
+        "ornicar/apc-bundle": "*",
+        "egeloen/ckeditor-bundle": "2.*",
+        "helios-ag/fm-elfinder-bundle": "2.*",
+        "avalanche123/imagine-bundle": "*",
+        "liip/theme-bundle": "*",
+        "besimple/i18n-routing-bundle": "*",
+        "egeloen/google-map": "*",
+        "willdurand/geocoder": "*",
+        "genemu/form-bundle": "*",
+        "lexik/form-filter-bundle": "*",
+        "liuggio/excelbundle": "*",
+        "bcc/cron-manager-bundle": "v2.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

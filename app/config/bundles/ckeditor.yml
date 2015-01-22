@@ -1,0 +1,43 @@
+ivory_ck_editor:
+#    base_path: bundles/enigmaticapp/ckeditor/
+    plugins:
+        wordcount:
+            path:                       "/bundles/enigmaticapp/ckeditor/wordcount/"
+            filename:                   "plugin.js"
+        video:
+            path:                       '/bundles/enigmaticapp/ckeditor/video/'
+            filename:                   'plugin.js'
+    configs:
+        normal:
+            language:                   %locale%
+            toolbar:                   [ [ 'Preview' ], [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ], [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ], [ 'Source' ], [ "About" ], "/", [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript','-','RemoveFormat' ], [ 'NumberedList','BulletedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], [ 'Link','Unlink','Anchor' ], [ 'Image', 'Video', 'Table','SpecialChar','Iframe' ], '/', [ 'Styles', 'Format','Font','FontSize' ], [ 'TextColor','BGColor' ], [ 'RemoveFormat' ], [ 'Maximize' ] ]
+            uiColor:                    "#FCFCFC"
+            filebrowserBrowseRoute:     elfinder
+            filebrowserBrowseRouteParameters:
+                instance: ckeditor
+            extraPlugins:               'video'
+            removePlugins:              'elementspath'
+            stylesSet:                  'my_styles'
+#    styles:
+#        my_styles:
+#            - { name: "Titre bleu", element: "h2",  styles: { color: "#0075b9" }}
+#            - { name: "Fond gris", element: "span", styles: { background: "#F3F3F3", padding:0px 5px; }}
+#            - { name: "Fleche", element: "p", attributes: { class: "ckefleche" }}
+
+fm_elfinder:
+    instances:
+        ckeditor:
+            locale:           %locale%
+            editor:           ckeditor
+            fullscreen:       false
+            include_assets:   true
+            compression:      false
+            connector:
+                debug:        false
+                roots:
+                    uploads:
+                        driver:           LocalFileSystem
+                        path:             medias
+                        upload_allow:     ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'application/zip', 'audio/mpeg', 'text/csv', 'video/mp4', 'video/webm', 'application/pdf']
+                        upload_deny:      ['all']
+                        upload_max_size:  8M

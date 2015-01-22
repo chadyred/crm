@@ -1,0 +1,3 @@
+liip_theme:
+    themes: ['default']
+    active_theme: %theme%
