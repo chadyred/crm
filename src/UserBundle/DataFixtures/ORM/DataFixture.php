@@ -35,16 +35,6 @@ class DataFixture implements FixtureInterface, ContainerAwareInterface, OrderedF
         $super_admin->setDateCreated(new \DateTime());
         $userManager->updateUser($super_admin);
         $em->flush();
-
-        $admin = $userManager->createUser();
-        $admin->setEmail($this->container->getParameter('email.admin'));
-        $admin->setUsername(58658545);
-        $admin->addRole('ROLE_ADMIN');
-        $admin->setPlainPassword('azert');
-        $admin->setEnabled(true);
-        $admin->setDateCreated(new \DateTime());
-        $userManager->updateUser($admin);
-        $em->flush();
     }
 
     /**
