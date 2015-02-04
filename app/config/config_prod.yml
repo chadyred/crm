@@ -53,8 +53,8 @@ monolog:
             handler:        swift_critical
         swift_critical:
             type:           swift_mailer
-            from_email:     contact@domain.com
-            to_email:       error@my-domain.com
+            from_email:     %email_sender%
+            to_email:       %email_error%
             subject:        Une erreur critique est survenue !
             level:          info
         console:
