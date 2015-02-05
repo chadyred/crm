@@ -13,3 +13,13 @@ user:
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_imagine:
+    resource: .
+    type:     imagine
+
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"

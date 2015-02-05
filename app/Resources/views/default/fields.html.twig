@@ -1,1 +1,129 @@
 {% extends 'form_div_layout.html.twig' %}
+
+{% block enigmatic_city_widget %}
+    {% spaceless %}
+        <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %} style="display:none;"/>
+        {{ render(controller('EnigmaticCityBundle:Default:getFormSearch', {'id_form_city': id, 'default_value':value })) }}
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_widget_simple_placeholder %}
+    {% spaceless %}
+        {% set type = type|default('text') %}
+        <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+        {% if required %}
+            <span class="required" title="{% trans %}Required{% endtrans %}">*</span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_row %}
+    {% spaceless %}
+        <div class="form_row">
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <br/>
+            <span class="text_error">
+                {% for error in errors %}
+                    {{ error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators') }}
+                {% endfor %}
+            </span>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}
+
+{% block choice_widget_expanded %}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="form_choice">
+                {{- form_widget(child) -}}
+                <span class="{% if multiple %}checkbox{% else %}radio{% endif %}">
+            {{- form_label(child) -}}
+            </span>
+            </div>
+        {% endfor -%}
+    </div>
+{% endblock choice_widget_expanded %}
+
+{% block form_label %}
+    {% spaceless %}
+        {% if label and label != ' ' %}
+
+            {% if label is not sameas(false) %}
+                {% if not compound %}
+    {% set label_attr = label_attr|merge({'for': id}) %}
+    {#{% if expanded %}#}
+    {#{% if multiple %}#}
+    {#{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' radio')|trim}) %}#}
+    {#{% else %}#}
+    {#{% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' checkbox')|trim}) %}#}
+    {#{% endif %}#}
+    {#{% endif %}#}
+{% endif %}
+                {% if required %}
+    {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+{% endif %}
+                {% if label is empty %}
+    {% set label = name|humanize %}
+{% endif %}
+                <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+                {{ label|trans|raw }} {% if checked is not defined %}:{% endif %}
+                {% if required and checked is not defined %}
+    <span class="required" title="{% trans %}Required{% endtrans %}">*</span>
+{% endif %}
+                </label>
+            {% endif %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_label %}
+
+{% block textarea_widget %}
+    {% spaceless %}
+        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+    {% endspaceless %}
+{% endblock textarea_widget %}
+
+{#{% block choice_widget %}#}
+    {#{% spaceless %}#}
+    {#{% if expanded %}#}
+    {#<div {{ block('widget_container_attributes') }}>#}
+    {#{% for child in form %}#}
+        {#{{ form_widget(child) }} {{ form_label(child) }}#}
+    {#{% endfor %}#}
+    {#</div>#}
+    {#{% else %}#}
+        {#<select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>#}
+            {#{% if empty_value is not none %}#}
+                {#<option value="">{{ empty_value|trans }}</option>#}
+            {#{% endif %}#}
+            {#{% if preferred_choices|length > 0 %}#}
+                {#{% set options = preferred_choices %}#}
+                {#{{ block('widget_choice_options') }}#}
+                {#{% if choices|length > 0 and separator is not none %}#}
+                    {#<option disabled="disabled">{{ separator }}</option>#}
+                {#{% endif %}#}
+            {#{% endif %}#}
+            {#{% set options = choices %}#}
+            {#{{ block('widget_choice_options') }}#}
+        {#</select>#}
+    {#{% endif %}#}
+    {#{% endspaceless %}#}
+{#{% endblock choice_widget %}#}
+
+{% block captcha_widget %}
+    {% spaceless %}
+        <img src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}"/>
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    {% endspaceless %}
+{% endblock %}

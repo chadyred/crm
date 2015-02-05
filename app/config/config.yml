@@ -47,7 +47,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ AppBundle ]
+    bundles:        [ AppBundle, EnigmaticCRMBundle, EnigmaticCityBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

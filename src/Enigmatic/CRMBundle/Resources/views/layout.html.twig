@@ -1,0 +1,51 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="" title="{% trans %}enigmatic.crm.header.nav.dashboard.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.dashboard.link{% endtrans %}</a></li>
+                <li>
+                    <span>{% trans %}enigmatic.crm.header.nav.event.title{% endtrans %}</span>
+                    <ul>
+                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.calendar.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.calendar.link{% endtrans %}</a></li>
+                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.activity.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.activity.link{% endtrans %}</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span>{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}</span>
+                    <ul>
+                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.account.link{% endtrans %}</a></li>
+                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.contact.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.contact.link{% endtrans %}</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <span>{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}</span>
+                    <ul>
+                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.account.link{% endtrans %}</a></li>
+                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.contact.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.contact.link{% endtrans %}</a></li>
+                    </ul>
+                </li>
+                <li><a href="" title="{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.account.link{% endtrans %}</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {{ parent() }}
+
+    {% block content %}{% endblock %}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {% javascripts output='cache/js/system.js'
+        '@FOSJsRoutingBundle/Resources/public/js/router.js'
+        '@AppBundle/Resources/public/js/jquery.min.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+{% endblock %}
