@@ -16,7 +16,6 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new AppBundle\AppBundle(),
 
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
@@ -30,8 +29,12 @@ class AppKernel extends Kernel
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Liip\ThemeBundle\LiipThemeBundle(),
             new BCC\CronManagerBundle\BCCCronManagerBundle(),
+
+            new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),
+
             new Enigmatic\CRMBundle\EnigmaticCRMBundle(),
+            new Enigmatic\CityBundle\EnigmaticCityBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

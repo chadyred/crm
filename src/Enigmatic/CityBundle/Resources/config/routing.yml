@@ -1,0 +1,3 @@
+enigmatic_city_search:
+    pattern:  /search-{search}
+    defaults: { _controller: EnigmaticCityBundle:Default:search, search: '' }

@@ -2,6 +2,10 @@ enigmatic_crm:
     resource: "@EnigmaticCRMBundle/Resources/config/routing.yml"
     prefix:   /
 
+enigmatic_city:
+    resource: "@EnigmaticCityBundle/Resources/config/routing.yml"
+    prefix:   /villes
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /
