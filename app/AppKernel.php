@@ -35,6 +35,7 @@ class AppKernel extends Kernel
 
             new Enigmatic\CRMBundle\EnigmaticCRMBundle(),
             new Enigmatic\CityBundle\EnigmaticCityBundle(),
+            new Enigmatic\MailerBundle\EnigmaticMailerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

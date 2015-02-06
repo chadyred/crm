@@ -27,3 +27,6 @@ parameters:
     email_error:        ~
     email_sender:       ~
     email_from:         ~
+
+    enigmatic_mailer.email_from: ~
+    enigmatic_mailer.email_sender: ~
