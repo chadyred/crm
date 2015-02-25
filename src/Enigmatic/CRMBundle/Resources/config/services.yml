@@ -1,8 +1,161 @@
+parameters:
+    defaultListPageLimit: 25
+
 services:
+
+# MANAGER
+
+    enigmatic_crm.manager.account:
+        class: Enigmatic\CRMBundle\Manager\AccountManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.contact:
+        class: Enigmatic\CRMBundle\Manager\ContactManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.activity:
+        class: Enigmatic\CRMBundle\Manager\ActivityManager
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.manager.activity_type:
+        class: Enigmatic\CRMBundle\Manager\ActivityTypeManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.agency:
+        class: Enigmatic\CRMBundle\Manager\AgencyManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.user:
+        class: Enigmatic\CRMBundle\Manager\UserManager
+        arguments: [@doctrine.orm.entity_manager, @security.token_storage]
+
+# MAILER
+
+    enigmatic_crm.mailer.user:
+        class: Enigmatic\CRMBundle\Mailer\UserMailer
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_mailer, @templating]
+
+# LISTENER
+
+    enigmatic_crm.listener.account.doctrine:
+        class: Enigmatic\CRMBundle\Listener\AccountListener
+        arguments: []
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+
+    enigmatic_crm.listener.user.doctrine:
+        class: Enigmatic\CRMBundle\Listener\UserListener
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+
 # FORM
+
+    enigmatic_crm.form.account:
+        class: Enigmatic\CRMBundle\Form\AccountType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_account }
+        arguments: []
+
+    enigmatic_crm.form.account_import:
+        class: Enigmatic\CRMBundle\Form\AccountImportType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_account_import }
+        arguments: []
+
+    enigmatic_crm.form.contact:
+        class: Enigmatic\CRMBundle\Form\ContactType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_contact }
+        arguments: []
+
+    enigmatic_crm.form.contact_phone:
+        class: Enigmatic\CRMBundle\Form\ContactPhoneType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_contact_phone }
+        arguments: []
+
+    enigmatic_crm.form.activity:
+        class: Enigmatic\CRMBundle\Form\ActivityType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_activity }
+        arguments: [@enigmatic_crm.manager.activity_type, @translator.default]
+
     enigmatic_crm.form.agency:
         class: Enigmatic\CRMBundle\Form\AgencyType
         tags:
             - { name: form.type, alias: enigmatic_crm_agency }
-        arguments: [@enigmatic_city.transformer.default]
+        arguments: []
 
+    enigmatic_crm.form.agency_user:
+        class: Enigmatic\CRMBundle\Form\AgencyUserType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency_user }
+        arguments: []
+
+    enigmatic_crm.form.user:
+        class: Enigmatic\CRMBundle\Form\UserType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_user }
+        arguments: []
+
+    enigmatic_crm.form.user_security:
+        class: Enigmatic\CRMBundle\Form\UserSecurityType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_user_security }
+        arguments: []
+
+# SERVICES
+
+    enigmatic_crm.service.list:
+        class: Enigmatic\CRMBundle\Services\ListService
+        arguments: []
+
+    enigmatic_crm.service.map:
+        class: Enigmatic\CRMBundle\Services\MapService
+        arguments: []
+
+    enigmatic_crm.service.grant:
+        class: Enigmatic\CRMBundle\Services\GrantService
+        arguments: [@enigmatic_crm.manager.user, @security.authorization_checker]
+
+    enigmatic_crm.service.calendar:
+        class: Enigmatic\CRMBundle\Services\CalendarService
+        arguments: [@enigmatic_crm.manager.user, @security.authorization_checker, , @translator.default]
+
+# PARAM CONVERTER
+
+    enigmatic_crm.param_converter.account:
+        class: Enigmatic\CRMBundle\ParamConverter\AccountParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.contact:
+        class: Enigmatic\CRMBundle\ParamConverter\ContactParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.activity:
+        class: Enigmatic\CRMBundle\ParamConverter\ActivityParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.agency:
+        class: Enigmatic\CRMBundle\ParamConverter\AgencyParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.user:
+        class: Enigmatic\CRMBundle\ParamConverter\UserParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }

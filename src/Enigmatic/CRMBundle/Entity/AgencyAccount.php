@@ -61,6 +61,13 @@ class AgencyAccount
     private $turnovers;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", nullable=true)
+     */
+    private $description;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreated", type="datetime")
@@ -244,5 +251,28 @@ class AgencyAccount
     public function getTurnovers()
     {
         return $this->turnovers;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return AgencyAccount
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

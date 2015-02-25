@@ -29,6 +29,10 @@ class AppKernel extends Kernel
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
             new Liip\ThemeBundle\LiipThemeBundle(),
             new BCC\CronManagerBundle\BCCCronManagerBundle(),
+            new BeSimple\I18nRoutingBundle\BeSimpleI18nRoutingBundle(),
+            new Ddeboer\DataImportBundle\DdeboerDataImportBundle(),
+            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
 
             new AppBundle\AppBundle(),
             new UserBundle\UserBundle(),

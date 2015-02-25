@@ -31,15 +31,16 @@
         "avalanche123/imagine-bundle": "*",
         "liip/theme-bundle": "*",
         "besimple/i18n-routing-bundle": "*",
-        "egeloen/google-map": "*",
+        "egeloen/google-map-bundle": "~2.1",
         "willdurand/geocoder": "*",
         "genemu/form-bundle": "*",
         "lexik/form-filter-bundle": "*",
         "liuggio/excelbundle": "*",
-        "bcc/cron-manager-bundle": "v2.6"
+        "bcc/cron-manager-bundle": "v2.6",
+        "ddeboer/data-import-bundle": "@stable"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "*"
     },
     "scripts": {
         "post-root-package-install": [

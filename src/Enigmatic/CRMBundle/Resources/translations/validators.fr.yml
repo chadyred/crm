@@ -1,0 +1,5 @@
+enigmatic:
+    crm:
+        account_import:
+            file:
+                mime_type: Veuillez importer un fichier au format CSV

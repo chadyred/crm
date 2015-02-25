@@ -30,9 +30,8 @@ class CityTransformer implements DataTransformerInterface
      */
     public function transform($city)
     {
-        if (null === $city) {
+        if (null === $city)
             return "";
-        }
 
         return $city->getId();
     }
@@ -46,21 +45,21 @@ class CityTransformer implements DataTransformerInterface
      */
     public function reverseTransform($id)
     {
-        if (!$id) {
+        if (!$id)
             return null;
-        }
+
+
 
         $city = $this->om
             ->getRepository('EnigmaticCityBundle:City')
             ->findOneBy(array('id' => $id))
         ;
 
-        if (null === $city) {
+        if (null === $city)
             throw new TransformationFailedException(sprintf(
                 'This city cannot be found',
                 $id
             ));
-        }
 
         return $city;
     }

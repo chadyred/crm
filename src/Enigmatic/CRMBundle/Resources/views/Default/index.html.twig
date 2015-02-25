@@ -1,5 +1,8 @@
-{% extends "EnigmaticCRMBundle::layout.html.twig" %}
-{% block body %}
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.home{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% block content %}
 
     Dashboard
 

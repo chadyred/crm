@@ -1,0 +1,26 @@
+.select2 {min-width:300px;}
+
+select.select2 {
+    position:absolute;
+    display: block !important;
+    visibility: hidden;
+    height: 1px;
+    margin-left: 120px;
+    width:1px;
+    margin-top: -5px;
+    border:none;
+}
+
+/* GOOGLE MAP */
+.gmnoprint img {
+    max-width: none;
+}
+
+.gm-style img {
+    max-width: none;
+}
+
+.gm-style label {
+    width: auto;
+    display: inline;
+}

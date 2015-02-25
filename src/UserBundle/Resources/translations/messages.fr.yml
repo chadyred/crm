@@ -5,3 +5,11 @@ user:
         title: Connexion
     resetting:
         title: Envoyer
+    form:
+        field:
+            email:
+                label: Email
+            password:
+                confirm:
+                    label: Confirmation
+                label: Mot de passe

@@ -1,0 +1,321 @@
+enigmatic:
+    crm:
+        account:
+            contact:
+                empty: Aucun contact n'est disponible pour ce compte
+            field:
+                activity:
+                    name: Secteur d'activité
+                address:
+                    name: Adresse
+                addressCpl:
+                    name: Complément d'adresse
+                city:
+                    name: Ville
+                description:
+                    name: Autre informations
+                fax:
+                    name: Fax
+                name:
+                    name: Nom de l'entreprise
+                phone:
+                    name: Téléphone
+                siret:
+                    name: Numéro SIRET
+            form:
+                field:
+                    activity:
+                        label: Secteur d'activité
+                    address:
+                        label: Adresse
+                    addressCpl:
+                        label: Complément d'adresse
+                    city:
+                        label: Ville
+                    description:
+                        label: Autre informations
+                    fax:
+                        label: Fax
+                    name:
+                        label: Nom de l'entreprise
+                    phone:
+                        label: Téléphone pricipal
+                    siret:
+                        label: Numéro SIRET
+                submit:
+                    add: Ajouter le compte
+                    import: Importer
+                    update: Modifier le compte
+            message:
+                add: Le compte a été ajouté
+                remove: Le compte a été supprimé
+                update: Le compte a été modifié
+            table:
+                empty: Aucun compte n'est disponible
+                head:
+                    address: Adresse
+                    name: Société
+                    owner: Chargé d'affaire
+                    phone: Téléphone
+                    potential: Potentiel TT
+            view:
+                titles:
+                    activities: Activités
+                    contacts: Contacts
+                    details: Résumé
+        account_import:
+            form:
+                field:
+                    file:
+                        label: Fichier à importer
+        activity:
+            action:
+                replann: Replannifier
+            form:
+                field:
+                    account:
+                        empty_value: Selectionnez un compte
+                        label: Lier au compte
+                    comment:
+                        label: Commentaire
+                    dateEnd:
+                        label: Date de fin
+                    dateStart:
+                        label: Date de l'activité
+                        replann:
+                            label: Nouvelle date
+                    type:
+                        label: Type d'activité
+                        empty_value: Selectionnez un type d'activité
+                    user:
+                        empty_value: Selectionnez un utilisateur
+                        label: Utilisateur
+                submit:
+                    add: Ajouter
+                    update: Modifier l'activité
+            message:
+                add: L'activité a été ajoutée
+                confirm:
+                    remove: Voulez-vous vraiment supprimer cette activité ?
+                remove: L'activité a été supprimée
+                replanned: Attention, cette activité à été replanifiée
+                update: L'activité a été modifiée
+            table:
+                empty: Aucune activité
+                head:
+                    type: Type d'activité
+                    account: Compte
+                    user: Utilisateur
+                    dateStart: Date
+                    comment: Commentaire
+                search:
+                    dateStart: De
+                    dateStartEnd: à
+        activity_type:
+            field:
+                type:
+                    1: Appel
+                    2: Rendez-vous
+        activity_user:
+            form:
+                field:
+                    agency:
+                        label: Agence
+                        empty_value: Selectionnez une agence
+        agency:
+            field:
+                address:
+                    name: Adresse
+            form:
+                field:
+                    address:
+                        label: Adresse
+                    addressCpl:
+                        label: Complément d'adresse
+                    city:
+                        label: Ville
+                    name:
+                        label: Nom de l'agence
+                submit:
+                    add: Ajouter l'agence
+                    update: Modifier l'agence
+            message:
+                add: L'agence a été ajoutée
+                remove: L'agence a été supprimée
+                update: L'agence a été modifiée
+            table:
+                empty: Aucune agence
+                head:
+                    name: Nom
+                    address: Adresse
+        calendar:
+            error_load: Une erreur est survenue, impossible de récupérer les données ou la requête n'a pas pu aboutir ...
+            event:
+                by: Par
+                replannified_to: Replannifié le
+            load: Chargement ...
+        contact:
+            form:
+                field:
+                    account:
+                        empty_value: Selectionnez un compte
+                        label: Lier au compte
+                    address:
+                        label: Adresse
+                    addressCpl:
+                        label: Complément d'adresse
+                    birthday:
+                        label: Date de naissance
+                    city:
+                        label: Ville
+                    description:
+                        label: Description
+                    email:
+                        label: Adresse mail
+                    firstname:
+                        label: Prénom
+                    function:
+                        label: Fonction
+                    name:
+                        label: Nom
+                    phones:
+                        label: Téléphones
+                        phone:
+                            label: Numéro
+                        type:
+                            empty_value: Type
+                            work:
+                                label: Bureau
+                            home:
+                                label: Domicile
+                            fax:
+                                label: Fax
+                            mobile:
+                                label: Mobile
+                            other:
+                                label: Autre
+
+                submit:
+                    add: Ajouter le contact
+                    update: Modifier le contact
+            message:
+                add: Le contact a été ajouté
+                remove: Le contact a été supprimé
+                update: Le contact a été modifié
+            table:
+                empty: Aucun contact n'est disponible
+                head:
+                    account: Comptes
+                    email: Email
+                    function: Fonction
+                    name: Nom
+                    phones: Téléphones
+        header:
+            nav:
+                accounts:
+                    link: Comptes
+                    title: ''
+                activities:
+                    link: Activités
+                    title: ''
+                contacts:
+                    link: Contacts
+                    title: ''
+                home:
+                    link: Synthèse
+                    title: ''
+                system:
+                    agencys:
+                        link: Agences
+                        title: ''
+                    link: Configuration
+                    users:
+                        link: Utilisateurs
+                        title: ''
+            logout:
+                name: Déconnexion
+                title: Déconnexion
+            titles:
+                agencies_list: Agences
+                agency_add: Ajouter agence
+                agency_view: Agence
+                agency_update: Modifier agence
+                accounts_list: Comptes
+                account_add: Ajouter un compte
+                account_view: Compte
+                account_update: Modifier un compte
+                account_import: Importer
+                activities_list: Activités
+                activity_add: Ajouter une activité
+                activity_view: Activité
+                activity_update: Modifer une activité
+                calendar: Calendrier
+                contacts_list: Contacts
+                contact_add: Ajouter un contact
+                contact_view: Contact
+                contact_update: Modifier un contact
+                home: Synthèse
+                users_list: Utilisateurs
+                user_add: Ajouter un utilisateur
+                user_view: Utilisateur
+                user_update: Modifier un utilisateur
+
+        user:
+            form:
+                field:
+                    firstname:
+                        label: Prénom
+                    name:
+                        label: Nom
+                submit:
+                    add: Ajouter l'utilisateur
+                    update: Modifier l'utilisateur
+            field:
+                agencies:
+                    name: Agence(s)
+                    empty: Aucune
+                name:
+                    name: Nom
+                email:
+                    name: Email
+                role:
+                    name: Droits
+                    ca: Chargé d'affaire
+                    rca: Responsable d'agence
+                    rs: Responsable de secteur
+                    admin: Administrateur
+            message:
+                add: L'utilisateur a été ajouté
+                remove: L'utilisateur a été supprimé
+                update: L'utilisateur a été modifié
+            security:
+                form:
+                    field:
+                        locked:
+                            label: Actif
+                            unlock:
+                                label: Oui
+                            lock:
+                                label: Non
+
+                        roles:
+                            ca:
+                                label: Chargé d'affaires
+                            label: Droits:
+                            rca:
+                                label: Resonsable de chargés d'affaires
+                            rs:
+                                label: Responsable de secteur
+
+            table:
+                empty: Aucun utilisateur
+                head:
+                    name: Nom
+                    email: Email
+                    agency: Agence(s)
+                    locked: Etat
+                    lastLogin: Dernière connexion le
+            view:
+                titles:
+                    details: Détail
+                    agencies: Agence(s)

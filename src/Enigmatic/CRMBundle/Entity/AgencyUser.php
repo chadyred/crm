@@ -52,7 +52,7 @@ class AgencyUser
     /**
      * @var AgencyUserEnd
      *
-     * @ORM\OneToOne(targetEntity="Enigmatic\CRMBundle\Entity\AgencyUserEnd", mappedBy="agencyUser")
+     * @ORM\OneToOne(targetEntity="Enigmatic\CRMBundle\Entity\AgencyUserEnd", mappedBy="agencyUser", cascade="all")
      */
     private $end;
 
@@ -60,10 +60,12 @@ class AgencyUser
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(User $user = null, Agency $agency = null)
     {
+        $this->user = $user;
+        $this->agency = $agency;
         $this->dateCreated = new \DateTime();
-        $this->end = new \DateTime();
+        $this->end = null;
     }
 
     /**

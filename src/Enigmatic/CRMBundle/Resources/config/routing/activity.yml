@@ -1,0 +1,54 @@
+enigmatic_crm_activity_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:Activity:list }
+
+enigmatic_crm_activity_view:
+    path:     /{activity}
+    defaults: { _controller: EnigmaticCRMBundle:Activity:view }
+    requirements:
+        activity: \d+
+
+enigmatic_crm_activity_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:add }
+    options:
+        expose: true
+
+enigmatic_crm_activity_replann:
+    locales:  { fr: "/replanifier-{activity}", en: "/replan-{activity}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:add }
+    requirements:
+        activity: \d+
+    options:
+        expose: true
+
+enigmatic_crm_activity_update:
+    locales:  { fr: "/modifier-{activity}", en: "/update-{activity}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:update }
+    requirements:
+        activity: \d+
+    options:
+        expose: true
+
+enigmatic_crm_activity_remove:
+    locales:  { fr: "/supprimer-{activity}", en: "/remove-{activity}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:remove}
+    requirements:
+        activity: \d+
+
+
+enigmatic_crm_activity_calendar:
+    locales:  { fr: "/calendrier", en: "/calendar" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:calendar }
+
+enigmatic_crm_activity_calendar_event:
+    locales:  { fr: "/calendrier-evenements", en: "/calendar-event" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:calendarEvent }
+
+enigmatic_crm_activity_calendar_event_save:
+    locales:  { fr: "/calendrier-evenements-save-{activity}", en: "/calendar-event-save-{activity}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:calendarEventSave }
+    requirements:
+        activity: \d+
+    options:
+        expose: true

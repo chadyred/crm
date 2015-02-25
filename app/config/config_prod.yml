@@ -53,9 +53,9 @@ monolog:
             handler:        swift_critical
         swift_critical:
             type:           swift_mailer
-            from_email:     %email_sender%
+            from_email:     %email_from%
             to_email:       %email_error%
-            subject:        Une erreur critique est survenue !
+            subject:        CRM LIP Intérim - Erreur Critique
             level:          info
         console:
             type:  console

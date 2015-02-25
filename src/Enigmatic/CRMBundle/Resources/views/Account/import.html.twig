@@ -1,0 +1,16 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.account_import{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <form method="post" action="" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% trans %}enigmatic.crm.account.form.submit.import{% endtrans %}">
+        {{ button.create('back', 'Cancel'|trans, path('enigmatic_crm_account_list'), null, 'speednav' ) }}
+    </form>
+{% endblock %}

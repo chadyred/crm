@@ -31,6 +31,11 @@ class User extends BaseUser
      */
     private $date_created;
 
+    /**
+     * @var string
+     */
+    private $newRole;
+
 
     /**
      * Constructor
@@ -82,5 +87,26 @@ class User extends BaseUser
     public function getDateCreated()
     {
         return $this->date_created;
+    }
+
+    /**
+     * set newRole
+     *
+     * @param string $role
+     * @return User
+     */
+    public function setNewRole($role)
+    {
+        return $this->newRole = $role;
+    }
+
+    /**
+     * Get newRole
+     *
+     * @return string
+     */
+    public function getNewRole()
+    {
+        return $this->newRole;
     }
 }

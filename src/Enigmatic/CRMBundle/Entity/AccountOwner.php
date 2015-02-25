@@ -52,7 +52,7 @@ class AccountOwner
     /**
      * @var AccountOwnerEnd
      *
-     * @ORM\OneToOne(targetEntity="Enigmatic\CRMBundle\Entity\AccountOwnerEnd", mappedBy="accountOwner")
+     * @ORM\OneToOne(targetEntity="Enigmatic\CRMBundle\Entity\AccountOwnerEnd", mappedBy="accountOwner", cascade="all")
      */
     private $end;
 

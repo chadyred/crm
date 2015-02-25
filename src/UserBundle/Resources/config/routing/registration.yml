@@ -1,0 +1,10 @@
+user_registration_confirm:
+    locales:  { fr: "/confirmation-{token}", en: "/confirm-{token}" }
+    defaults:  { _controller: UserBundle:Registration:confirm }
+
+user_registration_confirm_redirect:
+    locales:  { fr: "/confirmation-redirection", en: "/confirm-redirect" }
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /app
+        permanent: true

@@ -1,51 +1,91 @@
-{% extends "::base.html.twig" %}
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+
+    {% stylesheets filter='cssrewrite' output='cache/themes/default/css/style.css'
+    'bundles/app/css/select2.css'
+    'bundles/enigmaticcrm/css/fullcalendar.min.css'
+    'bundles/app/css/datetimepicker.css'
+    'bundles/app/css/system.css'
+    'bundles/app/css/style.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets filter='cssrewrite' output='cache/themes/default/css/print.css'
+    'bundles/enigmaticcrm/css/fullcalendar.print.css' %}
+    <link type="text/css" rel="stylesheet" href="{{ asset_url }}" media="print"/>
+    {% endstylesheets %}
+
+{% endblock %}
+
 {% block body %}
 
     <header>
+        <div class="header_right">
+            <a class="speednav" href="{{ path('logout') }}" title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}">{% trans %}enigmatic.crm.header.logout.name{% endtrans %}</a>
+        </div>
         <nav>
             <ul>
-                <li><a href="" title="{% trans %}enigmatic.crm.header.nav.dashboard.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.dashboard.link{% endtrans %}</a></li>
+                <li><a class="speednav" href="{{ path('enigmatic_crm_home') }}" title="{% trans %}enigmatic.crm.header.nav.home.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.home.link{% endtrans %}</a></li>
+                <li><a class="speednav" href="{{ path('enigmatic_crm_account_list') }}" title="{% trans %}enigmatic.crm.header.nav.accounts.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.accounts.link{% endtrans %}</a></li>
+                <li><a class="speednav" href="{{ path('enigmatic_crm_contact_list') }}" href="" title="{% trans %}enigmatic.crm.header.nav.contacts.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.contacts.link{% endtrans %}</a></li>
+                <li><a class="speednav" href="{{ path('enigmatic_crm_activity_calendar') }}" title="{% trans %}enigmatic.crm.header.nav.activities.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.activities.link{% endtrans %}</a></li>
+                {% if is_granted('ROLE_RS') %}
                 <li>
-                    <span>{% trans %}enigmatic.crm.header.nav.event.title{% endtrans %}</span>
+                    <span>{% trans %}enigmatic.crm.header.nav.system.link{% endtrans %}</span>
                     <ul>
-                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.calendar.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.calendar.link{% endtrans %}</a></li>
-                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.activity.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.activity.link{% endtrans %}</a></li>
+                        <li><a class="speednav" href="{{ path('enigmatic_crm_agency_list') }}" title="{% trans %}enigmatic.crm.header.nav.system.agencys.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.system.agencys.link{% endtrans %}</a></li>
+                        <li><a class="speednav" href="{{ path('enigmatic_crm_user_list') }}" title="{% trans %}enigmatic.crm.header.nav.system.users.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.system.users.link{% endtrans %}</a></li>
                     </ul>
                 </li>
-                <li>
-                    <span>{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}</span>
-                    <ul>
-                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.account.link{% endtrans %}</a></li>
-                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.contact.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.contact.link{% endtrans %}</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <span>{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}</span>
-                    <ul>
-                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.account.link{% endtrans %}</a></li>
-                        <li><a href="" title="{% trans %}enigmatic.crm.header.nav.contact.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.contact.link{% endtrans %}</a></li>
-                    </ul>
-                </li>
-                <li><a href="" title="{% trans %}enigmatic.crm.header.nav.account.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.account.link{% endtrans %}</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
 
     {{ parent() }}
 
-    {% block content %}{% endblock %}
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
 
 {% endblock %}
 
 {% block javascripts %}
 
-    {% javascripts output='cache/js/system.js'
+    {% javascripts output='cache/themes/default/js/system.js'
+        '@AppBundle/Resources/public/js/nav.js'
+        '@AppBundle/Resources/public/js/collection.js'
+        '@AppBundle/Resources/public/js/datetimepicker.js'
+        '@AppBundle/Resources/public/js/select2.min.js'
+        '@AppBundle/Resources/public/js/system.js'
         '@FOSJsRoutingBundle/Resources/public/js/router.js'
-        '@AppBundle/Resources/public/js/jquery.min.js'
+        '@EnigmaticCRMBundle/Resources/public/js/moment.min.js'
+        '@EnigmaticCRMBundle/Resources/public/js/fullcalendar.min.js'
+        '@EnigmaticCRMBundle/Resources/public/js/lang-all.js'
     %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
+        <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
     <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    <script type="text/javascript">
+
+        function OnNavLoad() {
+            dateTimePicker();
+            runSelect2();
+            $('.form_collection').each(function() {
+                collectionStart($(this).attr('id'), false);
+            });
+        }
+
+        jQuery(function() {
+            OnNavLoad();
+        });
+        jQuery('body').on('NavLoad', function() {
+            OnNavLoad();
+        })
+    </script>
 
 {% endblock %}

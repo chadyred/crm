@@ -1,0 +1,68 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.agencies_list{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_agency_add'), null, 'speednav') }}
+    </div>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+    <table class="table table_striped table_extended">
+        <thead>
+            <tr>
+                {{ table.th('name', 'enigmatic.crm.agency.table.head.name'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('address_full', 'enigmatic.crm.agency.table.head.address'|trans, 20, null, params['entity']) }}
+                {{ table.th('action', 'Action', 10, null, params['entity']) }}
+            </tr>
+            <tr id="list_search">
+                {{ table.th_search_input('name', params['search']) }}
+                {{ table.th_search_input('address_full', params['search']) }}
+                {{ table.search_link(params['entity']) }}
+            </tr>
+        </thead>
+        <tbody>
+        {% for agency in agencies %}
+            <tr onclick="Nav.get('{{ path('enigmatic_crm_agency_view', {'agency': agency.getId() }) }}')" id="item_{{ agency.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                <td>{{ agency.getName() }}</td>
+                <td>
+                    <address>
+                        {{ agency.getAddress() }}<br/>
+                        {% if agency.getAddressCpl() %}
+                            {{ agency.getAddressCpl() }}<br/>
+                        {% endif %}
+                        {{ agency.getCity().getName() }}, {{ agency.getCity().getCanonicalZipcode() }}
+                    </address>
+                </td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_agency_list') }}');
+        });
+    </script>
+
+{% endblock %}

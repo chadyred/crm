@@ -8,11 +8,11 @@ security:
             iterations:           1000
 
     role_hierarchy:
-        CA:                 [ROLE_USER]
-        RCA:                [ROLE_USER]
-        RS:                 [ROLE_USER]
-        ADMIN:              [ROLE_USER]
-        SUPER_ADMIN:        [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_CA:                 [ROLE_USER]
+        ROLE_RCA:                [ROLE_CA]
+        ROLE_RS:                 [ROLE_RCA]
+        ROLE_ADMIN:              [ROLE_RS]
+        ROLE_SUPER_ADMIN:        [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         fos_userbundle:

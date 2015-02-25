@@ -1,0 +1,102 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.accounts_list{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_account_add'), null, 'speednav') }}
+        {{ button.create('import', 'Import'|trans, path('enigmatic_crm_account_import'), null, 'speednav') }}
+    </div>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+    <table class="table table_striped table_extended">
+        <thead>
+            <tr>
+                {{ table.th('name', 'enigmatic.crm.account.table.head.name'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('address_full', 'enigmatic.crm.account.table.head.address'|trans, 40, null, params['entity']) }}
+                {{ table.th('phone', 'enigmatic.crm.account.table.head.phone'|trans, 20, null, params['entity']) }}
+                {{ table.th('owner', 'enigmatic.crm.account.table.head.owner'|trans, 20, null, params['entity']) }}
+                {{ table.th('potential', 'enigmatic.crm.account.table.head.potential'|trans, 10, params['order'], params['entity']) }}
+                {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
+            </tr>
+            <tr id="list_search">
+                {{ table.th_search_input('name', params['search']) }}
+                {{ table.th_search_input('address_full', params['search']) }}
+                {{ table.th_search_input('phone', params['search']) }}
+                {{ table.th_search_input('owner', params['search']) }}
+                {{ table.th_search_input('potential', params['search']) }}
+                {{ table.search_link(params['entity']) }}
+            </tr>
+        </thead>
+        <tbody>
+        {% for account in accounts %}
+            <tr data-id="{{ account.getId() }}" id="item_{{ account.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                <td class="onclick">{{ account.getName() }}</td>
+                <td>
+                    {% if account.getCity() %}
+                        <address>
+                            {{ account.getAddress() }}<br/>
+                            {% if account.getAddressCpl() %}
+                                {{ account.getAddressCpl() }}<br/>
+                            {% endif %}
+                            {{ account.getCity().getName() }}, {{ account.getCity().getCanonicalZipcode() }}
+                        </address>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if account.getPhone() %}
+                        {{ phoneFormat(account.getPhone()) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    todo
+                </td>
+                <td>
+                    todo
+                </td>
+                <td>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.account.table.empty{% endtrans %}</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_account_list') }}');
+        });
+    </script>
+
+    <script type="text/javascript">
+        jQuery('.onclick').click(function() {
+            Nav.get(Routing.generate('enigmatic_crm_account_view.{{ app.request.locale }}', {'account': $(this).parent().attr('data-id') }));
+        })
+    </script>
+
+{% endblock %}

@@ -22,5 +22,6 @@ services:
 
     enigmatic_city.form_type.city:
         class: Enigmatic\CityBundle\Form\Type\CityType
+        arguments: [@enigmatic_city.transformer.default]
         tags:
             - { name: form.type, alias: enigmatic_city }

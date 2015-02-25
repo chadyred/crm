@@ -10,3 +10,27 @@ services:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
+
+    enigmatic.render:
+        class: AppBundle\Services\Render
+        arguments: [@service_container]
+
+    enigmatic.crypt_mail:
+        class: AppBundle\Services\CryptEmail
+        tags:
+            -  { name: twig.extension }
+
+    enigmatic.phone_format:
+        class: AppBundle\Services\PhoneFormat
+        tags:
+            -  { name: twig.extension }
+
+    enigmatic.rewrite_to_url:
+        class: AppBundle\Services\RewriteToUrl
+        tags:
+            -  { name: twig.extension }
+
+    enigmatic.token_generator:
+        class: AppBundle\Services\TokenGenerator
+        tags:
+            -  { name: twig.extension }

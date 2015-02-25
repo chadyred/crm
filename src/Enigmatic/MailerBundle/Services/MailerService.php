@@ -44,6 +44,7 @@ class MailerService
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)
             ->setSender($mailer->getEmailFrom(), $mailer->getSender())
+            ->setReplyTo($mailer->getEmailFrom(), $mailer->getSender())
             ->setFrom($mailer->getEmailFrom(), $mailer->getSender())
             ->setReturnPath($return_path)
             ->setTo($email_to)

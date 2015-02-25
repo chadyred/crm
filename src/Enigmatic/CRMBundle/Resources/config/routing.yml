@@ -1,3 +1,28 @@
 enigmatic_crm_home:
     path:     /
     defaults: { _controller: EnigmaticCRMBundle:Default:index }
+
+enigmatic_crm_account:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/account.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/comptes", en: "/accounts" }
+
+enigmatic_crm_contact:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/contact.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/contacts", en: "/contacts" }
+
+enigmatic_crm_activity:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/activity.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/activites", en: "/activities" }
+
+enigmatic_crm_agency:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/agency.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/agences", en: "/agencies" }
+
+enigmatic_crm_user:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/user.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/utilisateurs", en: "/users" }

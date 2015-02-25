@@ -1,0 +1,72 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.user_view{% endtrans %} - {{ user.getFirstname() }} {{ user.getName() }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_user_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
+    </div>
+
+    <h1>{{ user.getFirstname() }} {{ user.getName() }}</h1>
+
+    <section class="details">
+
+        <h2>{% trans %}enigmatic.crm.user.view.titles.details{% endtrans %}</h2>
+
+        <div class="bloc_row">
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.user.field.name.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {{ user.getFirstname() }} {{ user.getName() }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.user.field.email.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {{ user.getEmail() }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.user.field.role.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {% if user.hasRole('ROLE_ADMIN') %}
+                        {% trans %}enigmatic.crm.user.field.role.admin{% endtrans %}
+                    {% elseif user.hasRole('ROLE_RS') %}
+                        {% trans %}enigmatic.crm.user.field.role.rs{% endtrans %}
+                    {% elseif user.hasRole('ROLE_RCA') %}
+                        {% trans %}enigmatic.crm.user.field.role.rca{% endtrans %}
+                    {% elseif user.hasRole('ROLE_CA') %}
+                        {% trans %}enigmatic.crm.user.field.role.ca{% endtrans %}
+                    {% else %}
+                        {% trans %}enigmatic.crm.user.field.role.empty{% endtrans %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+
+        <h2>{% trans %}enigmatic.crm.user.view.titles.agencies{% endtrans %}</h2>
+
+        <div class="bloc_row">
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.user.field.agencies.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {% if user.getAgency() %}{{ user.getAgency().getName() }}{% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}

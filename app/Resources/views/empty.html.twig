@@ -1,0 +1,64 @@
+{% block stylesheets %}{% endblock %}
+{% block alert_message %}
+    <div id="alert_message">
+
+        <noscript>
+            {% block noscript %}
+                <div class="alert_message alert_message_warning">
+                    {% trans %}enigmatic.app.alert.warning.javascript_not_enabled{% endtrans %}<br/>
+                </div>
+            {% endblock %}
+        </noscript>
+
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            {% if loop.first %}
+                <div class="alert_message alert_message_error">
+            {% endif %}
+            {{ flashMessage|raw }}
+            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+            {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('warning') %}
+            {% if loop.first %}
+                <div class="alert_message alert_message_warning">
+            {% endif %}
+            {{ flashMessage|raw }}
+
+            {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            {% if loop.first %}
+                <div class="alert_message alert_message_success">
+            {% endif %}
+            {{ flashMessage|raw }}
+            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+            {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
+            {% if loop.first %}
+                <div class="alert_message alert_message_success">
+            {% endif %}
+            {{ flashMessage|trans({}, 'FOSUserBundle') }}
+            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+            {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+
+        {% for flashMessage in app.session.flashbag.get('info') %}
+            {% if loop.first %}
+                <div class="alert_message alert_message_info">
+            {% endif %}
+            {{ flashMessage|raw }}
+            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+            {% if loop.last %}</div>{% endif %}
+        {% endfor %}
+
+    </div>
+{% endblock %}
+{% block content %}{% endblock %}
+<script type="text/javascript">
+    document.title = '{% block title %}{% endblock %}';
+</script>
+{% block javascripts %}{% endblock %}

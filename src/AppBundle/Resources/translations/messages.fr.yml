@@ -1,0 +1,16 @@
+Action: Action
+Add: Ajouter
+Back: Retour
+Cancel: Annuler
+Close: Fermer
+Import: Importer
+Export: Exporter
+Update: Modifier
+Remove: Supprimer
+
+enigmatic:
+    app:
+        pager:
+            label: Page
+            limit:
+                label: Nombre par page

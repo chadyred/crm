@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}CRM LIP Intérim{% endblock %}
+{% block font %}{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets filter='cssrewrite' output='cache/themes/default/css/style.css'
+        'bundles/app/css/style.css'
+        'bundles/app/css/system.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts_head %}
+    {% javascripts output='cache/themes/default/js/jquery.js'
+    '@AppBundle/Resources/public/js/jquery.min.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+{% block body_class %}{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {% javascripts output='cache/themes/default/js/system.js'
+    '@AppBundle/Resources/public/js/nav.js'
+    '@FOSJsRoutingBundle/Resources/public/js/router.js'
+    %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+{% endblock %}

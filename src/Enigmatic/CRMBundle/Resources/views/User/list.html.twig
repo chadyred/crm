@@ -1,0 +1,70 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.users_list{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_user_add'), null, 'speednav') }}
+    </div>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+    <table class="table table_striped table_extended">
+        <thead>
+            <tr>
+                {{ table.th('name', 'enigmatic.crm.user.table.head.name'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('email', 'enigmatic.crm.user.table.head.email'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('agency', 'enigmatic.crm.user.table.head.agency'|trans, 20, null, params['entity']) }}
+                {{ table.th('locked', 'enigmatic.crm.user.table.head.locked'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('lastLogin', 'enigmatic.crm.user.table.head.lastLogin'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('action', 'Action', 10, null, params['entity']) }}
+            </tr>
+            <tr id="list_search">
+                {{ table.th_search_input('name', params['search']) }}
+                {{ table.th_search_input('email', params['search']) }}
+                {{ table.th_search_input('agency', params['search']) }}
+                <th></th>
+                <th></th>
+                {{ table.search_link(params['entity']) }}
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for user in users %}
+            <tr onclick="Nav.get('{{ path('enigmatic_crm_user_view', {'user': user.getId() }) }}')" id="item_{{ user.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                <td>{{ user.getFirstname() }} {{ user.getName() }}</td>
+                <td>{{ user.getUser().getEmail() }}</td>
+                <td>{% if user.getAgency() %}{{ user.getAgency().getName }}{% endif %}</td>
+                <td>{% if user.isLocked() %}Inactif{% else %}Actif{% endif %}</td>
+                <td>{% if user.getLastLogin() %}{{ user.getLastLogin() | date ('d-m-Y H:i') }}{% else %}Jamais{% endif %}</td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_user_list') }}');
+        });
+    </script>
+
+{% endblock %}

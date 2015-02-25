@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Agency
  *
  * @ORM\Table(name="crm_agency")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\AgencyRepository")
  */
 class Agency
 {
@@ -108,6 +108,14 @@ class Agency
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();
         $this->contacts = new ArrayCollection();
+    }
+
+    /**
+     * ToString
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 
     /**

@@ -4,18 +4,18 @@ namespace Enigmatic\CRMBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\OrderBy;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Activity
  *
  * @ORM\Table(name="crm_activity")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\ActivityRepository")
+ * @Assert\Callback(methods={"isValid"})
  */
 class Activity
 {
-    const CALL = 1;
-    const RDV = 2;
-
     /**
      * @var integer
      *
@@ -44,11 +44,12 @@ class Activity
     private $account;
 
     /**
-     * @var integer
+     * @var ActivityType
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\ManyToOne(targetEntity="Enigmatic\CRMBundle\Entity\ActivityType", inversedBy="activities")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull()
-     * @Assert\Range(min="1", max="3")
+     * @OrderBy({"title" = "ASC"})
      */
     private $type;
 
@@ -62,11 +63,20 @@ class Activity
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateAction", type="datetime")
+     * @ORM\Column(name="dateStart", type="datetime")
      * @Assert\DateTime()
      * @Assert\NotNull()
      */
-    private $dateAction;
+    private $dateStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateEnd", type="datetime")
+     * @Assert\DateTime()
+     * @Assert\NotNull()
+     */
+    private $dateEnd;
 
     /**
      * @var \DateTime
@@ -86,17 +96,50 @@ class Activity
      */
     private $dateUpdated;
 
+    /**
+     * @var Activity
+     *
+     * @ORM\OneToOne(targetEntity="Enigmatic\CRMBundle\Entity\Activity", inversedBy="replannedBy", cascade={"persist", "detach", "merge"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $replanned;
+
+    /**
+     * @var Activity
+     *
+     * @ORM\OneToOne(targetEntity="Enigmatic\CRMBundle\Entity\Activity", mappedBy="replanned", cascade={"persist", "detach", "merge"})
+     */
+    private $replannedBy;
+
 
     /**
      * Constructor
      */
-    public function __construct($type = null)
+    public function __construct(Account $account = null, Activity $activity = null, User $user = null, ActivityType $type = null)
     {
+        $this->account = $account;
+        $this->user = $user;
         $this->type = $type;
 
-        $this->dateAction = new \DateTime();
+        $this->dateStart = new \DateTime();
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();
+
+        if ($activity) {
+            $this->account = $activity->getAccount();
+            $this->user = $activity->getUser();
+            $this->setReplannedBy($activity);
+            $this->type = $activity->getType();
+            $this->comment = $activity->getComment();
+            $this->dateStart = $activity->getDateStart();
+        }
+    }
+
+    public function isValid(ExecutionContextInterface $context)
+    {
+        if ($this->getDateEnd() <= $this->getDateStart()) {
+            $context->addViolation('Date de fin incohérente');
+        }
     }
 
     /**
@@ -107,52 +150,6 @@ class Activity
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set type
-     *
-     * @param integer $type
-     * @return Activity
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return integer 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set dateAction
-     *
-     * @param \DateTime $dateAction
-     * @return Activity
-     */
-    public function setDateAction($dateAction)
-    {
-        $this->dateAction = $dateAction;
-
-        return $this;
-    }
-
-    /**
-     * Get dateAction
-     *
-     * @return \DateTime 
-     */
-    public function getDateAction()
-    {
-        return $this->dateAction;
     }
 
     /**
@@ -268,5 +265,125 @@ class Activity
     public function getAccount()
     {
         return $this->account;
+    }
+
+    /**
+     * Set dateStart
+     *
+     * @param \DateTime $dateStart
+     * @return Activity
+     */
+    public function setDateStart($dateStart)
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    /**
+     * Get dateStart
+     *
+     * @return \DateTime 
+     */
+    public function getDateStart()
+    {
+        return $this->dateStart;
+    }
+
+    /**
+     * Set dateEnd
+     *
+     * @param \DateTime $dateEnd
+     * @return Activity
+     */
+    public function setDateEnd($dateEnd)
+    {
+        $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get dateEnd
+     *
+     * @return \DateTime 
+     */
+    public function getDateEnd()
+    {
+        return $this->dateEnd;
+    }
+
+
+    /**
+     * Set type
+     *
+     * @param \Enigmatic\CRMBundle\Entity\ActivityType $type
+     * @return Activity
+     */
+    public function setType(\Enigmatic\CRMBundle\Entity\ActivityType $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \Enigmatic\CRMBundle\Entity\ActivityType 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set replanned
+     *
+     * @param \Enigmatic\CRMBundle\Entity\Activity $replanned
+     * @return Activity
+     */
+    public function setReplanned(\Enigmatic\CRMBundle\Entity\Activity $replanned = null)
+    {
+        $this->replanned = $replanned;
+
+        return $this;
+    }
+
+    /**
+     * Get replanned
+     *
+     * @return \Enigmatic\CRMBundle\Entity\Activity 
+     */
+    public function getReplanned()
+    {
+        return $this->replanned;
+    }
+
+    /**
+     * Set replannedBy
+     *
+     * @param \Enigmatic\CRMBundle\Entity\Activity $replannedBy
+     * @return Activity
+     */
+    public function setReplannedBy(\Enigmatic\CRMBundle\Entity\Activity $replannedBy = null)
+    {
+        if ($replannedBy)
+            $replannedBy->setReplanned($this);
+        elseif ($this->replannedBy)
+            $this->replannedBy->setReplanned(null);
+        $this->replannedBy = $replannedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get replannedBy
+     *
+     * @return \Enigmatic\CRMBundle\Entity\Activity 
+     */
+    public function getReplannedBy()
+    {
+        return $this->replannedBy;
     }
 }

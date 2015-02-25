@@ -1,0 +1,15 @@
+{% macro th(name, title, width, order_by, type_name = '') %}
+    <th width="{{ width }}%" {% if order_by is iterable %}class="cliquable {% if order_by[name] is defined %}order_{{ order_by[name] }}{% endif %}" onclick="Table{{ type_name }}Management.setOrderBy('{{ name }}', {% if order_by[name] is defined %}{% if order_by[name] == 'DESC' %}'ASC'{% else %}'DESC'{% endif %}{% else %}'ASC'{% endif %});" {% endif %}>{{ title }}</th>
+{% endmacro %}
+
+{% macro th_search_input(name, search) %}
+    <th><input type="text" data="{{ name }}" value="{% if search[name] is defined %}{{ search[name] }}{% endif %}" /></th>
+{% endmacro %}
+
+{% macro search_link(type_name) %}
+    <th>
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {{ icon.create('search', 'Rechercher', '#', 'Table'~type_name~'Management.parseSearch(); return Table'~type_name~'Management.getList();') }}
+    {{ icon.create('reset', 'Réinitialiser', '#', 'return Table'~type_name~'Management.reset();') }}
+    </th>
+{% endmacro %}

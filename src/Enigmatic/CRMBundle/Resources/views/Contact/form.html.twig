@@ -1,0 +1,15 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% if contact.getId() %}{% trans %}enigmatic.crm.header.titles.contact_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.contact_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% if contact.getId() %}{% trans %}enigmatic.crm.contact.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.contact.form.submit.add{% endtrans %}{% endif %}">
+        {{ button.create('back', 'Cancel'|trans, contact.getId()?path('enigmatic_crm_contact_view', {'contact': contact.getId}):path('enigmatic_crm_contact_list'), null, 'speednav' ) }}
+    </form>
+{% endblock %}

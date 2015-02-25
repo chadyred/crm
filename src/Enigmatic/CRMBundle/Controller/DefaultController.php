@@ -9,12 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
+
     public function indexAction()
     {
-
-
-        return $this->render('EnigmaticCRMBundle:Default:index.html.twig', array(
-
+        $content = $this->renderView('EnigmaticCRMBundle:Default:index.html.twig', array(
         ));
+
+        return $this->get('enigmatic.render')->render($content);
     }
 }

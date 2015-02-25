@@ -1,0 +1,128 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.account_view{% endtrans %} - {{ account.getName() }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{{ account.getName() }}</h1>
+
+    {# =================================== #}
+    {# ============= ACCOUNT ============= #}
+    {# =================================== #}
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_account_update', {'account': account.getId()}), null, 'speednav') }}
+    </div>
+
+    <section id="account_view">
+
+        <h2>{% trans %}enigmatic.crm.account.view.titles.details{% endtrans %}</h2>
+
+        <div class="bloc_row">
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.account.field.address.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {% if account.getCity() %}
+                    <address>
+                        {{ account.getAddress() }}<br/>
+                        {% if account.getAddressCpl() %}
+                            {{ account.getAddressCpl() }}<br/>
+                        {% endif %}
+                        {{ account.getCity().getName() }}, {{ account.getCity().getCanonicalZipcode() }}
+                    </address>
+                    {% else %}
+                        -
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.account.field.phone.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {% if account.getPhone() %}
+                        {{ account.getPhone() }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.account.field.activity.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    {% if account.getActivity() %}
+                        {{ account.getActivity() }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    {# =================================== #}
+    {# ============ CONTACTS ============= #}
+    {# =================================== #}
+
+    <aside id="account_contact">
+
+        <h3>{% trans %}enigmatic.crm.account.view.titles.contacts{% endtrans %}</h3>
+
+        {% for contact in account.getContacts %}
+            <div class="contact">
+                <h4>{{ contact.getFirstname() }} {{ contact.getName() }}</h4><br/>
+                <em><a href="mailto:{{ contact.getEmail() }}" title="">{{ contact.getEmail() }}</a></em><br/>
+                {% if contact.getCity() %}
+                <address>
+                    {{ contact.getAddress() }}<br/>
+                    {% if contact.getAddressCpl() %}
+                        {{ contact.getAddressCpl() }}<br/>
+                    {% endif %}
+                    {{ contact.getCity().getName() }}, {{ contact.getCity().getCanonicalZipcode() }}
+                </address>
+                {% endif %}
+                <div class="contact_phones">
+                    {% for phone in contact.getPhones%}
+                        <span>TYPE !!</span>
+                        <span>{{ phone.getPhone() }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <p>{% trans %}enigmatic.crm.account.contact.empty{% endtrans %}</p>
+        {% endfor %}
+
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_account_contact_add', {'account': account.getId()}), null, 'speednav') }}
+
+    </aside>
+
+    {# =================================== #}
+    {# =========== ACTIVITIES ============ #}
+    {# =================================== #}
+
+    <section id="account_activities">
+
+        <h2>{% trans %}enigmatic.crm.account.view.titles.activities{% endtrans %}</h2>
+
+        <div id="content_activities">
+            Chargement des activitées ...
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        Nav.include('{{ path('enigmatic_crm_account_activity_list', {'account': account.getId()}) }}', 'account_activities');
+    </script>
+
+{% endblock %}

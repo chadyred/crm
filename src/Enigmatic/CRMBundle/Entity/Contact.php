@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Contact
  *
  * @ORM\Table(name="crm_contact")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\ContactRepository")
  */
 class Contact
 {
@@ -26,7 +26,6 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=45, nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Length(max="45")
      */
     private $firstname;
@@ -50,6 +49,14 @@ class Contact
     private $email;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="function", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $function;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="date", nullable=true)
@@ -61,7 +68,6 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Length(max="255")
      */
     private $address;
@@ -70,7 +76,6 @@ class Contact
      * @var string
      *
      * @ORM\Column(name="addressCpl", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Length(max="255")
      */
     private $addressCpl;
@@ -79,8 +84,7 @@ class Contact
      * @var \Enigmatic\CityBundle\Entity\City
      *
      * @ORM\ManyToOne(targetEntity="Enigmatic\CityBundle\Entity\City")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
+     * @ORM\JoinColumn(nullable=true)
      */
     private $city;
 
@@ -112,7 +116,7 @@ class Contact
     /**
      * @var ContactPhone
      *
-     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\ContactPhone", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\ContactPhone", mappedBy="contact", cascade="all", orphanRemoval=true)
      */
     private $phones;
 
@@ -137,8 +141,9 @@ class Contact
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Account $account = null)
     {
+        $this->account = $account;
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();
     }
@@ -470,5 +475,28 @@ class Contact
     public function getAgencies()
     {
         return $this->agencies;
+    }
+
+    /**
+     * Set function
+     *
+     * @param string $function
+     * @return Contact
+     */
+    public function setFunction($function)
+    {
+        $this->function = $function;
+
+        return $this;
+    }
+
+    /**
+     * Get function
+     *
+     * @return string 
+     */
+    public function getFunction()
+    {
+        return $this->function;
     }
 }

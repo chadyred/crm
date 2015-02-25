@@ -1,0 +1,43 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.agency_view{% endtrans %} - {{ agency.getName() }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_agency_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_agency_update', {'agency': agency.getId()}), null, 'speednav') }}
+    </div>
+
+    <h1>{{ agency.getName() }}</h1>
+
+    <section class="details">
+
+        <div class="bloc_row">
+            <div class="row">
+                <div class="cel cel_label">{% trans %}enigmatic.crm.agency.field.address.name{% endtrans %}</div>
+                <div class="cel cel_info">
+                    <address>
+                        {{ agency.getAddress() }}<br/>
+                        {% if agency.getAddressCpl() %}
+                            {{ agency.getAddressCpl() }}<br/>
+                        {% endif %}
+                        {{ agency.getCity().getName() }}, {{ agency.getCity().getCanonicalZipcode() }}
+                    </address>
+                </div>
+            </div>
+        </div>
+        <div class="bloc_row">
+            {{ google_map(map) }}
+        </div>
+
+    </section>
+
+
+
+{% endblock %}

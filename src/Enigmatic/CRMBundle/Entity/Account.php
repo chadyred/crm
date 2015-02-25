@@ -2,6 +2,7 @@
 
 namespace Enigmatic\CRMBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -9,13 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Account
  *
  * @ORM\Table(name="crm_account")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\AccountRepository")
  */
 class Account
 {
     const VALID = 1;
-    const REMOVED = 2;
-    const ARCHIVED = 3;
+    const ARCHIVED = 2;
 
     /**
      * @var integer
@@ -38,8 +38,7 @@ class Account
     /**
      * @var string
      *
-     * @ORM\Column(name="siret", type="string", length=14)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="siret", type="string", length=14, nullable=true)
      * @Assert\Length(min="14", max="14")
      */
     private $siret;
@@ -65,8 +64,7 @@ class Account
      * @var \Enigmatic\CityBundle\Entity\City
      *
      * @ORM\ManyToOne(targetEntity="Enigmatic\CityBundle\Entity\City")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
+     * @ORM\JoinColumn(nullable=true)
      */
     private $city;
 
@@ -93,13 +91,6 @@ class Account
      * @Assert\Length(max="255")
      */
     private $activity;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
-     */
-    private $description;
 
     /**
      * @var \DateTime
@@ -131,28 +122,28 @@ class Account
     /**
      * @var Contact
      *
-     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\Contact", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\Contact", mappedBy="account", cascade="all")
      */
     private $contacts;
 
     /**
      * @var Activity
      *
-     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\Activity", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\Activity", mappedBy="account", cascade="all")
      */
     private $activities;
 
     /**
      * @var AccountOwner
      *
-     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\AccountOwner", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\AccountOwner", mappedBy="account", cascade="all")
      */
     private $owners;
 
     /**
      * @var AgencyAccount
      *
-     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\AgencyAccount", mappedBy="account")
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\AgencyAccount", mappedBy="account", cascade="all")
      */
     private $agencies;
 
@@ -165,6 +156,21 @@ class Account
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();
         $this->state = $state;
+        $this->agencies = new ArrayCollection();
+        $this->owners = new ArrayCollection();
+        $this->activities = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
+    }
+
+    /**
+     * ToString
+     */
+    public function __toString()
+    {
+        if ($this->getCity())
+            return $this->getName().' - '.$this->getCity()->getCanonicalZipcode();
+        else
+            return $this->getName();
     }
 
     /**
@@ -336,29 +342,6 @@ class Account
     public function getActivity()
     {
         return $this->activity;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * @return Account
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string 
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

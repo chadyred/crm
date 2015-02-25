@@ -8,6 +8,7 @@ imports:
     - { resource: bundles/ckeditor.yml }
     - { resource: bundles/ornicar_apc.yml }
     - { resource: bundles/liip_theme.yml }
+    - { resource: bundles/genemu_form.yml }
     - { resource: bundles/enigmatic_mailer.yml }
 
 framework:
@@ -96,3 +97,5 @@ swiftmailer:
             spool:
                 type: file
                 path: "%kernel.root_dir%/spool"
+
+be_simple_i18n_routing: ~

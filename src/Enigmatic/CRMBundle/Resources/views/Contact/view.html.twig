@@ -1,0 +1,23 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.contact_view{% endtrans %} - {{ contact.getFirstname() }} {{ contact.getName() }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{{ contact.getName() }}</h1>
+
+    {# =================================== #}
+    {# ============= ACCOUNT ============= #}
+    {# =================================== #}
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_contact_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_contact_update', {'contact': contact.getId()}), null, 'speednav') }}
+    </div>
+
+{% endblock %}
