@@ -1,11 +1,8 @@
 ivory_ck_editor:
 #    base_path: bundles/enigmaticapp/ckeditor/
     plugins:
-        wordcount:
-            path:                       "/bundles/enigmaticapp/ckeditor/wordcount/"
-            filename:                   "plugin.js"
         video:
-            path:                       '/bundles/enigmaticapp/ckeditor/video/'
+            path:                       '/bundles/app/js/ckeditor/video/'
             filename:                   'plugin.js'
     configs:
         normal:
