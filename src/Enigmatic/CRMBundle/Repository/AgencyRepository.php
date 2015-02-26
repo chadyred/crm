@@ -48,12 +48,14 @@ class AgencyRepository extends EntityRepository
     {
         $qb->leftjoin('agency.accounts', 'accounts');
         $qb->leftjoin('agency.users', 'users');
+        $qb->leftjoin('users.end', 'users_end');
         $qb->leftjoin('agency.contacts', 'contacts');
         $qb->leftjoin('agency.city', 'city');
 
         if ($add) {
             $qb->addSelect('accounts');
             $qb->addSelect('users');
+            $qb->addSelect('users_end');
             $qb->addSelect('contacts');
             $qb->addSelect('city');
         }

@@ -61,14 +61,18 @@ class UserRepository extends EntityRepository
         $qb->innerjoin('user.user', 'securityUser');
         $qb->leftjoin('user.activities', 'activities');
         $qb->leftjoin('user.assignedAccount', 'assignedAccount');
+        $qb->leftjoin('assignedAccount.end', 'assignedAccount_end');
         $qb->leftjoin('user.agencies', 'agencies');
         $qb->leftjoin('agencies.agency', 'agency');
+        $qb->leftjoin('agencies.end', 'agencies_end');
 
         if ($add) {
             $qb->addSelect('securityUser');
             $qb->addSelect('assignedAccount');
             $qb->addSelect('agencies');
             $qb->addSelect('agency');
+            $qb->addSelect('agencies_end');
+            $qb->addSelect('assignedAccount_end');
         }
 
         return $qb;

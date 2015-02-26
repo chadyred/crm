@@ -50,14 +50,20 @@ class AccountRepository extends EntityRepository
     {
         $qb->leftjoin('account.contacts', 'contacts');
         $qb->leftjoin('account.activities', 'activities');
+        $qb->leftjoin('activities.replanned', 'activities_replanned');
+        $qb->leftjoin('activities.replannedBy', 'activities_replannedBy');
         $qb->leftjoin('account.owners', 'owners');
+        $qb->leftjoin('owners.end', 'owners_end');
         $qb->leftjoin('account.agencies', 'agencies');
         $qb->leftjoin('account.city', 'city');
 
         if ($add) {
             $qb->addSelect('contacts');
             $qb->addSelect('activities');
+            $qb->addSelect('activities_replanned');
+            $qb->addSelect('activities_replannedBy');
             $qb->addSelect('owners');
+            $qb->addSelect('owners_end');
             $qb->addSelect('agencies');
             $qb->addSelect('city');
         }
