@@ -71,6 +71,20 @@ class CampaignFaxingRepository extends EntityRepository
                             $qb ->andWhere('campaign.name LIKE :search_name');
                             $qb ->setParameter('search_name', '%'.$value.'%');
                             break;
+                        case 'state':
+                            $qb ->andWhere('campaign.state = :search_state');
+                            $qb ->setParameter('search_state', $value);
+                            break;
+                        case 'dateSended':
+                            $value = \DateTime::createFromFormat('d-m-Y H:i:s', $value.':00');
+                            $qb ->andWhere('campaign.dateSended >= :search_date_sended');
+                            $qb ->setParameter('search_date_sended', $value);
+                            break;
+                        case 'dateSendedEnd':
+                            $value = \DateTime::createFromFormat('d-m-Y H:i:s', $value.':00');
+                            $qb ->andWhere('campaign.dateSended < :search_date_sended_end');
+                            $qb ->setParameter('search_date_sended_end', $value);
+                            break;
                     }
                 }
             }

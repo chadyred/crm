@@ -13,7 +13,9 @@
     </div>
 
     <div class="action action_right">
+        {% if campaign.getState() != constant('CAMPAIGN_FAXING_SENDED', campaign) %}
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_faxing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+        {% endif %}
     </div>
 
 {% endblock %}

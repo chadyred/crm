@@ -17,9 +17,9 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 class CampaignMailing
 {
-    const CAMPAIGN_MAILING_WAITING = 0;
+    const CAMPAIGN_MAILING_WAITING = 2;
     const CAMPAIGN_MAILING_SENDED = 1;
-    const CAMPAIGN_MAILING_LOCKED = 2;
+    const CAMPAIGN_MAILING_LOCKED = 3;
 
 
     /**
@@ -96,6 +96,7 @@ class CampaignMailing
      *
      * @ORM\Column(name="state", type="smallint")
      * @Assert\NotNull()
+     * @Assert\Range(min=1, max=3)
      */
     private $state;
 

@@ -156,6 +156,14 @@ enigmatic:
             errors:
                 config_ecofax: Attention, le paramétrage pour l'envoi de fax est invalide. Les fax ne pourront seront pas envoyés
                 load: Une erreur est survenue, impossible de charger les contacts.
+            field:
+                state:
+                    locked:
+                        name: En attente de confirmation
+                    waiting:
+                        name: Prêt à envoyé
+                    sended:
+                        name: Envoyé
             form:
                 contacts:
                     available:
@@ -202,9 +210,23 @@ enigmatic:
                 empty: Aucune campagne
                 head:
                     name: Nom
+                    dateSended: Date d'envois
+                    state: Etat
+                search:
+                    dateSended: De
+                    dateSendedEnd: à
+
         campaign_mailing:
             errors:
                 load: Une erreur est survenue, impossible de charger les contacts.
+            field:
+                state:
+                    locked:
+                        name: En attente de confirmation
+                    waiting:
+                        name: Prêt à envoyé
+                    sended:
+                        name: Envoyé
             form:
                 contacts:
                     available:
@@ -253,6 +275,12 @@ enigmatic:
                 empty: Aucune campagne
                 head:
                     name: Nom
+                    subject: Sujet du mail
+                    dateSended: Date d'envois
+                    state: Etat
+                search:
+                    dateSended: De
+                    dateSendedEnd: à
         contact:
             form:
                 field:

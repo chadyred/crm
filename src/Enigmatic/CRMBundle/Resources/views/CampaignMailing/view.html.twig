@@ -14,8 +14,11 @@
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
     </div>
 
+
     <div class="action action_right">
+        {% if campaign.getState() != constant('CAMPAIGN_MAILING_SENDED', campaign) %}
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_mailing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+        {% endif %}
     </div>
 
 {% endblock %}

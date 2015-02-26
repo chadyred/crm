@@ -18,23 +18,47 @@
 
     <table class="table table_striped table_extended">
         <thead>
-            <tr>
-                {{ table.th('name', 'enigmatic.crm.campaign_faxing.table.head.name'|trans, 20, params['order'], params['entity']) }}
-                {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
-            </tr>
-            <tr id="list_search">
-                {{ table.th_search_input('name', params['search']) }}
-                {{ table.search_link(params['entity']) }}
-            </tr>
+        <tr>
+            {{ table.th('name', 'enigmatic.crm.campaign_faxing.table.head.name'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('dateSended', 'enigmatic.crm.campaign_faxing.table.head.dateSended'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('state', 'enigmatic.crm.campaign_faxing.table.head.state'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
+        </tr>
+        <tr id="list_search">
+            {{ table.th_search_input('name', params['search']) }}
+            <th>
+                <input class="search_data" id="datepicker_dateSended" type="text" data="dateSended" value="{% if  params['search']['dateSended'] is defined %}{{  params['search']['dateSended'] }}{% endif %}" placeholder="{% trans %}enigmatic.crm.campaign_faxing.table.search.dateSended{% endtrans %}" />
+                <input class="search_data" id="datepicker_dateSendedEnd" type="text" data="dateSendedEnd" value="{% if  params['search']['dateSendedEnd'] is defined %}{{  params['search']['dateSendedEnd'] }}{% endif %}" placeholder="{% trans %}enigmatic.crm.campaign_faxing.table.search.dateSendedEnd{% endtrans %}" />
+            </th>
+            <th>
+                <select class="search_data" data="state">
+                    <option value="">Tous</option>
+                    <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_SENDED') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_SENDED') }}">{% trans %}enigmatic.crm.campaign_faxing.field.state.sended.name{% endtrans %}</option>
+                    <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_WAITING') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_WAITING') }}">{% trans %}enigmatic.crm.campaign_faxing.field.state.waiting.name{% endtrans %}</option>
+                    <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_LOCKED') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_LOCKED') }}">{% trans %}enigmatic.crm.campaign_faxing.field.state.locked.name{% endtrans %}</option>
+                </select>
+            </th>
+            {{ table.search_link(params['entity']) }}
+        </tr>
         </thead>
         <tbody>
         {% for campaign in campaigns %}
             <tr data-id="{{ campaign.getId() }}" id="item_{{ campaign.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
                 <td class="onclick">{{ campaign.getName() }}</td>
+                <td class="onclick">{{ campaign.getDateSended() | localizeddate('full', 'short') }}</td>
+                <td class="onclick">
+                    {% if campaign.getState() == constant('CAMPAIGN_FAXING_LOCKED', campaign) %}
+                        <span class="text-warning">{% trans %}enigmatic.crm.campaign_faxing.field.state.locked.name{% endtrans %}</span>
+                    {% elseif campaign.getState() == constant('CAMPAIGN_FAXING_WAITING', campaign) %}
+                        <span class="text-success">{% trans %}enigmatic.crm.campaign_faxing.field.state.waiting.name{% endtrans %}</span>
+                    {% elseif campaign.getState() == constant('CAMPAIGN_FAXING_SENDED', campaign) %}
+                        <span class="text-success">{% trans %}enigmatic.crm.campaign_faxing.field.state.sended.name{% endtrans %}</span>
+                    {% endif %}
+                </td>
                 <td></td>
             </tr>
         {% else %}
-            <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.contact.table.empty{% endtrans %}</td></tr>
+            <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.campaign_faxing.table.empty{% endtrans %}</td></tr>
         {% endfor %}
         </tbody>
     </table>
@@ -52,7 +76,7 @@
 
     <script type="text/javascript">
         jQuery(function () {
-            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_contact_list') }}');
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_campaign_faxing_list') }}');
         });
     </script>
 

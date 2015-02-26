@@ -35,6 +35,11 @@ services:
         tags:
             -  { name: twig.extension }
 
+    twig.extension.intl:
+         class: Twig_Extensions_Extension_Intl
+         tags:
+             - { name: twig.extension }
+
     enigmatic_mailer.transport.spool:
         class: Enigmatic\MailerBundle\Model\Transport
         arguments: [@swiftmailer.mailer.spooled, %enigmatic_mailer.email_from%, 'Enigmatic (spool)']

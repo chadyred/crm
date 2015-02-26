@@ -17,9 +17,9 @@ use Symfony\Component\Validator\ExecutionContextInterface;
  */
 class CampaignFaxing
 {
-    const CAMPAIGN_FAXING_WAITING = 0;
+    const CAMPAIGN_FAXING_WAITING = 2;
     const CAMPAIGN_FAXING_SENDED = 1;
-    const CAMPAIGN_FAXING_LOCKED = 2;
+    const CAMPAIGN_FAXING_LOCKED = 3;
 
     /**
      * @var integer
@@ -79,6 +79,7 @@ class CampaignFaxing
      *
      * @ORM\Column(name="state", type="smallint")
      * @Assert\NotNull()
+     * @Assert\Range(min=1, max=3)
      */
     private $state;
 
