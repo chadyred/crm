@@ -31,6 +31,7 @@ class ContactType extends AbstractType
             ))
             ->add('phones', 'collection', array(
                 'type'          => 'enigmatic_crm_contact_phone',
+                'required'     => false,
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'label'         => 'enigmatic.crm.contact.form.field.phones.label',

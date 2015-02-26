@@ -3,3 +3,12 @@ enigmatic:
         account_import:
             file:
                 mime_type: Veuillez importer un fichier au format CSV
+        campaign_faxing:
+            dateSended:
+                invalid: Veuillez choisir une date future
+            fax:
+                file:
+                    mimeTypes: Veuillez utiliser un format PDF
+        campaign_mailing:
+            dateSended:
+                invalid: Veuillez choisir une date future

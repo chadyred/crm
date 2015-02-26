@@ -29,13 +29,11 @@ class MailerService
     public function sendMail($email_to, $rendered_template, $mailer_alias = 'default')
     {
         $mailer = $this->mailers->getTransport($mailer_alias);
-        if (!$mailer instanceof Transport)
-            throw new \Exception('This mailer in not a instance of Enigmatic\MailerBundle\Model\Transport.');
 
-        $renderedLines = explode("\n", trim($rendered_template));
+        $renderedLines = explode("#EOF_UJHSLFHBYVEDC2W60TZ9R8M9CCDSSCTO", trim($rendered_template));
 
         $subject = $renderedLines[0];
-        $body = implode("\n", array_slice($renderedLines, 1));
+        $body = implode("#EOF_UJHSLFHBYVEDC2W60TZ9R8M9CCDSSCTO", array_slice($renderedLines, 1));
 
         $tab_from = explode('@', $mailer->getEmailFrom());
         $tab_to = explode('@', $email_to);

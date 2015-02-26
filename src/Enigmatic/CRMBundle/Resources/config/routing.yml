@@ -26,3 +26,8 @@ enigmatic_crm_user:
     resource: "@EnigmaticCRMBundle/Resources/config/routing/user.yml"
     type: be_simple_i18n
     prefix:  { fr: "/utilisateurs", en: "/users" }
+
+enigmatic_crm_campaign_mailing:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/campaignMailing.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/campagnes/mailing", en: "/campaign/mailing" }

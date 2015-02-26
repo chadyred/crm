@@ -5,6 +5,7 @@ namespace Enigmatic\CRMBundle\Services;
 
 use Enigmatic\CRMBundle\Entity\Account;
 use Enigmatic\CRMBundle\Entity\Activity;
+use Enigmatic\CRMBundle\Entity\CampaignMailing;
 use Enigmatic\CRMBundle\Entity\Contact;
 use Enigmatic\CRMBundle\Manager\UserManager;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -121,5 +122,13 @@ class GrantService
         return $grant;
     }
 
+    // @rp_todo : fonction grantMailing
+    public function grantCampaignMailing(CampaignMailing $campaignMailing) {
+
+        $grant = false;
+        $grant = true;
+
+        return $grant;
+    }
 
 }

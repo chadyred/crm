@@ -5,6 +5,7 @@ namespace Enigmatic\CRMBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Enigmatic\CRMBundle\Entity\ContactPhone;
 
 /**
  * ContactRepository
@@ -49,11 +50,13 @@ class ContactRepository extends EntityRepository
         $qb->leftjoin('contact.phones', 'phones');
         $qb->leftjoin('contact.account', 'account');
         $qb->leftjoin('contact.agencies', 'agencies');
+        $qb->leftjoin('contact.city', 'city');
 
         if ($add) {
             $qb->addSelect('phones');
             $qb->addSelect('account');
             $qb->addSelect('agencies');
+            $qb->addSelect('city');
         }
 
         return $qb;
@@ -81,6 +84,10 @@ class ContactRepository extends EntityRepository
                             $qb ->andWhere('contact.function LIKE :search_function');
                             $qb ->setParameter('search_function', '%'.$value.'%');
                             break;
+                        case 'city':
+                            $qb ->andWhere('city.name LIKE :search_city OR city.zipcode LIKE :search_city');
+                            $qb ->setParameter('search_city', '%'.$value.'%');
+                            break;
                         case 'phones':
                             $qb ->andWhere('phones.phone LIKE :search_phones');
                             $qb ->setParameter('search_phones', '%'.$value.'%');
@@ -97,6 +104,13 @@ class ContactRepository extends EntityRepository
                             $qb->leftjoin('account.owners', 'owners');
                             $qb ->andWhere('owners.user = :search_owner');
                             $qb ->setParameter('search_owner', $value);
+                            break;
+                        case 'hasFax':
+                            $qb ->andWhere('phones.type = :phone_type_fax OR account.fax IS NOT NULL');
+                            $qb ->setParameter('phone_type_fax', ContactPhone::FAX);
+                            break;
+                        case 'hasEmail':
+                            $qb ->andWhere('contact.email IS NOT NULL');
                             break;
                     }
                 }

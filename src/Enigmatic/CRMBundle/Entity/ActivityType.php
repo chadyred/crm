@@ -16,6 +16,7 @@ class ActivityType
 {
     const CALL = 1;
     const RDV = 2;
+    const CAMPAIGN = 3;
 
     /**
      * @var integer
@@ -25,6 +26,15 @@ class ActivityType
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=45)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="45")
+     */
+    private $name;
 
     /**
      * @var string
@@ -40,7 +50,7 @@ class ActivityType
      *
      * @ORM\Column(name="type", type="smallint")
      * @Assert\NotNull()
-     * @Assert\Range(min="1", max="2")
+     * @Assert\Range(min="1", max="3")
      */
     private $type;
 
@@ -54,8 +64,9 @@ class ActivityType
     /**
      * Constructor
      */
-    public function __construct($title = null, $type = null)
+    public function __construct($name = null, $title = null, $type = null)
     {
+        $this->name = $name;
         $this->title = $title;
         $this->type = $type;
         $this->activities = new ArrayCollection();
@@ -156,5 +167,28 @@ class ActivityType
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return ActivityType
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

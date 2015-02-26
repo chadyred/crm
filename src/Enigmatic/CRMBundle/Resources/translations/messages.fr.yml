@@ -12,8 +12,6 @@ enigmatic:
                     name: Complément d'adresse
                 city:
                     name: Ville
-                description:
-                    name: Autre informations
                 fax:
                     name: Fax
                 name:
@@ -55,7 +53,7 @@ enigmatic:
                 head:
                     address: Adresse
                     name: Société
-                    owner: Chargé d'affaire
+                    owner: Chargé d'affaires
                     phone: Téléphone
                     potential: Potentiel TT
             view:
@@ -154,6 +152,57 @@ enigmatic:
                 by: Par
                 replannified_to: Replannifié le
             load: Chargement ...
+        campaign_mailing:
+            errors:
+                load: Une erreur est survenue, impossible de charger les contacts.
+            form:
+                contacts:
+                    available:
+                        description: Cliquez sur les cases pour selectionner
+                        title: Contacts disponibles
+                    enabled:
+                        description: Cliquez sur les cases pour annuler la selection
+                        title: Contacts selectionnés
+                    title: Contacts
+                    search:
+                        account_name:
+                            placeholder: Compte
+                        name:
+                            placeholder: Nom / Prénom
+                        city:
+                            placeholder: Ville / Code postal
+
+                field:
+                    contact:
+                        label: Contacts
+                    name:
+                        label: Nom de la campagne
+                    emailSubject:
+                        label: Sujet du mailing
+                    emailBody:
+                        label: Contenu du mailing
+                    dateSended:
+                        label: Date de l'envois
+                    owner:
+                        label: Créé par
+                        empty_value: Sélectionnez un utilisateur
+                    state:
+                        label: Configuration
+                        locked:
+                            label: Bloqué - Le mailing ne partira pas
+                        waiting:
+                            label: Prêt - Le mailing partira a la date indiqué
+                submit:
+                    add: Ajouter la campagne
+                    update: Modifier la campagne
+            message:
+                add: La campagne a été ajoutée
+                remove: La campagne a été supprimée
+                update: La campagne a été modifiée
+            table:
+                empty: Aucune campagne
+                head:
+                    name: Nom
         contact:
             form:
                 field:
@@ -218,6 +267,14 @@ enigmatic:
                 activities:
                     link: Activités
                     title: ''
+                campaign:
+                    link: Mailing / Faxing
+                    mailing:
+                        link: Mailing
+                        title: ''
+                    faxing:
+                        link: Faxing
+                        title: ''
                 contacts:
                     link: Contacts
                     title: ''
@@ -254,6 +311,10 @@ enigmatic:
                 contact_add: Ajouter un contact
                 contact_view: Contact
                 contact_update: Modifier un contact
+                campaign_mailing_list: Campagne de mailing
+                campaign_mailing_add: Ajouter une campagne de mailing
+                campaign_mailing_view: Campagne de mailing
+                campaign_mailing_update: Modifier une campagne de mailing
                 home: Synthèse
                 users_list: Utilisateurs
                 user_add: Ajouter un utilisateur

@@ -1,0 +1,217 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% if campaign.getId() %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <form id="campaign_form" class="speednav" method="post" action="" {{ form_enctype(form) }}>
+
+
+        {{ form_row(form.name) }}
+
+        {{ form_row(form.emailSubject) }}
+        {{ form_row(form.emailBody) }}
+
+        {{ form_row(form.dateSended) }}
+        {{ form_row(form.state) }}
+
+        {% if form.owner is defined %}
+            {{ form_row(form.owner) }}
+        {% endif %}
+
+        <div id="campaign_contact" style="display:none;">
+            {{ form_widget(form.contacts) }}
+        </div>
+
+        {{ form_rest(form) }}
+
+    </form>
+
+    <div id="campaign_contact_search">
+
+        <div class="search">
+            <form id="campaign_contact_search_form" onsubmit="return Contact.load(false);" >
+                <h4>{% trans %}enigmatic.crm.campaign_mailing.form.contacts.title{% endtrans %}</h4>
+                <input onkeyup="jQuery('#campaign_contact_search_form').submit();" type="text" id="contacts_availables_search_account_name" value="" placeholder="{% trans %}enigmatic.crm.campaign_mailing.form.contacts.search.account_name.placeholder{% endtrans %}" />
+                <input onkeyup="jQuery('#campaign_contact_search_form').submit();" type="text" id="contacts_availables_search_contact_name" value="" placeholder="{% trans %}enigmatic.crm.campaign_mailing.form.contacts.search.name.placeholder{% endtrans %}" />
+                <input onkeyup="jQuery('#campaign_contact_search_form').submit();" type="text" id="contacts_availables_search_city" value="" placeholder="{% trans %}enigmatic.crm.campaign_mailing.form.contacts.search.city.placeholder{% endtrans %}" />
+            </form>
+        </div>
+
+        <div id="list_contacts_availables" class="list_contact">
+            <form onsubmit="return false;">
+                <h4>{% trans %}enigmatic.crm.campaign_mailing.form.contacts.available.title{% endtrans %}</h4>
+                <input class="checkbox_all" type="checkbox" onclick="Contact.checkedAll($(this));" data-type="availables" />
+                <em>{% trans %}enigmatic.crm.campaign_mailing.form.contacts.available.description{% endtrans %}</em>
+                <div class="list"></div>
+            </form>
+        </div>
+        <div id="list_contacts_action" class="list_contact_action">
+            <span onclick="Contact.syncCheckbox();"><=></span>
+        </div>
+        <div id="list_contacts_enables" class="list_contact">
+            <form onsubmit="return false;">
+                <h4>{% trans %}enigmatic.crm.campaign_mailing.form.contacts.enabled.title{% endtrans %}</h4>
+                <input class="checkbox_all" type="checkbox" onclick="Contact.checkedAll($(this));" data-type="enables" />
+                <em>{% trans %}enigmatic.crm.campaign_mailing.form.contacts.enabled.description{% endtrans %}</em>
+                <div class="list"></div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var Contact = {
+            line_id : 0,
+            tab_enabled: [],
+
+            reel_contact: null,
+
+            search_contact_name: null,
+            search_account_name: null,
+            search_city: null,
+
+            init: function(reel_contact_id) {
+                this.load(true);
+                this.reel_contact = reel_contact_id;
+            },
+
+            initEnabled: function() {
+                jQuery('#campaign_contact input').each(function() {
+                    if (jQuery(this).attr('checked') == 'checked')
+                        Contact.add(jQuery('#contact_item_'+jQuery(this).val()));
+                });
+            },
+
+            parseSearch: function() {
+                this.search_contact_name = jQuery('#contacts_availables_search_contact_name').val();
+                this.search_account_name = jQuery('#contacts_availables_search_account_name').val();
+                this.search_city = jQuery('#contacts_availables_search_city').val();
+            },
+
+            load: function (init) {
+
+                this.parseSearch();
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: '{{ path('enigmatic_crm_contact_search') }}',
+                    dataType: "json",
+                    data: {contact_name: this.search_contact_name, account_name: this.search_account_name, city: this.search_city, hasEmail: 1},
+                    cache: true,
+                    success: function (code_html, statut) {
+                        if (code_html.success) {
+                            Contact.displayData(code_html.result);
+                            if (init)
+                                Contact.initEnabled();
+                        }
+                    },
+
+                    error: function (resultat, statut, erreur) {
+                        alert('{% trans %}enigmatic.crm.campaign_mailing.errors.load{% endtrans %}');
+                    },
+                });
+
+                return false;
+            },
+
+            displayData: function (data) {
+                jQuery('#list_contacts_availables .list').html('');
+                jQuery.each(data, function(i, item) {
+                    var add = true;
+                    try {if (Contact.tab_enabled[data[i]['id']] === true) add = false;} catch(err) {}
+                    if (add)
+                        jQuery('#list_contacts_availables .list').append('<div class="contact_block" id="contact_item_'+data[i]['id']+'"><input type="checkbox" name="availables" ><div onclick="Contact.add($(this).parent());" class="contact_item" data-id="'+data[i]['id']+'">'+data[i]['account']+' ('+data[i]['firstname']+' '+data[i]['name']+')</div></div>');
+                });
+            },
+
+            add: function (data) {
+                data.fadeOut(500, function() {
+                    Contact.enable(data.children('.contact_item').attr('data-id'), data.children('.contact_item').html());
+                    data.remove();
+                    jQuery('#contact_item_'+data.children('.contact_item').attr('data-id')).fadeOut(0, function() {
+                        jQuery(this).fadeIn(500);
+                    });
+                });
+            },
+
+            remove: function (data) {
+                data.fadeOut(500, function() {
+                    Contact.disable(data.children('.contact_item').attr('data-id'), data.children('.contact_item').html());
+                    data.remove();
+                    jQuery('#contact_item_'+data.children('.contact_item').attr('data-id')).fadeOut(0, function() {
+                        jQuery(this).fadeIn(500);
+                    });
+                });
+            },
+
+            enable: function (id, name) {
+                this.placeItem(jQuery('#list_contacts_enables .list'), name, '<div class="contact_block" id="contact_item_'+id+'"><input type="checkbox" name="enables"><div onclick="Contact.remove($(this).parent());" class="contact_item" data-id="'+id+'">'+name+'</div></div>');
+                jQuery('#'+this.reel_contact+id).prop('checked', true);
+//                jQuery('#list_contacts').append('<input type="hidden" id="line_contact_'+id+'" name="enigmatic_oro_mailingbundle_campaign[contacts]['+this.line_id+'][contact]" value="'+id+'" />');
+                this.line_id ++;
+                this.tab_enabled[id] = true;
+            },
+
+            disable: function (id, name) {
+                this.placeItem(jQuery('#list_contacts_availables .list'), name, '<div class="contact_block" id="contact_item_'+id+'"><input type="checkbox" name="availables"><div onclick="Contact.add($(this).parent());" id="contact_item_'+id+'" class="contact_item" data-id="'+id+'">'+name+'</div></div>');
+//                jQuery('#line_contact_'+id).remove();
+                jQuery('#'+this.reel_contact+id).prop('checked', false);
+                this.tab_enabled[id] = false;
+            },
+
+            placeItem: function(container, name, html) {
+                var place = false;
+                container.find('.contact_block').each(function() {
+                    if (jQuery(this).children('.contact_item').html() > name && place === false) {
+                        jQuery(this).before(html);
+                        place = true;
+                    }
+                });
+                if (!place)
+                    container.append(html);
+            },
+
+            checkedAll: function(box) {
+                var container = jQuery('#list_contacts_enables');
+                if (box.attr('data-type') == 'availables')
+                    container = jQuery('#list_contacts_availables');
+
+                container.find('input').each(function() {
+                    if (box.is(':checked') === true)
+                        jQuery(this).prop('checked', true);
+                    else
+                        jQuery(this).prop('checked', false);
+                });
+            },
+
+            syncCheckbox: function(box) {
+                var container = jQuery('#list_contacts_enables');
+                container.find('input').each(function() {
+                    if (jQuery(this).is(':checked') === true && jQuery(this).hasClass('checkbox_all') === false)
+                        Contact.remove(jQuery(this).parent());
+                });
+                container = jQuery('#list_contacts_availables');
+                container.find('input').each(function() {
+                    if (jQuery(this).is(':checked') === true && jQuery(this).hasClass('checkbox_all') === false)
+                        Contact.add(jQuery(this).parent());
+                });
+                jQuery('.checkbox_all').each(function() {
+                    jQuery(this).attr('checked', false);
+                });
+
+            }
+        };
+
+        document.ready = function(){
+            Contact.init('enigmatic_crm_campaign_mailing_contacts_');
+        };
+
+        try {Contact.init('enigmatic_crm_campaign_mailing_contacts_');}catch(err) {}
+
+    </script>
+
+    {{ button.create('submit', campaign.getId()?'enigmatic.crm.campaign_mailing.form.submit.update'|trans:'enigmatic.crm.campaign_mailing.form.submit.add'|trans, null, 'jQuery(\'#campaign_form\').submit();;') }}
+    {{ button.create('back', 'Cancel'|trans, campaign.getId()?path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId}):path('enigmatic_crm_campaign_mailing_list'), null, 'speednav' ) }}
+
+{% endblock %}

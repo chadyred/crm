@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enigmatic\CRMBundle\Entity\Account;
 use Enigmatic\CRMBundle\Entity\Activity;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Enigmatic\CRMBundle\Entity\User;
 
 class ActivityManager
 {
@@ -27,8 +28,8 @@ class ActivityManager
      * @param integer $type
      * @return Activity
      */
-    public function create(Account $account = null, Activity $activity = null, $type = null) {
-        return new Activity($account, $activity, $this->userManager->getCurrent(), $type);
+    public function create(Account $account = null, Activity $activity = null, User $user = null, $type = null) {
+        return new Activity($account, $activity, $user?$user:$this->userManager->getCurrent(), $type);
     }
 
     /**

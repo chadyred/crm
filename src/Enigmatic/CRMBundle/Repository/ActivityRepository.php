@@ -145,27 +145,32 @@ class ActivityRepository extends EntityRepository
     protected function order(QueryBuilder $qb, $orders = null)
     {
         if (is_array($orders)) {
-            foreach ($orders as $field => $direction) {
-                if ($direction != 'ASC')
-                    $direction = 'DESC';
-                switch ($field) {
-                    case 'id':
-                        $qb ->addOrderBy('activity.id', $direction);
-                        break;
-                    case 'type':
-                        $qb ->addOrderBy('type.title', $direction);
-                        break;
-                    case 'account_name':
-                        $qb ->addOrderBy('account.name', $direction);
-                        break;
-                    case 'user_name':
-                        $qb ->addOrderBy('user.firstname', $direction);
-                        $qb ->addOrderBy('user.name', $direction);
-                        break;
-                    case 'dateStart':
-                        $qb ->addOrderBy('activity.dateStart', $direction);
-                        break;
+            if (count($orders)) {
+                foreach ($orders as $field => $direction) {
+                    if ($direction != 'ASC')
+                        $direction = 'DESC';
+                    switch ($field) {
+                        case 'id':
+                            $qb->addOrderBy('activity.id', $direction);
+                            break;
+                        case 'type':
+                            $qb->addOrderBy('type.title', $direction);
+                            break;
+                        case 'account_name':
+                            $qb->addOrderBy('account.name', $direction);
+                            break;
+                        case 'user_name':
+                            $qb->addOrderBy('user.firstname', $direction);
+                            $qb->addOrderBy('user.name', $direction);
+                            break;
+                        case 'dateStart':
+                            $qb->addOrderBy('activity.dateStart', $direction);
+                            break;
+                    }
                 }
+            }
+            else {
+                $qb->addOrderBy('activity.dateStart', 'DESC');
             }
         }
 

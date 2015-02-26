@@ -1,0 +1,21 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} - {{ campaign.getName() }} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+{% import "AppBundle:macro:button.html.twig" as button %}
+
+<h1>{{ campaign.getName() }}</h1>
+
+    {{ campaign.getEmailBody() }}
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_mailing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+    </div>
+
+{% endblock %}

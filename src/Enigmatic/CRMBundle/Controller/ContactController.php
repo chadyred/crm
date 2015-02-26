@@ -5,6 +5,7 @@ use Enigmatic\CRMBundle\Entity\Account;
 use Enigmatic\CRMBundle\Entity\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ContactController extends Controller
@@ -115,6 +116,30 @@ class ContactController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.contact.message.remove'));
         return $this->redirect($this->generateUrl('enigmatic_crm_contact_list'));
+    }
+
+
+    public function searchAction() {
+
+        $params['search']['name'] = $this->get('request')->request->get('contact_name');
+        $params['search']['account_name'] = $this->get('request')->request->get('account_name');
+        $params['search']['city'] = $this->get('request')->request->get('city');
+
+        $contacts = $this->get('enigmatic_crm.manager.contact')->getList(0, null, $params);
+
+        $tab_result = array();
+        foreach ($contacts as $contact) {
+            $tab_result[] = array (
+                'id'    => $contact->getId(),
+                'account'  => $contact->getAccount()->getName(),
+                'firstname'  => $contact->getFirstName()?$contact->getFirstName():'',
+                'name'  => $contact->getName()
+            );
+        }
+        return new Response(json_encode(array(
+            'success'  => true,
+            'result'   => $tab_result,
+        )), 200, array('Content-Type' => 'application/json'));
     }
 
 }

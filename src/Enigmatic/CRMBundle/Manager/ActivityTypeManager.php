@@ -64,6 +64,14 @@ class ActivityTypeManager
     }
 
     /**
+     * @param string $name
+     * @return ActivityType
+     */
+    public function getByName($name) {
+        return $this->em->getRepository($this->class)->findOneByName($name);
+    }
+
+    /**
      * @return Array
      */
     public function getAll() {

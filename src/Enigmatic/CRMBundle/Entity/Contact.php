@@ -149,6 +149,14 @@ class Contact
     }
 
     /**
+     * toString
+     */
+    public function __toString()
+    {
+        return $this->getFirstname().' '.$this->getName().' ('.$this->getAccount()->getName().')';
+    }
+
+    /**
      * Get id
      *
      * @return integer 

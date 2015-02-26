@@ -1,0 +1,27 @@
+enigmatic_crm_campaign_mailing_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:list }
+
+enigmatic_crm_campaign_mailing_view:
+    path:     /{campaign}
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:view }
+    requirements:
+        campaign_mailing: \d+
+    options:
+        expose: true
+
+enigmatic_crm_campaign_mailing_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:add }
+
+enigmatic_crm_campaign_mailing_update:
+    locales:  { fr: "/modifier-{campaign}", en: "/update-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:update }
+    requirements:
+        campaign_mailing: \d+
+
+enigmatic_crm_campaign_mailing_remove:
+    locales:  { fr: "/supprimer-{campaign}", en: "/remove-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:remove}
+    requirements:
+        campaign_mailing: \d+

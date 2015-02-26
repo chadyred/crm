@@ -1,0 +1,3 @@
+{% extends "@EnigmaticCRM/email.html.twig" %}
+{% block subject %}{{ subject }}{% endblock %}
+{% block body %}{{ content | raw }}{% endblock %}
