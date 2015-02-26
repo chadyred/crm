@@ -18,8 +18,8 @@ group:
 
 security:
     login:
-        username: "Adresse email :"
-        password: "Mot de passe :"
+        username: "Adresse email"
+        password: "Mot de passe"
         remember_me: Se souvenir de moi
         submit: Connexion
 

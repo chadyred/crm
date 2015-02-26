@@ -52,6 +52,10 @@ var Nav = {
         if (!url)
             url = document.URL;
 
+        if (typeof CKEDITOR != 'undefined')
+            for ( instance in CKEDITOR.instances )
+                CKEDITOR.instances[instance].updateElement();
+
         jQuery.ajax({
             type: "POST",
             url: url,
@@ -65,7 +69,7 @@ var Nav = {
             error : function(resultat, statut, erreur){
                 jQuery(form).addClass('speednav_error');
                 jQuery(form).submit();
-                //window.location.href = url;
+                window.location.href = url;
             },
 
             complete : function(resultat, statut) {

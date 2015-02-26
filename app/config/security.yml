@@ -24,7 +24,7 @@ security:
             security: false
 
         login:
-            pattern: ^/(connexion)
+            pattern: ^/(connexion|mot-de-passe)
             security: false
 
         main:
