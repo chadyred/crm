@@ -16,7 +16,7 @@ class CampaignFaxingController extends Controller
     public function listAction()
     {
         if (!$this->container->getParameter('enigmatic_crm.ecofax.login') || !$this->container->getParameter('enigmatic_crm.ecofax.password'))
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.campaign_faxing.errors.config_ecofax'));
+            $this->get('session')->getFlashBag()->add('warning', $this->get('translator')->trans('enigmatic.crm.campaign_faxing.errors.config_ecofax'));
 
         $params = $this->get('enigmatic_crm.service.list')->parseRequest($this->get('request')->request->all());
 

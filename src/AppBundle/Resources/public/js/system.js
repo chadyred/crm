@@ -26,12 +26,10 @@ function runSelect2() {
     $('.select2').select2();
 }
 
-$(document).ready(function () {
-    $('.nav_collapsible > .nav_link').click(function () {
-        $(this).parent().toggleClass('nav_open');
-        if ($(this).parent().siblings().hasClass('nav_open')) {
-            $(this).parent().siblings().removeClass('nav_open');
-        }
-        return false;
-    });
-})
+$('.nav_collapsible > .nav_link').click(function () {
+    $(this).parent().toggleClass('nav_open');
+    if ($(this).parent().siblings().hasClass('nav_open')) {
+        $(this).parent().siblings().removeClass('nav_open');
+    }
+    return false;
+});

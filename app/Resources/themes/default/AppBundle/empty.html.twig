@@ -1,2 +1,17 @@
 {% extends '::empty.html.twig' %}
 {% block title %}CRM LIP Intérim{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        var nav_active = '{% block nav_active %}{% endblock %}';
+
+        if (nav_active != 'null') {
+            jQuery('aside.sidebar li').each(function () {
+                jQuery(this).removeClass('active');
+            });
+
+            if (jQuery('#header_nav_' + nav_active))
+                jQuery('#header_nav_' + nav_active).addClass('active');
+        }
+    </script>
+    {{ parent() }}
+{% endblock %}

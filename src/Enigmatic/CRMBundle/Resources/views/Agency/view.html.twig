@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.agency_view{% endtrans %} - {{ agency.getName() }} - {{ parent() }}{% endblock %}
+{% block nav_active %}agency{% endblock %}
 
 {% block content %}
 
@@ -37,7 +38,5 @@
         </div>
 
     </section>
-
-
 
 {% endblock %}

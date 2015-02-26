@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_view{% endtrans %} - {{ campaign.getName() }} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_faxing{% endblock %}
 
 {% block content %}
 

@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.users_list{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}user{% endblock %}
 
 {% block content %}
 

@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% if account.getId() %}{% trans %}enigmatic.crm.header.titles.account_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.account_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}account{% endblock %}
 
 {% block content %}
 
@@ -13,3 +14,5 @@
         {{ button.create('back', 'Cancel'|trans, account.getId()?path('enigmatic_crm_account_view', {'account': account.getId}):path('enigmatic_crm_account_list'), null, 'speednav' ) }}
     </form>
 {% endblock %}
+
+

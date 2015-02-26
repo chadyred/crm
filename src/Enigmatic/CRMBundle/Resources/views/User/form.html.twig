@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% if user.getId() %}{% trans %}enigmatic.crm.header.titles.user_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.user_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}user{% endblock %}
 
 {% block content %}
 

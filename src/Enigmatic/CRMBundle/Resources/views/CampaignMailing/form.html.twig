@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% if campaign.getId() %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_mailing{% endblock %}
 
 {% block content %}
 

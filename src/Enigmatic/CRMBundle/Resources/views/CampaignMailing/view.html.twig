@@ -1,6 +1,7 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} - {{ campaign.getName() }} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_mailing{% endblock %}
 
 {% block content %}
 
@@ -13,7 +14,6 @@
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
     </div>
-
 
     <div class="action action_right">
         {% if campaign.getState() != constant('CAMPAIGN_MAILING_SENDED', campaign) %}
