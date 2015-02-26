@@ -30,3 +30,6 @@ parameters:
 
     enigmatic_mailer.email_from: ~
     enigmatic_mailer.email_sender: ~
+
+    enigmatic_crm_ecofax_login: null
+    enigmatic_crm_ecofax_password: null

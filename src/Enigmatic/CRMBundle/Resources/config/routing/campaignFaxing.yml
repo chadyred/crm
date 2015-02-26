@@ -1,0 +1,27 @@
+enigmatic_crm_campaign_faxing_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:list }
+
+enigmatic_crm_campaign_faxing_view:
+    path:     /{campaign}
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:view }
+    requirements:
+        campaign_faxing: \d+
+    options:
+        expose: true
+
+enigmatic_crm_campaign_faxing_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:add }
+
+enigmatic_crm_campaign_faxing_update:
+    locales:  { fr: "/modifier-{campaign}", en: "/update-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:update }
+    requirements:
+        campaign_faxing: \d+
+
+enigmatic_crm_campaign_faxing_remove:
+    locales:  { fr: "/supprimer-{campaign}", en: "/remove-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:remove}
+    requirements:
+        campaign_faxing: \d+

@@ -18,7 +18,15 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('enigmatic_crm');
+        $rootNode = $treeBuilder->root('enigmatic_crm')
+            ->children()
+            ->arrayNode('ecofax')->addDefaultsIfNotSet()
+            ->children()
+                ->scalarNode('login')->end()
+                ->scalarNode('password')->end()
+            ->end()
+            ->end()
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

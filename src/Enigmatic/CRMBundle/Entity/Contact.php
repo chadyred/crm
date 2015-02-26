@@ -422,11 +422,26 @@ class Contact
     /**
      * Get phones
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPhones()
     {
         return $this->phones;
+    }
+
+    /**
+     * Get fax
+     *
+     * @return string | null
+     */
+    public function getFax()
+    {
+        foreach ($this->getPhones() as $phone) {
+            if ($phone->getType() == ContactPhone::FAX)
+                return $phone->getNumero();
+        }
+
+        return $this->getAccount()->getFax();
     }
 
     /**

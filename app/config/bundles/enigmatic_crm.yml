@@ -1,0 +1,4 @@
+enigmatic_crm:
+    ecofax:
+        login: %enigmatic_crm_ecofax_login%
+        password: %enigmatic_crm_ecofax_password%

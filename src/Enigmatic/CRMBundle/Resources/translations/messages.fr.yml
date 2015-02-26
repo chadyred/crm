@@ -152,6 +152,56 @@ enigmatic:
                 by: Par
                 replannified_to: Replannifié le
             load: Chargement ...
+        campaign_faxing:
+            errors:
+                config_ecofax: Attention, le paramétrage pour l'envoi de fax est invalide. Les fax ne pourront seront pas envoyés
+                load: Une erreur est survenue, impossible de charger les contacts.
+            form:
+                contacts:
+                    available:
+                        description: Cliquez sur les cases pour selectionner
+                        title: Contacts disponibles
+                    enabled:
+                        description: Cliquez sur les cases pour annuler la selection
+                        title: Contacts selectionnés
+                    title: Contacts
+                    search:
+                        account_name:
+                            placeholder: Compte
+                        name:
+                            placeholder: Nom / Prénom
+                        city:
+                            placeholder: Ville / Code postal
+
+                field:
+                    contact:
+                        label: Contacts
+                    name:
+                        label: Nom de la campagne
+                    fax:
+                        label: Fax
+                    dateSended:
+                        label: Date de l'envois
+                    owner:
+                        label: Créé par
+                        empty_value: Sélectionnez un utilisateur
+                    state:
+                        label: Configuration
+                        locked:
+                            label: Bloqué - Le faxing ne sera pas envoyé
+                        waiting:
+                            label: Prêt - Le faxing sera envoyé à la date indiqué
+                submit:
+                    add: Ajouter la campagne
+                    update: Modifier la campagne
+            message:
+                add: La campagne a été ajoutée
+                remove: La campagne a été supprimée
+                update: La campagne a été modifiée
+            table:
+                empty: Aucune campagne
+                head:
+                    name: Nom
         campaign_mailing:
             errors:
                 load: Une erreur est survenue, impossible de charger les contacts.
@@ -189,9 +239,9 @@ enigmatic:
                     state:
                         label: Configuration
                         locked:
-                            label: Bloqué - Le mailing ne partira pas
+                            label: Bloqué - Le mailing ne sera pas envoyé
                         waiting:
-                            label: Prêt - Le mailing partira a la date indiqué
+                            label: Prêt - Le mailing sera envoyé à la date indiqué
                 submit:
                     add: Ajouter la campagne
                     update: Modifier la campagne
@@ -311,6 +361,10 @@ enigmatic:
                 contact_add: Ajouter un contact
                 contact_view: Contact
                 contact_update: Modifier un contact
+                campaign_faxing_list: Campagne de faxing
+                campaign_faxing_add: Ajouter une campagne de faxing
+                campaign_faxing_view: Campagne de faxing
+                campaign_faxing_update: Modifier une campagne de faxing
                 campaign_mailing_list: Campagne de mailing
                 campaign_mailing_add: Ajouter une campagne de mailing
                 campaign_mailing_view: Campagne de mailing

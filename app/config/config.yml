@@ -10,6 +10,7 @@ imports:
     - { resource: bundles/liip_theme.yml }
     - { resource: bundles/genemu_form.yml }
     - { resource: bundles/enigmatic_mailer.yml }
+    - { resource: bundles/enigmatic_crm.yml }
 
 framework:
     esi:             ~

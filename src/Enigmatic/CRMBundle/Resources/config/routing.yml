@@ -31,3 +31,8 @@ enigmatic_crm_campaign_mailing:
     resource: "@EnigmaticCRMBundle/Resources/config/routing/campaignMailing.yml"
     type: be_simple_i18n
     prefix:  { fr: "/campagnes/mailing", en: "/campaign/mailing" }
+
+enigmatic_crm_campaign_faxing:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/campaignFaxing.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/campagnes/faxing", en: "/campaign/faxing" }

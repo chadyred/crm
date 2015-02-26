@@ -5,10 +5,10 @@ enigmatic:
                 mime_type: Veuillez importer un fichier au format CSV
         campaign_faxing:
             dateSended:
-                invalid: Veuillez choisir une date future
+                invalid: Veuillez choisir une date future pour l'envois
             fax:
                 file:
                     mimeTypes: Veuillez utiliser un format PDF
         campaign_mailing:
             dateSended:
-                invalid: Veuillez choisir une date future
+                invalid: Veuillez choisir une date future pour l'envoi

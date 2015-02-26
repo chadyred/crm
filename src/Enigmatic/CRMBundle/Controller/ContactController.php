@@ -124,6 +124,8 @@ class ContactController extends Controller
         $params['search']['name'] = $this->get('request')->request->get('contact_name');
         $params['search']['account_name'] = $this->get('request')->request->get('account_name');
         $params['search']['city'] = $this->get('request')->request->get('city');
+        $params['search']['hasFax'] = $this->get('request')->request->get('hasFax');
+        $params['search']['hasEmail'] = $this->get('request')->request->get('hasEmail');
 
         $contacts = $this->get('enigmatic_crm.manager.contact')->getList(0, null, $params);
 
@@ -133,7 +135,8 @@ class ContactController extends Controller
                 'id'    => $contact->getId(),
                 'account'  => $contact->getAccount()->getName(),
                 'firstname'  => $contact->getFirstName()?$contact->getFirstName():'',
-                'name'  => $contact->getName()
+                'name'  => $contact->getName(),
+                'fax'  => $this->get('enigmatic.phone_format')->phoneFormat($contact->getFax())
             );
         }
         return new Response(json_encode(array(

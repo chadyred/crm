@@ -1,5 +1,6 @@
 parameters:
-    defaultListPageLimit: 25
+    enigmatic_crm.ecofax.login: ~
+    enigmatic_crm.ecofax.password: ~
 
 services:
 
@@ -32,6 +33,11 @@ services:
     enigmatic_crm.manager.campaign_mailing:
         class: Enigmatic\CRMBundle\Manager\CampaignMailingManager
         arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.campaign_faxing:
+        class: Enigmatic\CRMBundle\Manager\CampaignFaxingManager
+        arguments: [@doctrine.orm.entity_manager]
+
 # MAILER
 
     enigmatic_crm.mailer.user:
@@ -130,6 +136,18 @@ services:
             - { name: form.type, alias: enigmatic_crm_campaign_mailing }
         arguments: []
 
+    enigmatic_crm.form.campaign_faxing:
+        class: Enigmatic\CRMBundle\Form\CampaignFaxingType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_faxing }
+        arguments: []
+
+    enigmatic_crm.form.campaign_faxing_fax:
+        class: Enigmatic\CRMBundle\Form\CampaignFaxingFaxType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_faxing_fax }
+        arguments: []
+
 # SERVICES
 
     enigmatic_crm.service.list:
@@ -182,6 +200,12 @@ services:
 
     enigmatic_crm.param_converter.campaign_mailing:
         class: Enigmatic\CRMBundle\ParamConverter\CampaignMailingParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.campaign_faxing:
+        class: Enigmatic\CRMBundle\ParamConverter\CampaignFaxingParamConverter
         arguments: [@doctrine.orm.entity_manager]
         tags:
             - { name: request.param_converter, priority: 20 }

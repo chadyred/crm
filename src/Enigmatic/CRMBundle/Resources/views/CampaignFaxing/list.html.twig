@@ -1,0 +1,65 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_list{% endtrans %} - {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_campaign_faxing_add'), null, 'speednav') }}
+    </div>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+    <table class="table table_striped table_extended">
+        <thead>
+            <tr>
+                {{ table.th('name', 'enigmatic.crm.campaign_faxing.table.head.name'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
+            </tr>
+            <tr id="list_search">
+                {{ table.th_search_input('name', params['search']) }}
+                {{ table.search_link(params['entity']) }}
+            </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr data-id="{{ campaign.getId() }}" id="item_{{ campaign.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                <td class="onclick">{{ campaign.getName() }}</td>
+                <td></td>
+            </tr>
+        {% else %}
+            <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.contact.table.empty{% endtrans %}</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_contact_list') }}');
+        });
+    </script>
+
+    <script type="text/javascript">
+        jQuery('.onclick').click(function() {
+            Nav.get(Routing.generate('enigmatic_crm_campaign_faxing_view.{{ app.request.locale }}', {'campaign': $(this).parent().attr('data-id') }));
+        })
+    </script>
+
+{% endblock %}

@@ -5,6 +5,7 @@ namespace Enigmatic\CRMBundle\Services;
 
 use Enigmatic\CRMBundle\Entity\Account;
 use Enigmatic\CRMBundle\Entity\Activity;
+use Enigmatic\CRMBundle\Entity\CampaignFaxing;
 use Enigmatic\CRMBundle\Entity\CampaignMailing;
 use Enigmatic\CRMBundle\Entity\Contact;
 use Enigmatic\CRMBundle\Manager\UserManager;
@@ -124,6 +125,15 @@ class GrantService
 
     // @rp_todo : fonction grantMailing
     public function grantCampaignMailing(CampaignMailing $campaignMailing) {
+
+        $grant = false;
+        $grant = true;
+
+        return $grant;
+    }
+
+    // @rp_todo : fonction grantFAxing
+    public function grantCampaignFaxing(CampaignFaxing $campaignFaxingg) {
 
         $grant = false;
         $grant = true;

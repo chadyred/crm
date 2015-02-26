@@ -23,22 +23,55 @@
 {% endblock %}
 
 {% block body %}
-
+    
     {% if app.user %}
 
-        <header>
+        <header id="header">
             <div class="header_right">
                 <a class="speednav" href="{{ path('logout') }}" title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}">{% trans %}enigmatic.crm.header.logout.name{% endtrans %}</a>
-            </div>
-            <nav>
+            </div>            
+        </header>
+
+    {% endif %}
+
+    {{ parent() }}
+	
+	<aside class="sidebar">
+	<nav>
                 <ul>
-                    <li><a class="speednav" href="{{ path('enigmatic_crm_home') }}" title="{% trans %}enigmatic.crm.header.nav.home.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.home.link{% endtrans %}</a></li>
-                    <li><a class="speednav" href="{{ path('enigmatic_crm_account_list') }}" title="{% trans %}enigmatic.crm.header.nav.accounts.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.accounts.link{% endtrans %}</a></li>
-                    <li><a class="speednav" href="{{ path('enigmatic_crm_contact_list') }}" href="" title="{% trans %}enigmatic.crm.header.nav.contacts.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.contacts.link{% endtrans %}</a></li>
-                    <li><a class="speednav" href="{{ path('enigmatic_crm_activity_calendar') }}" title="{% trans %}enigmatic.crm.header.nav.activities.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.activities.link{% endtrans %}</a></li>
                     <li>
-                        <span>{% trans %}enigmatic.crm.header.nav.campaign.link{% endtrans %}</span>
-                        <ul>
+					<a class="speednav" href="{{ path('enigmatic_crm_home') }}" title="{% trans %}enigmatic.crm.header.nav.home.title{% endtrans %}">
+					<span class="nav_ico"><i class="ico ico_stats-bars"></i></span>
+					{% trans %}enigmatic.crm.header.nav.home.link{% endtrans %}
+					</a>
+					</li>
+					
+                    <li>
+					<a class="speednav" href="{{ path('enigmatic_crm_account_list') }}" title="{% trans %}enigmatic.crm.header.nav.accounts.title{% endtrans %}">
+					<span class="nav_ico"><i class="ico ico_user"></i></span>
+					{% trans %}enigmatic.crm.header.nav.accounts.link{% endtrans %}
+					</a>
+					</li>
+					
+                    <li>
+					<a class="speednav" href="{{ path('enigmatic_crm_contact_list') }}" href="" title="{% trans %}enigmatic.crm.header.nav.contacts.title{% endtrans %}">
+					<span class="nav_ico"><i class="ico ico_mail3"></i></span>
+					{% trans %}enigmatic.crm.header.nav.contacts.link{% endtrans %}
+					</a>
+					</li>
+                    <li>
+					<a class="speednav" href="{{ path('enigmatic_crm_activity_calendar') }}" title="{% trans %}enigmatic.crm.header.nav.activities.title{% endtrans %}">
+					<span class="nav_ico"><i class="ico ico_files-empty"></i></span>
+					{% trans %}enigmatic.crm.header.nav.activities.link{% endtrans %}
+					</a>
+					</li>
+					
+                    <li>
+                    <a>
+					<span class="nav_ico"><i class="ico ico_printer"></i></span>
+					{% trans %}enigmatic.crm.header.nav.campaign.link{% endtrans %}
+					</a>
+                     <ul>
                             <li><a class="speednav" href="{{ path('enigmatic_crm_campaign_mailing_list') }}" title="{% trans %}enigmatic.crm.header.nav.campaign.mailing.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.campaign.mailing.link{% endtrans %}</a></li>
                             <li><a class="speednav" href="" title="{% trans %}enigmatic.crm.header.nav.campaign.faxing.title{% endtrans %}">{% trans %}enigmatic.crm.header.nav.campaign.faxing.link{% endtrans %}</a></li>
                         </ul>
@@ -54,11 +87,7 @@
                     {% endif %}
                 </ul>
             </nav>
-        </header>
-
-    {% endif %}
-
-    {{ parent() }}
+	</aside>
 
     <div id="content">
         {% block content %}{% endblock %}

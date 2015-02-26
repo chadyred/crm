@@ -24,5 +24,8 @@ class EnigmaticCRMExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter('enigmatic_crm.ecofax.login', $config['ecofax']['login']);
+        $container->setParameter('enigmatic_crm.ecofax.password', $config['ecofax']['password']);
     }
 }
