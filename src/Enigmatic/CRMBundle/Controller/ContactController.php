@@ -28,12 +28,10 @@ class ContactController extends Controller
         $params['entity'] = 'Contact';
         $params['total'] = $contacts->count();
 
-        $content = $this->renderView('EnigmaticCRMBundle:Contact:list.html.twig', array(
+        return $this->get('enigmatic.render')->render( $this->renderView('EnigmaticCRMBundle:Contact:list.html.twig', array(
             'contacts'      => $contacts,
             'params'        => $params
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -44,11 +42,9 @@ class ContactController extends Controller
         if (!$this->get('enigmatic_crm.service.grant')->grantContact($contact))
             throw new AccessDeniedException();
 
-        $content = $this->renderView('EnigmaticCRMBundle:Contact:view.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:view.html.twig', array(
             'contact'       => $contact
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -70,12 +66,10 @@ class ContactController extends Controller
                 return $this->redirect($this->generateUrl('enigmatic_crm_contact_view', array('contact'=> $contact->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Contact:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:form.html.twig', array(
             'contact'       => $contact,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -96,12 +90,10 @@ class ContactController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_contact_view', array('contact'=> $contact->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Contact:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:form.html.twig', array(
             'contact'       => $contact,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**

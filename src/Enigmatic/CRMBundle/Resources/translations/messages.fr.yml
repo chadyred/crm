@@ -212,6 +212,7 @@ enigmatic:
                     name: Nom
                     dateSended: Date d'envois
                     state: Etat
+                    owner: Créé par
                 search:
                     dateSended: De
                     dateSendedEnd: à
@@ -278,6 +279,7 @@ enigmatic:
                     subject: Sujet du mail
                     dateSended: Date d'envois
                     state: Etat
+                    owner: Créé par
                 search:
                     dateSended: De
                     dateSendedEnd: à

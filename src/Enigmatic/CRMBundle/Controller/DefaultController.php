@@ -12,9 +12,6 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-        $content = $this->renderView('EnigmaticCRMBundle:Default:index.html.twig', array(
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Default:index.html.twig', array()));
     }
 }

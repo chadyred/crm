@@ -17,12 +17,10 @@ class AgencyController extends Controller
         $params['entity'] = 'Agency';
         $params['total'] = $agencies->count();
 
-        $content = $this->renderView('EnigmaticCRMBundle:Agency:list.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Agency:list.html.twig', array(
             'agencies'      => $agencies,
             'params'        => $params
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -30,12 +28,10 @@ class AgencyController extends Controller
      */
     public function viewAction(Agency $agency)
     {
-        $content = $this->renderView('EnigmaticCRMBundle:Agency:view.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Agency:view.html.twig', array(
             'agency'       => $agency,
             'map'          => $this->get('enigmatic_crm.service.map')->generateAction($agency->getAddress().', '.$agency->getCity()->getName().' '.$agency->getCity()->getCanonicalZipcode(), $agency->getName(), '400px', '400px;')
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -54,12 +50,10 @@ class AgencyController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_agency_view', array('agency'=> $agency->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Agency:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Agency:form.html.twig', array(
             'agency'        => $agency,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -77,12 +71,10 @@ class AgencyController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_agency_view', array('agency'=> $agency->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Agency:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Agency:form.html.twig', array(
             'agency'        => $agency,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**

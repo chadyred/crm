@@ -25,19 +25,21 @@
 
 {% block body %}
 
-    {% if app.user %}
+    
 
         <header id="header">
             <div class="header_right">
-                <a class="speednav" href="{{ path('logout') }}"
+                <a class="speednav logout" href="{{ path('logout') }}"
                    title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}">{% trans %}
                     enigmatic.crm.header.logout.name{% endtrans %}</a>
             </div>
         </header>
 
-    {% endif %}
+    
 
     <aside class="sidebar">
+	<div id="logo"></div>
+		{% if app.user %}
         <nav>
             <ul>
                 <li id="header_nav_home">
@@ -51,7 +53,7 @@
                 <li id="header_nav_account">
                     <a class="speednav nav_link" href="{{ path('enigmatic_crm_account_list') }}"
                        title="{% trans %}enigmatic.crm.header.nav.accounts.title{% endtrans %}">
-                        <span class="nav_ico"><i class="ico ico_user"></i></span>
+                        <span class="nav_ico"><i class="ico ico_credit-card"></i></span>
                         {% trans %}enigmatic.crm.header.nav.accounts.link{% endtrans %}
                     </a>
                 </li>
@@ -59,7 +61,7 @@
                 <li id="header_nav_contact">
                     <a class="speednav nav_link" href="{{ path('enigmatic_crm_contact_list') }}" href=""
                        title="{% trans %}enigmatic.crm.header.nav.contacts.title{% endtrans %}">
-                        <span class="nav_ico"><i class="ico ico_mail3"></i></span>
+                        <span class="nav_ico"><i class="ico ico_user-tie"></i></span>
                         {% trans %}enigmatic.crm.header.nav.contacts.link{% endtrans %}
                     </a>
                 </li>
@@ -71,7 +73,7 @@
                     </a>
                 </li>
 
-                <li class="nav_collapsible">
+                <li id="header_nav_mailing" class="nav_collapsible">
                     <a class="nav_link" href="#">
                         <span class="nav_ico"><i class="ico ico_printer"></i></span>
                         {% trans %}enigmatic.crm.header.nav.campaign.link{% endtrans %}
@@ -86,7 +88,7 @@
                     </ul>
                 </li>
                 {% if is_granted('ROLE_RS') %}
-                    <li class="nav_collapsible">
+                    <li id="header_nav_config" class="nav_collapsible">
                         <a class="nav_link" href="#">
                             <span class="nav_ico"><i class="ico ico_cog"></i></span>
                             {% trans %}enigmatic.crm.header.nav.system.link{% endtrans %}
@@ -103,6 +105,7 @@
                 {% endif %}
             </ul>
         </nav>
+		{% endif %}
     </aside>
 
     <div id="content">

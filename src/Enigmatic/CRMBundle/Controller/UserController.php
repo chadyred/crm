@@ -17,12 +17,10 @@ class UserController extends Controller
         $params['entity'] = 'User';
         $params['total'] = $users->count();
 
-        $content = $this->renderView('EnigmaticCRMBundle:User:list.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:User:list.html.twig', array(
             'users'         => $users,
             'params'        => $params
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -30,11 +28,9 @@ class UserController extends Controller
      */
     public function viewAction(User $user)
     {
-        $content = $this->renderView('EnigmaticCRMBundle:User:view.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:User:view.html.twig', array(
             'user'       => $user
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
 
@@ -54,12 +50,10 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_user_view', array('user'=> $user->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:User:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:User:form.html.twig', array(
             'user'          => $user,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -77,12 +71,10 @@ class UserController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_user_view', array('user'=> $user->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:User:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:User:form.html.twig', array(
             'user'          => $user,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**

@@ -85,6 +85,33 @@ class CampaignFaxingRepository extends EntityRepository
                             $qb ->andWhere('campaign.dateSended < :search_date_sended_end');
                             $qb ->setParameter('search_date_sended_end', $value);
                             break;
+                        case 'owner':
+                            $qb ->andWhere('owner.firstname LIKE :search_owner OR owner.name LIKE :search_owner');
+                            $qb ->setParameter('search_owner', '%'.$value.'%');
+                            break;
+                        case 'agency':
+                            $qb ->leftjoin('owner.agencies', 'owner_agencies');
+                            $qb ->addSelect('owner_agencies');
+                            $qb ->leftjoin('owner_agencies.end', 'owner_agencies_end');
+                            $qb ->addSelect('owner_agencies_end');
+                            $qb ->andWhere('owner_agencies.agency = :search_agency');
+                            $qb ->andWhere('owner_agencies.dateCreated <= campaign.dateCreated');
+                            $qb ->andWhere('owner_agencies_end IS NULL OR owner_agencies_end.dateEnd > campaign.dateCreated');
+                            $qb ->setParameter('search_agency', $value);
+                            break;
+                        case 'createdBy':
+                            $qb ->leftjoin('owner.agencies', 'owner_agencies');
+                            $qb ->addSelect('owner_agencies');
+                            $qb ->leftjoin('owner_agencies.end', 'owner_agencies_end');
+                            $qb ->addSelect('owner_agencies_end');
+                            $qb ->andWhere('owner_agencies.agency = :search_agency');
+                            $qb ->andWhere('owner_agencies.dateCreated <= campaign.dateCreated');
+                            $qb ->andWhere('owner_agencies_end IS NULL OR owner_agencies_end.dateEnd > campaign.dateCreated');
+                            $qb ->setParameter('search_agency', $value);
+                            $qb ->andWhere('owner_agencies_end IS NULL');
+                            $qb ->andWhere('owner = :search_owner');
+                            $qb ->setParameter('search_owner', $value);
+                            break;
                     }
                 }
             }

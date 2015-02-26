@@ -123,20 +123,84 @@ class GrantService
         return $grant;
     }
 
-    // @rp_todo : fonction grantMailing
     public function grantCampaignMailing(CampaignMailing $campaignMailing) {
 
         $grant = false;
-        $grant = true;
+        if ($this->authorizationChecker->isGranted('ROLE_RS')) {
+            $grant = true;
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_RCA')) {
+            $agency = $this->userManager->getCurrent()->getAgency();
+            foreach($campaignMailing->getOwner()->getAgencies() as $histoAgence) {
+                if ($agency == $histoAgence->getAgency()) {
+                    if ($histoAgence->getDateCreated() <= $campaignMailing->getDateCreated()) {
+                        if ($histoAgence->getEnd()) {
+                            if ($histoAgence->getEnd()->getDateEnd() > $campaignMailing->getDateCreated()) {
+                                $grant = true;
+                            }
+                        } else
+                            $grant = true;
+                    }
+                }
+            }
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+            $agency = $this->userManager->getCurrent()->getAgency();
+            foreach($campaignMailing->getOwner()->getAgencies() as $histoAgence) {
+                if ($agency == $histoAgence->getAgency()) {
+                    if ($histoAgence->getDateCreated() <= $campaignMailing->getDateCreated()) {
+                        if ($histoAgence->getEnd() == null)
+                            $grant = true;
+                    }
+                }
+            }
+            if ($grant) {
+                $grant = false;
+                if ($campaignMailing->getOwner() == $this->userManager->getCurrent())
+                    $grant = true;
+            }
+        }
 
         return $grant;
     }
 
-    // @rp_todo : fonction grantFAxing
-    public function grantCampaignFaxing(CampaignFaxing $campaignFaxingg) {
+    public function grantCampaignFaxing(CampaignFaxing $campaignFaxing) {
 
         $grant = false;
-        $grant = true;
+        if ($this->authorizationChecker->isGranted('ROLE_RS')) {
+            $grant = true;
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_RCA')) {
+            $agency = $this->userManager->getCurrent()->getAgency();
+            foreach($campaignFaxing->getOwner()->getAgencies() as $histoAgence) {
+                if ($agency == $histoAgence->getAgency()) {
+                    if ($histoAgence->getDateCreated() <= $campaignFaxing->getDateCreated()) {
+                        if ($histoAgence->getEnd()) {
+                            if ($histoAgence->getEnd()->getDateEnd() > $campaignFaxing->getDateCreated()) {
+                                $grant = true;
+                            }
+                        } else
+                            $grant = true;
+                    }
+                }
+            }
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+            $agency = $this->userManager->getCurrent()->getAgency();
+            foreach($campaignFaxing->getOwner()->getAgencies() as $histoAgence) {
+                if ($agency == $histoAgence->getAgency()) {
+                    if ($histoAgence->getDateCreated() <= $campaignFaxing->getDateCreated()) {
+                        if ($histoAgence->getEnd() == null)
+                            $grant = true;
+                    }
+                }
+            }
+            if ($grant) {
+                $grant = false;
+                if ($campaignFaxing->getOwner() == $this->userManager->getCurrent())
+                    $grant = true;
+            }
+        }
 
         return $grant;
     }

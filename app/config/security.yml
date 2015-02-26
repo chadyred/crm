@@ -47,5 +47,6 @@ security:
             switch_user:                            { role: ROLE_SUPER_ADMIN, parameter: _user }
 
     access_control:
+        - { path: ^/cron, roles: ROLE_SUPER_ADMIN, requires_channel: https }
         - { path: ^/admin/, roles: ROLE_ADMIN, requires_channel: https }
         - { path: ^/*$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

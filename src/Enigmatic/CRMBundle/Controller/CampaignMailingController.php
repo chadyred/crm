@@ -17,7 +17,11 @@ class CampaignMailingController extends Controller
     {
         $params = $this->get('enigmatic_crm.service.list')->parseRequest($this->get('request')->request->all());
 
-        // @rp_todo : grants
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_RCA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS'))
+            $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
+        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA')) {
+            $params['search']['createdBy'] = $this->get('enigmatic_crm.manager.user')->getCurrent();
+        }
 
         $campaigns = $this->get('enigmatic_crm.manager.campaign_mailing')->getList($params['page'], $params['limit'], $params);
         $params['entity'] = 'CampaignMailing';

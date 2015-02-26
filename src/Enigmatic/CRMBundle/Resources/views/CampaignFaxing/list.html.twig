@@ -23,6 +23,7 @@
             {{ table.th('name', 'enigmatic.crm.campaign_faxing.table.head.name'|trans, 20, params['order'], params['entity']) }}
             {{ table.th('dateSended', 'enigmatic.crm.campaign_faxing.table.head.dateSended'|trans, 20, params['order'], params['entity']) }}
             {{ table.th('state', 'enigmatic.crm.campaign_faxing.table.head.state'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('owner', 'enigmatic.crm.campaign_mailing.table.head.owner'|trans, 20, params['order'], params['entity']) }}
             {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
         </tr>
         <tr id="list_search">
@@ -39,6 +40,7 @@
                     <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_LOCKED') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignFaxing::CAMPAIGN_FAXING_LOCKED') }}">{% trans %}enigmatic.crm.campaign_faxing.field.state.locked.name{% endtrans %}</option>
                 </select>
             </th>
+            {{ table.th_search_input('owner', params['search']) }}
             {{ table.search_link(params['entity']) }}
         </tr>
         </thead>
@@ -56,6 +58,7 @@
                         <span class="text-success">{% trans %}enigmatic.crm.campaign_faxing.field.state.sended.name{% endtrans %}</span>
                     {% endif %}
                 </td>
+                <td class="onclick">{{ campaign.getOwner().getFirstname() }} {{ campaign.getOwner().getName() }}</td>
                 <td></td>
             </tr>
         {% else %}

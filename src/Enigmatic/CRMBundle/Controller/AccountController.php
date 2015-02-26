@@ -27,12 +27,10 @@ class AccountController extends Controller
         $params['entity'] = 'Account';
         $params['total'] = $accounts->count();
 
-        $content = $this->renderView('EnigmaticCRMBundle:Account:list.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:list.html.twig', array(
             'accounts'      => $accounts,
             'params'        => $params
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -43,11 +41,9 @@ class AccountController extends Controller
         if (!$this->get('enigmatic_crm.service.grant')->grantAccount($account))
             throw new AccessDeniedException();
 
-        $content = $this->renderView('EnigmaticCRMBundle:Account:view.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:view.html.twig', array(
             'account'       => $account
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -66,12 +62,10 @@ class AccountController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Account:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:form.html.twig', array(
             'account'       => $account,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -92,12 +86,10 @@ class AccountController extends Controller
             return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Account:form.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:form.html.twig', array(
             'account'       => $account,
             'form'          => $form->createView(),
-        ));
-
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
     /**
@@ -154,10 +146,9 @@ class AccountController extends Controller
 //            return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
         }
 
-        $content = $this->renderView('EnigmaticCRMBundle:Account:import.html.twig', array(
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:import.html.twig', array(
             'form'          => $form->createView(),
-        ));
-        return $this->get('enigmatic.render')->render($content);
+        )));
     }
 
 }

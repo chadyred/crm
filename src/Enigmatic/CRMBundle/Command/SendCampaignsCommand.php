@@ -35,7 +35,8 @@ class SendCampaignsCommand extends ContainerAwareCommand
                     $nb_campaign_send++;
                     foreach ($campaign->getContacts() as $contact) {
                         if ($contact->getEmail()) {
-                            $this->getContainer()->get('enigmatic_mailer')->sendMail($contact->getEmail(), $this->getContainer()->get('templating')->render('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
+
+                            $this->getContainer()->get('enigmatic_mailer')->sendMail('rp@enigmatic.fr'/*$contact->getEmail()*/, $this->getContainer()->get('templating')->render('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
                                     'subject' => $campaign->getEmailSubject(),
                                     'content' => $campaign->getEmailBody())
                             ), 'spool');

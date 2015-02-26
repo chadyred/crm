@@ -23,3 +23,7 @@ _imagine:
 
 elfinder:
      resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+BCCCronManagerBundle:
+    resource: "@BCCCronManagerBundle/Resources/config/routing.xml"
+    prefix:   /cron
