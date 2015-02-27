@@ -2,6 +2,7 @@
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.calendar{% endtrans %} - {{ parent() }}{% endblock %}
 {% block nav_active %}activities{% endblock %}
+{% block body_class %}{{ parent() }} calendar{% endblock %}
 
 {% block content %}
 
@@ -144,7 +145,7 @@
             update: function(event_id) {
                 jQuery.ajax({
                     type: "GET",
-                    url: Routing.generate('enigmatic_crm_activity_update.{{ app.request.locale }}', {activity: event_id}),
+                    url: Routing.generate('enigmatic_crm_activity_update_box.{{ app.request.locale }}', {activity: event_id}),
                     dataType: "json",
                     cache: true,
                     success : function(code_html, statut) {

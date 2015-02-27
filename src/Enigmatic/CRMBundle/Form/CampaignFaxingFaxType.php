@@ -29,9 +29,10 @@ class CampaignFaxingFaxType extends AbstractType
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use($options) {
-                if ($event->getData()->getFile()) {
-                    $event->getData()->setDateUpdated(new \DateTime());
-                }
+                if ($event->getData())
+                    if ($event->getData()->getFile()) {
+                        $event->getData()->setDateUpdated(new \DateTime());
+                    }
             }
         );
     }

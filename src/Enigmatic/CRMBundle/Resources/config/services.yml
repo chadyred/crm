@@ -136,6 +136,12 @@ services:
             - { name: form.type, alias: enigmatic_crm_campaign_mailing }
         arguments: []
 
+    enigmatic_crm.form.campaign_mailing_test:
+        class: Enigmatic\CRMBundle\Form\CampaignMailingTestType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_mailing_test }
+        arguments: []
+
     enigmatic_crm.form.campaign_faxing:
         class: Enigmatic\CRMBundle\Form\CampaignFaxingType
         tags:

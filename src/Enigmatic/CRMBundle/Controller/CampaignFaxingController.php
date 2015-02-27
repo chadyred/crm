@@ -3,6 +3,7 @@
 namespace Enigmatic\CRMBundle\Controller;
 
 use Enigmatic\CRMBundle\Entity\CampaignFaxing;
+use Enigmatic\CRMBundle\Entity\CampaignFaxingFax;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -107,5 +108,22 @@ class CampaignFaxingController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.campaign_faxing.message.remove'));
         return $this->redirect($this->generateUrl('enigmatic_crm_campaign_faxing_list'));
+    }
+
+    /**
+     * @Secure(roles={"ROLE_CA"})
+     */
+    public function downloadAction(CampaignFaxingFax $fax)
+    {
+        if (!$this->get('enigmatic_crm.service.grant')->grantCampaignFaxing($fax->getCampaign()))
+            throw new AccessDeniedException();
+
+        $fichier = $fax->getAbsolutePath();
+        $filename = 'fax.'.substr(strrchr($fichier,'.'), 1);
+
+        return new Response(file_get_contents($fichier), 200, array(
+            'Content-Type' => 'application/force-download',
+            'Content-disposition' => 'filename='.$filename
+        ));
     }
 }

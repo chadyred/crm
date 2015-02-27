@@ -15,8 +15,7 @@
                 <div class="alert_message alert_message_error">
             {% endif %}
             {{ flashMessage|raw }}
-            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
-            {% if loop.last %}</div>{% endif %}
+            {% if loop.last %}<a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a></div>{% endif %}
         {% endfor %}
 
         {% for flashMessage in app.session.flashbag.get('warning') %}
@@ -24,8 +23,7 @@
                 <div class="alert_message alert_message_warning">
             {% endif %}
             {{ flashMessage|raw }}
-
-            {% if loop.last %}</div>{% endif %}
+            {% if loop.last %}<a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a></div>{% endif %}
         {% endfor %}
 
         {% for flashMessage in app.session.flashbag.get('success') %}
@@ -33,8 +31,7 @@
                 <div class="alert_message alert_message_success">
             {% endif %}
             {{ flashMessage|raw }}
-            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
-            {% if loop.last %}</div>{% endif %}
+            {% if loop.last %}<a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a></div>{% endif %}
         {% endfor %}
 
         {% for flashMessage in app.session.flashbag.get('fos_user_success') %}
@@ -42,8 +39,7 @@
                 <div class="alert_message alert_message_success">
             {% endif %}
             {{ flashMessage|trans({}, 'FOSUserBundle') }}
-            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
-            {% if loop.last %}</div>{% endif %}
+            {% if loop.last %}<a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a></div>{% endif %}
         {% endfor %}
 
         {% for flashMessage in app.session.flashbag.get('info') %}
@@ -51,8 +47,7 @@
                 <div class="alert_message alert_message_info">
             {% endif %}
             {{ flashMessage|raw }}
-            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
-            {% if loop.last %}</div>{% endif %}
+            {% if loop.last %}<a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a></div>{% endif %}
         {% endfor %}
 
     </div>
@@ -61,4 +56,5 @@
 <script type="text/javascript">
     document.title = '{% block title %}{% endblock %}';
 </script>
+{% block body_class %}{% endblock %}
 {% block javascripts %}{% endblock %}

@@ -1,10 +1,19 @@
 {% extends '::empty.html.twig' %}
 {% block title %}CRM LIP Intérim{% endblock %}
+
 {% block javascripts %}
+
+    <script type="text/javascript">
+        var body_class = '{% block body_class %}{% endblock %}';
+        jQuery('body').attr('class', body_class);
+    </script>
+
     <script type="text/javascript">
         var nav_active = '{% block nav_active %}{% endblock %}';
 
         if (nav_active != 'null') {
+            jQuery('.nav_collapsible').removeClass('nav_open');
+
             jQuery('aside.sidebar li').each(function () {
                 jQuery(this).removeClass('active');
             });
@@ -12,9 +21,10 @@
             if (jQuery('#header_nav_' + nav_active)) {
                 jQuery('#header_nav_' + nav_active).addClass('active');
                 if (jQuery('#header_nav_' + nav_active).parent().parent().hasClass('nav_collapsible'))
-                    jQuery('#header_nav_' + nav_active).parent().parent().addClass('active');
+                    jQuery('#header_nav_' + nav_active).parent().parent().addClass('active nav_open');
             }
         }
     </script>
+
     {{ parent() }}
 {% endblock %}

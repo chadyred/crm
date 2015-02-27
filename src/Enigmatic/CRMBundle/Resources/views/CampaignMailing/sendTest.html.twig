@@ -1,0 +1,21 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_send_test{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_mailing{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% trans %}enigmatic.crm.header.titles.campaign_mailing_send_test{% endtrans %}</h1>
+
+    <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% trans %}enigmatic.crm.campaign_mailing.form.submit.send_test{% endtrans %}">
+        {{ button.create('back', 'Cancel'|trans, path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId}), null, 'speednav' ) }}
+
+    </form>
+
+{% endblock %}

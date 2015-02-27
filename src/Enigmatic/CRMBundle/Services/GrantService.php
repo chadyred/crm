@@ -55,7 +55,6 @@ class GrantService
     }
 
     public function grantContact(Contact $contact) {
-
         $grant = false;
 
         if ($this->authorizationChecker->isGranted('ROLE_RS')) {

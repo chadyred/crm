@@ -105,13 +105,14 @@ class ActivityController extends Controller
     /**
      * @Secure(roles={"ROLE_CA"})
      */
-    public function viewAction(Activity $activity)
+    public function viewAction(Activity $activity, $box = false)
     {
         if (!$this->get('enigmatic_crm.service.grant')->grantActivity($activity))
             throw new AccessDeniedException();
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Activity:view.html.twig', array(
-            'activity'       => $activity
+            'activity'       => $activity,
+            'box'            => $box
         )));
     }
 
@@ -151,10 +152,10 @@ class ActivityController extends Controller
     /**
      * @Secure(roles={"ROLE_CA"})
      */
-    public function updateAction(Activity $activity)
+    public function updateAction(Activity $activity, $box = false)
     {
         if (!$this->get('enigmatic_crm.service.grant')->grantActivity($activity, 'edit') || $activity->getReplanned())
-            return $this->redirect($this->generateUrl('enigmatic_crm_activity_view', array('activity'=> $activity->getId())));
+            return $this->redirect($this->generateUrl($box?'enigmatic_crm_activity_view_box':'enigmatic_crm_activity_view', array('activity'=> $activity->getId())));
 
         $form = $this->createForm('enigmatic_crm_activity', $activity);
 

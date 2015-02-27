@@ -6,7 +6,7 @@ enigmatic_crm_campaign_mailing_view:
     path:     /{campaign}
     defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:view }
     requirements:
-        campaign_mailing: \d+
+        campaign: \d+
     options:
         expose: true
 
@@ -18,10 +18,16 @@ enigmatic_crm_campaign_mailing_update:
     locales:  { fr: "/modifier-{campaign}", en: "/update-{campaign}" }
     defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:update }
     requirements:
-        campaign_mailing: \d+
+        campaign: \d+
 
 enigmatic_crm_campaign_mailing_remove:
     locales:  { fr: "/supprimer-{campaign}", en: "/remove-{campaign}" }
     defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:remove}
     requirements:
-        campaign_mailing: \d+
+        campaign: \d+
+
+enigmatic_crm_campaign_mailing_send_test:
+    locales:  { fr: "/envoyer-mail-test-{campaign}", en: "/send-test-mail-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:sendTest}
+    requirements:
+        campaign: \d+

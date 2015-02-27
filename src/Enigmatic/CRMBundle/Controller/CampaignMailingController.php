@@ -93,6 +93,31 @@ class CampaignMailingController extends Controller
     }
 
     /**
+     * @Secure(roles={"ROLE_CA"})
+     */
+    public function sendTestAction(CampaignMailing $campaign)
+    {
+        $form = $this->createForm('enigmatic_crm_campaign_mailing_test', array('email' => $this->get('security.token_storage')->getToken()->getUser()->getEmail()));
+
+        $form->handleRequest($this->get('request'));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $this->get('enigmatic_mailer')->sendMail($data['email'], $this->renderView('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
+                    'subject' => $campaign->getEmailSubject(),
+                    'content' => $campaign->getEmailBody())
+            ));
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.campaign_mailing.message.send_test'));
+            return $this->redirect($this->generateUrl('enigmatic_crm_campaign_mailing_view', array('campaign'=> $campaign->getId())));
+        }
+
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:CampaignMailing:sendTest.html.twig', array(
+            'campaign'   => $campaign,
+            'form'       => $form->createView()
+        )));
+    }
+
+    /**
      * @Secure(roles={"RCA"})
      */
     public function removeAction(CampaignMailing $campaign)

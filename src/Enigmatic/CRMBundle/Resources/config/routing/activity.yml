@@ -4,7 +4,13 @@ enigmatic_crm_activity_list:
 
 enigmatic_crm_activity_view:
     path:     /{activity}
-    defaults: { _controller: EnigmaticCRMBundle:Activity:view }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:view, box: false}
+    requirements:
+        activity: \d+
+
+enigmatic_crm_activity_view_box:
+    path:     /box-{activity}
+    defaults: { _controller: EnigmaticCRMBundle:Activity:view, box: true }
     requirements:
         activity: \d+
 
@@ -24,7 +30,15 @@ enigmatic_crm_activity_replann:
 
 enigmatic_crm_activity_update:
     locales:  { fr: "/modifier-{activity}", en: "/update-{activity}" }
-    defaults: { _controller: EnigmaticCRMBundle:Activity:update }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:update, box: false }
+    requirements:
+        activity: \d+
+    options:
+        expose: true
+
+enigmatic_crm_activity_update_box:
+    locales:  { fr: "/modifier-box-{activity}", en: "/update-box-{activity}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:update, box: true }
     requirements:
         activity: \d+
     options:

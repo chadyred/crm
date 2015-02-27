@@ -41,7 +41,7 @@
         {% for account in accounts %}
             <tr data-id="{{ account.getId() }}" id="item_{{ account.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
                 <td class="onclick">{{ account.getName() }}</td>
-                <td>
+                <td class="onclick">
                     {% if account.getCity() %}
                         <address>
                             {{ account.getAddress() }}<br/>
@@ -54,22 +54,20 @@
                         -
                     {% endif %}
                 </td>
-                <td>
+                <td class="onclick">
                     {% if account.getPhone() %}
                         {{ phoneFormat(account.getPhone()) }}
                     {% else %}
                         -
                     {% endif %}
                 </td>
-                <td>
+                <td class="onclick">
                     todo
                 </td>
-                <td>
+                <td class="onclick">
                     todo
                 </td>
-                <td>
-
-                </td>
+                <td></td>
             </tr>
         {% else %}
             <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.account.table.empty{% endtrans %}</td></tr>

@@ -90,8 +90,8 @@ class ContactType extends AbstractType
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use($options) {
-                $phones = $event->getData()->getPhones();
-                foreach($phones as $phone) {
+                if (count($event->getData()->getPhones()))
+                foreach($event->getData()->getPhones() as $phone) {
                     $phone->setContact($event->getData());
                 }
             }

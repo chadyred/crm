@@ -69,6 +69,17 @@ enigmatic:
         activity:
             action:
                 replann: Replannifier
+            field:
+                account:
+                    name: Lié au compte
+                comment:
+                    name: Commentaire
+                dateStart:
+                    name: Date de l'activité
+                type:
+                    name: Type d'activité
+                user:
+                    name: Utilisateur
             form:
                 field:
                     account:
@@ -157,7 +168,12 @@ enigmatic:
                 config_ecofax: Attention, le paramétrage pour l'envoi de fax est invalide. Les fax ne pourront seront pas envoyés
                 load: Une erreur est survenue, impossible de charger les contacts.
             field:
+                dateSended:
+                    name: Date d'envois
+                fax:
+                    name: Fax
                 state:
+                    name: Etat
                     locked:
                         name: En attente de confirmation
                     waiting:
@@ -216,12 +232,24 @@ enigmatic:
                 search:
                     dateSended: De
                     dateSendedEnd: à
+            view:
+                title:
+                    config: Configuration du faxing
+                    contacts: Contacts
+                    fax: Fax
 
         campaign_mailing:
             errors:
                 load: Une erreur est survenue, impossible de charger les contacts.
             field:
+                dateSended:
+                    name: Date d'envois
+                emailBody:
+                    name: Contenu du mail (sans mise en forme)
+                emailSubject:
+                    name: Suject du mail
                 state:
+                    name: Etat
                     locked:
                         name: En attente de confirmation
                     waiting:
@@ -265,12 +293,17 @@ enigmatic:
                             label: Bloqué - Le mailing ne sera pas envoyé
                         waiting:
                             label: Prêt - Le mailing sera envoyé à la date indiqué
+                    test:
+                        email:
+                            label: Email
                 submit:
                     add: Ajouter la campagne
                     update: Modifier la campagne
+                    send_test: Envoyer le mail
             message:
                 add: La campagne a été ajoutée
                 remove: La campagne a été supprimée
+                send_test: Le mail de test a été envoyé
                 update: La campagne a été modifiée
             table:
                 empty: Aucune campagne
@@ -283,7 +316,33 @@ enigmatic:
                 search:
                     dateSended: De
                     dateSendedEnd: à
+            view:
+                title:
+                    config: Configuration du mailing
+                    contacts: Contacts
+                    mail: Mailing
         contact:
+            field:
+                account:
+                    name: Lié au compte
+                address:
+                    name: Adresse
+                birthday:
+                    name: Date d'anniverssaire
+                description:
+                    name: Autres informations
+                email:
+                    name: Email
+                function:
+                    name: Fonction
+                phone:
+                    name: Téléphone
+                    type:
+                        1: Bureau
+                        2: Domicile
+                        3: Mobile
+                        4: Fax
+                        5: Autre
             form:
                 field:
                     account:
@@ -399,6 +458,7 @@ enigmatic:
                 campaign_mailing_add: Ajouter une campagne de mailing
                 campaign_mailing_view: Campagne de mailing
                 campaign_mailing_update: Modifier une campagne de mailing
+                campaign_mailing_send_test: Envoyer un mail de test
                 home: Synthèse
                 users_list: Utilisateurs
                 user_add: Ajouter un utilisateur

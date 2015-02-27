@@ -18,10 +18,16 @@ enigmatic_crm_campaign_faxing_update:
     locales:  { fr: "/modifier-{campaign}", en: "/update-{campaign}" }
     defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:update }
     requirements:
-        campaign_faxing: \d+
+        campaign: \d+
 
 enigmatic_crm_campaign_faxing_remove:
     locales:  { fr: "/supprimer-{campaign}", en: "/remove-{campaign}" }
     defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:remove}
     requirements:
-        campaign_faxing: \d+
+        campaign: \d+
+
+enigmatic_crm_campaign_faxing_download:
+    locales:  { fr: "/telecharger-fax-{fax}", en: "/download-fax-{fax}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:download}
+    requirements:
+        faw: \d+

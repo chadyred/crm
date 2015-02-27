@@ -1,7 +1,7 @@
 {% extends (app.request.isXmlHttpRequest() or account)?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.activities_list{% endtrans %} - {{ parent() }}{% endblock %}
-{% block nav_active %}{% if account %}null{% else %}activities{% endif %}{% endblock %}
+{% block nav_active %}activities{% endblock %}
 
 {% block content %}
 
@@ -64,7 +64,9 @@
 
 {% block javascripts %}
 
-    {{ parent() }}
+    {% if account == null and app.request.isXmlHttpRequest() %}
+        {{ parent() }}
+    {% endif %}
 
     {% include 'AppBundle:include:table.js.twig' %}
 

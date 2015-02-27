@@ -43,7 +43,8 @@ class ContactController extends Controller
             throw new AccessDeniedException();
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:view.html.twig', array(
-            'contact'       => $contact
+            'contact'       => $contact,
+            'map'          => $this->get('enigmatic_crm.service.map')->generateAction($contact->getAddress().', '.($contact->getCity()?$contact->getCity()->getName():'').' '.($contact->getCity()?$contact->getCity()->getCanonicalZipcode():''), null, '400px', '400px;')
         )));
     }
 
@@ -97,7 +98,7 @@ class ContactController extends Controller
     }
 
     /**
-     * @Secure(roles={"RCA"})
+     * @Secure(roles={"ROLE_RCA"})
      */
     public function removeAction(Contact $contact)
     {
@@ -110,7 +111,9 @@ class ContactController extends Controller
         return $this->redirect($this->generateUrl('enigmatic_crm_contact_list'));
     }
 
-
+    /**
+     * @Secure(roles={"ROLE_CA"})
+     */
     public function searchAction() {
 
         $params['search']['name'] = $this->get('request')->request->get('contact_name');

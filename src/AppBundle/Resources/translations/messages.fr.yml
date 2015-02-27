@@ -3,10 +3,13 @@ Add: Ajouter
 Back: Retour
 Cancel: Annuler
 Close: Fermer
-Import: Importer
+Download: Télécharger
 Export: Exporter
-Update: Modifier
+Import: Importer
 Remove: Supprimer
+Send test mail: Envoyer un mail de test
+Update: Modifier
+
 
 enigmatic:
     app:
