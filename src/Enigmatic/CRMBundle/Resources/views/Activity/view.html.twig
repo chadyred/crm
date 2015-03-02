@@ -9,24 +9,31 @@
 
     {% if box == false %}
         <div class="action action_left">
-            {{ button.create('back', 'Back'|trans, path('enigmatic_crm_activity_list'), null, 'speednav') }}
+            {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
         </div>
 
         <div class="action action_right">
-            {{ button.create('update', 'Update'|trans, path('enigmatic_crm_activity_update', {'activity': activity.getId()}), null, 'speednav') }}
-            {% if is_granted('ROLE_RCA') %}
-                {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), 'return confirm("'~'enigmatic.crm.header.titles.contact_view' | trans~'");') }}
+            {% if activity.getReplanned() == null %}
+                {{ button.create('update', 'Update'|trans, path('enigmatic_crm_activity_update', {'activity': activity.getId()}), null, 'speednav') }}
+                {% if is_granted('ROLE_RCA') %}
+                    {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), 'return confirm("'~'enigmatic.crm.activity.action.remove_confirm' | trans~'");') }}
+                {% endif %}
+                {{ button.create('replan', 'enigmatic.crm.activity.action.replann'|trans, path('enigmatic_crm_activity_replann', {'activity': activity.getId()}), null, 'speednav' ) }}
             {% endif %}
         </div>
     {% endif %}
 
     <div class="view">
-        <h1>{{ activity.getAccount().getName() }} : {{ ('enigmatic.crm.activity_type.field.type.'~activity.getType().getType) | trans }}</h1>
+        <h1>{{ activity.getAccount().getName() }} : {{ ('enigmatic.crm.activity_type.field.type.'~activity.getType().getType) | trans }}
+            {% if activity.getReplanned() %}
+                ({% trans %}enigmatic.crm.activity.field.replanned.name{% endtrans %} {{ activity.getReplanned().getDateStart() | localizeddate('full', 'short') }})
+            {% endif %}
+        </h1>
 
         <div>
-            {% trans %}enigmatic.crm.activity.field.type.name{% endtrans %} : {{ activity.getType().getName() }} <br/>
-            {% trans %}enigmatic.crm.activity.field.account.name{% endtrans %} : {{ activity.getAccount().getName() }} <br/>
-            {% trans %}enigmatic.crm.activity.field.user.name{% endtrans %} : {{ activity.getUser().getFirstname() }} {{ activity.getUser().getName() }} <br/>
+            {% trans %}enigmatic.crm.activity.field.type.name{% endtrans %} : {{ activity.getType().getTitle() }} <br/>
+            {% trans %}enigmatic.crm.activity.field.account.name{% endtrans %} : <a class="speednav" href="{{ path('enigmatic_crm_account_view', {'account': activity.getAccount().getId() }) }}" title="">{{ activity.getAccount().getName() }}</a> <br/>
+            {% trans %}enigmatic.crm.activity.field.user.name{% endtrans %} : <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': activity.getUser().getId() }) }}" title="">{{ activity.getUser().getFirstname() }} {{ activity.getUser().getName() }}</a> <br/>
             {% trans %}enigmatic.crm.activity.field.dateStart.name{% endtrans %} : {{ activity.getDateStart() | localizeddate('full', 'short') }} <br/>
             {% trans %}enigmatic.crm.activity.field.comment.name{% endtrans %} : {{ activity.getComment() }} <br/>
         </div>

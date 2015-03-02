@@ -43,8 +43,8 @@ class ContactController extends Controller
             throw new AccessDeniedException();
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:view.html.twig', array(
-            'contact'       => $contact,
-            'map'          => $this->get('enigmatic_crm.service.map')->generateAction($contact->getAddress().', '.($contact->getCity()?$contact->getCity()->getName():'').' '.($contact->getCity()?$contact->getCity()->getCanonicalZipcode():''), null, '400px', '400px;')
+            'contact'   => $contact,
+            'map'       => $this->get('enigmatic_crm.service.map')->generateAction($contact->getAddress().', '.($contact->getCity()?$contact->getCity()->getName():'').' '.($contact->getCity()?$contact->getCity()->getCanonicalZipcode():''), null, '400px', '400px;')
         )));
     }
 

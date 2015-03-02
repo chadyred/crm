@@ -121,6 +121,10 @@ class ActivityController extends Controller
      */
     public function addAction(Account $account = null, Activity $activity = null)
     {
+        $replan = false;
+        if ($activity)
+            $replan = true;
+
         $activity = $this->get('enigmatic_crm.manager.activity')->create($account, $activity);
 
         if (isset($_POST['date_start'])) {
@@ -135,7 +139,7 @@ class ActivityController extends Controller
 
             $this->get('enigmatic_crm.manager.activity')->save($activity);
 
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.activity.message.add'));
+            $this->get('session')->getFlashBag()->add('success', $replan?$this->get('translator')->trans('enigmatic.crm.activity.message.replanned'):$this->get('translator')->trans('enigmatic.crm.activity.message.add'));
             if ($account)
                 return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
             else
@@ -145,6 +149,7 @@ class ActivityController extends Controller
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Activity:form.html.twig', array(
             'activity'      => $activity,
             'account'       => $account,
+            'replan'        => $replan,
             'form'          => $form->createView(),
         )), (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()));
     }
@@ -170,6 +175,7 @@ class ActivityController extends Controller
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Activity:form.html.twig', array(
             'activity'      => $activity,
             'account'       => null,
+            'replan'        => false,
             'form'          => $form->createView(),
         )), (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()));
     }

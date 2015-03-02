@@ -42,7 +42,8 @@ class AccountController extends Controller
             throw new AccessDeniedException();
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:view.html.twig', array(
-            'account'       => $account
+            'account'   => $account,
+            'map'       => $this->get('enigmatic_crm.service.map')->generateAction($account->getAddress().', '.($account->getCity()?$account->getCity()->getName():'').' '.($account->getCity()?$account->getCity()->getCanonicalZipcode():''), null, '400px', '400px;')
         )));
     }
 

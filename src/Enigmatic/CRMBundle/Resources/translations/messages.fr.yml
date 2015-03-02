@@ -1,6 +1,9 @@
 enigmatic:
     crm:
         account:
+            action:
+                sync_with_societe_com: Synchroniser avec Societe.com
+                remove_confirm: Souhaitez-vous réellement supprimer ce compte ?
             contact:
                 empty: Aucun contact n'est disponible pour ce compte
             field:
@@ -60,14 +63,17 @@ enigmatic:
                 titles:
                     activities: Activités
                     contacts: Contacts
-                    details: Résumé
+                    details: Informations du compte
         account_import:
             form:
                 field:
                     file:
                         label: Fichier à importer
+                    sync_societe_com:
+                        label: Synchroniser avec Societe.com pendant l'import (non actif)
         activity:
             action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette activité ?
                 replann: Replannifier
             field:
                 account:
@@ -80,6 +86,8 @@ enigmatic:
                     name: Type d'activité
                 user:
                     name: Utilisateur
+                replanned:
+                    name: Replanifié le
             form:
                 field:
                     account:
@@ -102,12 +110,13 @@ enigmatic:
                 submit:
                     add: Ajouter
                     update: Modifier l'activité
+                    replan: Replanifier l'activité
             message:
                 add: L'activité a été ajoutée
                 confirm:
                     remove: Voulez-vous vraiment supprimer cette activité ?
                 remove: L'activité a été supprimée
-                replanned: Attention, cette activité à été replanifiée
+                replanned: L'activité à été replanifiée
                 update: L'activité a été modifiée
             table:
                 empty: Aucune activité
@@ -132,6 +141,8 @@ enigmatic:
                         label: Agence
                         empty_value: Selectionnez une agence
         agency:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette agence ?
             field:
                 address:
                     name: Adresse
@@ -164,6 +175,8 @@ enigmatic:
                 replannified_to: Replannifié le
             load: Chargement ...
         campaign_faxing:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette campagne de faxing ?
             errors:
                 config_ecofax: Attention, le paramétrage pour l'envoi de fax est invalide. Les fax ne pourront seront pas envoyés
                 load: Une erreur est survenue, impossible de charger les contacts.
@@ -239,6 +252,8 @@ enigmatic:
                     fax: Fax
 
         campaign_mailing:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette campagne de mailing ?
             errors:
                 load: Une erreur est survenue, impossible de charger les contacts.
             field:
@@ -322,6 +337,8 @@ enigmatic:
                     contacts: Contacts
                     mail: Mailing
         contact:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer ce contact ?
             field:
                 account:
                     name: Lié au compte
@@ -445,6 +462,7 @@ enigmatic:
                 activity_add: Ajouter une activité
                 activity_view: Activité
                 activity_update: Modifer une activité
+                activity_replan: Replannifier une activité
                 calendar: Calendrier
                 contacts_list: Contacts
                 contact_add: Ajouter un contact
@@ -466,6 +484,8 @@ enigmatic:
                 user_update: Modifier un utilisateur
 
         user:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cet utilisateur ?
             form:
                 field:
                     firstname:
@@ -489,6 +509,10 @@ enigmatic:
                     rca: Responsable d'agence
                     rs: Responsable de secteur
                     admin: Administrateur
+                locked:
+                    name: Actif
+                    1: Oui
+                    0: Non
             message:
                 add: L'utilisateur a été ajouté
                 remove: L'utilisateur a été supprimé
