@@ -150,6 +150,7 @@ class ActivityController extends Controller
             'activity'      => $activity,
             'account'       => $account,
             'replan'        => $replan,
+            'box'           => null,
             'form'          => $form->createView(),
         )), (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()));
     }
@@ -176,6 +177,7 @@ class ActivityController extends Controller
             'activity'      => $activity,
             'account'       => null,
             'replan'        => false,
+            'box'           => $box,
             'form'          => $form->createView(),
         )), (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()));
     }

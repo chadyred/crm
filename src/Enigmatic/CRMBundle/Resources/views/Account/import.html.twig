@@ -7,6 +7,12 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% trans %}enigmatic.crm.account_import.title.import{% endtrans %}</h1>
+
     <form method="post" action="" {{ form_enctype(form) }}>
 
         {{ form_widget(form) }}

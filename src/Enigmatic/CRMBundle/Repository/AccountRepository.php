@@ -53,6 +53,9 @@ class AccountRepository extends EntityRepository
         $qb->leftjoin('activities.replanned', 'activities_replanned');
         $qb->leftjoin('activities.replannedBy', 'activities_replannedBy');
         $qb->leftjoin('account.owners', 'owners');
+//        $qb->leftjoin('owners.user', 'user');
+//        $qb->leftjoin('user.agencies', 'user_agency');
+//        $qb->leftjoin('user_agency.end', 'user_agency_end');
         $qb->leftjoin('owners.end', 'owners_end');
         $qb->leftjoin('account.agencies', 'agencies');
         $qb->leftjoin('account.city', 'city');
@@ -63,6 +66,9 @@ class AccountRepository extends EntityRepository
             $qb->addSelect('activities_replanned');
             $qb->addSelect('activities_replannedBy');
             $qb->addSelect('owners');
+//            $qb->addSelect('user');
+//            $qb->addSelect('user_agency');
+//            $qb->addSelect('user_agency_end');
             $qb->addSelect('owners_end');
             $qb->addSelect('agencies');
             $qb->addSelect('city');
@@ -84,6 +90,10 @@ class AccountRepository extends EntityRepository
                         case 'name':
                             $qb ->andWhere('account.name LIKE :search_name');
                             $qb ->setParameter('search_name', '%'.$value.'%');
+                            break;
+                        case 'potential':
+                            $qb ->andWhere('agencies.potential = :search_potential');
+                            $qb ->setParameter('search_potential', $value);
                             break;
                         case 'address_full':
                             $qb ->andWhere('account.address LIKE :search_address_full OR account.addressCpl LIKE :search_address_full OR city.canonicalName LIKE :search_address_full OR city.zipcode LIKE :search_address_full');

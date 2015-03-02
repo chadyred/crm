@@ -7,6 +7,13 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% if replan %}{% trans %}enigmatic.crm.header.titles.activity_replan{% endtrans %}{% elseif activity.getId() %}{% trans %}enigmatic.crm.header.titles.activity_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.activity_add{% endtrans %}{% endif %}</h1>
+
+
     {% if activity.getReplanned() %}
         <div class="alert_message alert_message_info">
             {% trans %}enigmatic.crm.activity.message.replanned{% endtrans %}
@@ -17,13 +24,12 @@
         {{ form_widget(form) }}
 
         <input class="btn" type="submit" value="{% if replan %}{% trans %}enigmatic.crm.activity.form.submit.replan{% endtrans %}{% elseif activity.getId() %}{% trans %}enigmatic.crm.activity.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.activity.form.submit.add{% endtrans %}{% endif %}">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
 
-        {% if activity.getId() and activity.getReplanned() == false %}
+        {% if activity.getId() and activity.getReplanned() == false and box == true %}
             {{ button.create('replan', 'enigmatic.crm.activity.action.replann'|trans, path('enigmatic_crm_activity_replann', {'activity': activity.getId()}), null, 'speednav' ) }}
         {% endif %}
 
-        {% if activity.getId() %}
+        {% if activity.getId() and box == true %}
             {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), "return confirmRemove();" ) }}
 
             <script type="text/javascript">

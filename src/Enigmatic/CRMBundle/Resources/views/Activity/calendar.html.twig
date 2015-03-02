@@ -24,10 +24,10 @@
 
     <div id="loader" style="display:none;">{% trans %}enigmatic.crm.calendar.load{% endtrans %}</div>
 
-<div class="parent">
+<div class="parent" style="display:none;">
 <div class="children">
     <a href="javascript:Event.back()"></a>
-<div id="calendar_popup" style="display:none;"></div>
+<div id="calendar_popup"></div>
 </div>
 </div>
 
@@ -129,8 +129,8 @@
                     data: {'date_start': date},
                     cache: true,
                     success : function(code_html, statut) {
-                        $('#calendar_popup').html(code_html.content)
-                        $('#calendar_popup').fadeIn('250');
+                        $('#calendar_popup').html(code_html.content);
+                        $('#calendar_popup').parent().parent().fadeIn('250');
                     },
                     error : function(resultat, statut, erreur) {
                         $('#script-warning').show();
@@ -154,8 +154,8 @@
                     dataType: "json",
                     cache: true,
                     success : function(code_html, statut) {
-                        $('#calendar_popup').html(code_html.content)
-                        $('#calendar_popup').fadeIn('250');
+                        $('#calendar_popup').html(code_html.content);
+                        $('#calendar_popup').parent().parent().fadeIn('250');
                     },
                     error : function(resultat, statut, erreur) {
                         $('#script-warning').show();
@@ -179,8 +179,8 @@
                     dataType: "json",
                     cache: true,
                     success : function(code_html, statut) {
-                        $('#calendar_popup').html(code_html.content)
-                        $('#calendar_popup').fadeIn('250');
+                        $('#calendar_popup').html(code_html.content);
+                        $('#calendar_popup').parent().parent().fadeIn('250');
                     },
                     error : function(resultat, statut, erreur) {
                         $('#script-warning').show();
@@ -199,7 +199,7 @@
             },
 
             back: function () {
-                $('#calendar_popup').fadeOut('250');
+                $('#calendar_popup').parent().parent().fadeOut('250');
                 return false;
             }
         }

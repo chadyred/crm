@@ -7,6 +7,14 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% if campaign.getId() %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_add{% endtrans %}{% endif %}</h1>
+
+
     <form id="campaign_form" method="post" action="" {{ form_enctype(form) }}>
 
 
@@ -213,6 +221,5 @@
     </script>
 
     {{ button.create('submit', campaign.getId()?'enigmatic.crm.campaign_faxing.form.submit.update'|trans:'enigmatic.crm.campaign_faxing.form.submit.add'|trans, null, 'jQuery(\'#campaign_form\').submit();;') }}
-    {{ button.create('back', 'Cancel'|trans, campaign.getId()?path('enigmatic_crm_campaign_faxing_view', {'campaign': campaign.getId}):path('enigmatic_crm_campaign_faxing_list'), null, 'speednav' ) }}
 
 {% endblock %}

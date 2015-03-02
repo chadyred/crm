@@ -55,7 +55,7 @@ class MapService
         $map->setAsync(true);
         $map->setAutoZoom(false);
         $map->setCenter($coordonnees->getLatitude(), $coordonnees->getLongitude(), true);
-        $map->setMapOption('zoom', 15);
+        $map->setMapOption('zoom', 12);
         $map->setMapOption('mapTypeId', MapTypeId::ROADMAP);
         $map->setMapOption('disableDefaultUI', false);
         $map->setMapOption('disableDoubleClickZoom', false);

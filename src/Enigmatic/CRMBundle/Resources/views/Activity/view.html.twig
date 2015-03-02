@@ -12,6 +12,8 @@
             {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
         </div>
 
+
+
         <div class="action action_right">
             {% if activity.getReplanned() == null %}
                 {{ button.create('update', 'Update'|trans, path('enigmatic_crm_activity_update', {'activity': activity.getId()}), null, 'speednav') }}
@@ -23,12 +25,13 @@
         </div>
     {% endif %}
 
+    <h1>{{ activity.getAccount().getName() }} : {{ ('enigmatic.crm.activity_type.field.type.'~activity.getType().getType) | trans }}
+        {% if activity.getReplanned() %}
+            ({% trans %}enigmatic.crm.activity.field.replanned.name{% endtrans %} {{ activity.getReplanned().getDateStart() | localizeddate('full', 'short') }})
+        {% endif %}
+    </h1>
+
     <div class="view">
-        <h1>{{ activity.getAccount().getName() }} : {{ ('enigmatic.crm.activity_type.field.type.'~activity.getType().getType) | trans }}
-            {% if activity.getReplanned() %}
-                ({% trans %}enigmatic.crm.activity.field.replanned.name{% endtrans %} {{ activity.getReplanned().getDateStart() | localizeddate('full', 'short') }})
-            {% endif %}
-        </h1>
 
         <div>
             {% trans %}enigmatic.crm.activity.field.type.name{% endtrans %} : {{ activity.getType().getTitle() }} <br/>

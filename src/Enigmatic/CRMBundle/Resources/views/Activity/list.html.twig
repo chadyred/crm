@@ -16,6 +16,9 @@
             {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
         </div>
 
+        <h1>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h1>
+
+
         <div class="table_pager">
             {% include 'AppBundle:include:pager.html.twig' %}
         </div>

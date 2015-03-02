@@ -23,6 +23,15 @@ enigmatic:
                     name: Téléphone
                 siret:
                     name: Numéro SIRET
+                owners:
+                    name: Assigné à
+                agencies:
+                    name: Agences
+                potential:
+                    name: Potentiel TT
+                    1: TOP 100
+                    2: TOP 150
+                    3: Autre
             form:
                 field:
                     activity:
@@ -53,6 +62,7 @@ enigmatic:
                 update: Le compte a été modifié
             table:
                 empty: Aucun compte n'est disponible
+                empty_owner: Aucun
                 head:
                     address: Adresse
                     name: Société
@@ -64,6 +74,9 @@ enigmatic:
                     activities: Activités
                     contacts: Contacts
                     details: Informations du compte
+                    owners: Chargés d'affaires
+            title:
+                list: Comptes
         account_import:
             form:
                 field:
@@ -71,6 +84,8 @@ enigmatic:
                         label: Fichier à importer
                     sync_societe_com:
                         label: Synchroniser avec Societe.com pendant l'import (non actif)
+            title:
+                import: Importer des comptes
         activity:
             action:
                 remove_confirm: Souhaitez-vous réellement supprimer cette activité ?
@@ -129,6 +144,8 @@ enigmatic:
                 search:
                     dateStart: De
                     dateStartEnd: à
+            title:
+                list: Activités
         activity_type:
             field:
                 type:
@@ -168,6 +185,8 @@ enigmatic:
                 head:
                     name: Nom
                     address: Adresse
+            title:
+                list: Agences
         calendar:
             error_load: Une erreur est survenue, impossible de récupérer les données ou la requête n'a pas pu aboutir ...
             event:
@@ -250,6 +269,8 @@ enigmatic:
                     config: Configuration du faxing
                     contacts: Contacts
                     fax: Fax
+            title:
+                list: Campagne de faxing
 
         campaign_mailing:
             action:
@@ -336,6 +357,8 @@ enigmatic:
                     config: Configuration du mailing
                     contacts: Contacts
                     mail: Mailing
+            title:
+                list: Campagne de mailing
         contact:
             action:
                 remove_confirm: Souhaitez-vous réellement supprimer ce contact ?
@@ -415,6 +438,8 @@ enigmatic:
                     function: Fonction
                     name: Nom
                     phones: Téléphones
+            title:
+                list: Contacts
         header:
             nav:
                 accounts:
@@ -548,3 +573,5 @@ enigmatic:
                 titles:
                     details: Détail
                     agencies: Agence(s)
+            title:
+                list: Utilisateurs

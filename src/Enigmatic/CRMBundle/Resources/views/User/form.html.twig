@@ -7,6 +7,13 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% if user.getId() %}{% trans %}enigmatic.crm.header.titles.user_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.user_add{% endtrans %}{% endif %}</h1>
+
+
     <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
 
         {{ form_row(form.firstname) }}
@@ -21,6 +28,5 @@
         {{ form_rest(form) }}
 
         <input class="btn" type="submit" value="{% if user.getId() %}{% trans %}enigmatic.crm.user.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.user.form.submit.add{% endtrans %}{% endif %}">
-        {{ button.create('back', 'Cancel'|trans, user.getId()?path('enigmatic_crm_user_view', {'user': user.getId}):path('enigmatic_crm_user_list'), null, 'speednav' ) }}
     </form>
 {% endblock %}

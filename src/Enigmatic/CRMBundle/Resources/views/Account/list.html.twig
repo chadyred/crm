@@ -18,6 +18,8 @@
         {% include 'AppBundle:include:pager.html.twig' %}
     </div>
 
+    <h1>{% trans %}enigmatic.crm.account.title.list{% endtrans %}</h1>
+
     <table class="table table_striped table_extended">
         <thead>
             <tr>
@@ -25,7 +27,9 @@
                 {{ table.th('address_full', 'enigmatic.crm.account.table.head.address'|trans, 40, null, params['entity']) }}
                 {{ table.th('phone', 'enigmatic.crm.account.table.head.phone'|trans, 20, null, params['entity']) }}
                 {{ table.th('owner', 'enigmatic.crm.account.table.head.owner'|trans, 20, null, params['entity']) }}
+                {% if is_granted('ROLE_RS') == false %}
                 {{ table.th('potential', 'enigmatic.crm.account.table.head.potential'|trans, 10, params['order'], params['entity']) }}
+                {% endif %}
                 {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
             </tr>
             <tr id="list_search">
@@ -33,7 +37,16 @@
                 {{ table.th_search_input('address_full', params['search']) }}
                 {{ table.th_search_input('phone', params['search']) }}
                 {{ table.th_search_input('owner', params['search']) }}
-                {{ table.th_search_input('potential', params['search']) }}
+                {% if is_granted('ROLE_RS') == false %}
+                <th>
+                    <select class="search_data" data="potential">
+                        <option value="">Tous</option>
+                        <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')) | trans }}</option>
+                        <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')) | trans }}</option>
+                        <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')) | trans }}</option>
+                    </select>
+                </th>
+                {% endif %}
                 {{ table.search_link(params['entity']) }}
             </tr>
         </thead>
@@ -62,11 +75,19 @@
                     {% endif %}
                 </td>
                 <td class="onclick">
-                    todo
+                    {% for owner in account.getOwners() %}
+                        <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': owner.getUser().getId()}) }}" title="">{{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}</a>{% if loop.last == false %}, {% endif %}
+                    {% else %}
+                        {% trans %}enigmatic.crm.account.table.empty_owner{% endtrans %}
+                    {% endfor %}
                 </td>
+                {% if is_granted('ROLE_RS') == false %}
                 <td class="onclick">
-                    todo
+                    {% for account_agency in account.getAgencies() %}
+                        {{ ('enigmatic.crm.account.field.potential.'~account_agency.getPotential()) | trans }}
+                    {% endfor %}
                 </td>
+                {% endif %}
                 <td></td>
             </tr>
         {% else %}

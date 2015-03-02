@@ -18,8 +18,10 @@
         {% endif %}
     </div>
 
+    <h1>{{ contact.getName() }}</h1>
+
+
     <div class="view">
-        <h1>{{ contact.getName() }}</h1>
 
         <div>
             {% trans %}enigmatic.crm.contact.field.account.name{% endtrans %} : <a href="{{ path('enigmatic_crm_account_view', {'account': contact.getAccount().getId()}) }}" title="">{{ contact.getAccount.getName() }}</a> <br/>

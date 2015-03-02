@@ -7,11 +7,16 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% if account.getId() %}{% trans %}enigmatic.crm.header.titles.account_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.account_add{% endtrans %}{% endif %}</h1>
+
     <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
 
         <input class="btn" type="submit" value="{% if account.getId() %}{% trans %}enigmatic.crm.account.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.account.form.submit.add{% endtrans %}{% endif %}">
-        {{ button.create('back', 'Cancel'|trans, account.getId()?path('enigmatic_crm_account_view', {'account': account.getId}):path('enigmatic_crm_account_list'), null, 'speednav' ) }}
     </form>
 {% endblock %}
 

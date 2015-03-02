@@ -7,10 +7,17 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% if agency.getId() %}{% trans %}enigmatic.crm.header.titles.agency_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.agency_add{% endtrans %}{% endif %}</h1>
+
+
     <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
 
         <input class="btn" type="submit" value="{% if agency.getId() %}{% trans %}enigmatic.crm.agency.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency.form.submit.add{% endtrans %}{% endif %}">
-        {{ button.create('back', 'Cancel'|trans, agency.getId()?path('enigmatic_crm_agency_view', {'agency': agency.getId}):path('enigmatic_crm_agency_list'), null, 'speednav' ) }}
     </form>
 {% endblock %}
