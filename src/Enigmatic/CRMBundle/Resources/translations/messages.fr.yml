@@ -208,6 +208,8 @@ enigmatic:
         agency_account:
             message:
                 add: Le compte a été lié à une nouvelle agence
+                update: Les informations ont été modifiées
+                remove: Le lien entre le compte et l'agence a été rompu
                 link_account: Le compte est lié à votre agence
                 link_account_error: Une erreur est survenue, le compte n'a pas été lié à votre agence
             form:

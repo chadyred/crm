@@ -68,6 +68,7 @@ class ContactController extends Controller
         }
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:form.html.twig', array(
+            'account'       => $account,
             'contact'       => $contact,
             'form'          => $form->createView(),
         )));
@@ -92,6 +93,7 @@ class ContactController extends Controller
         }
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Contact:form.html.twig', array(
+            'account'       => null,
             'contact'       => $contact,
             'form'          => $form->createView(),
         )));

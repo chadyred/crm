@@ -22,6 +22,11 @@ enigmatic_crm_agency:
     type: be_simple_i18n
     prefix:  { fr: "/agences", en: "/agencies" }
 
+enigmatic_crm_agency_account:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/agencyAccount.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/comptes/agences", en: "/accounts/agencies" }
+
 enigmatic_crm_user:
     resource: "@EnigmaticCRMBundle/Resources/config/routing/user.yml"
     type: be_simple_i18n

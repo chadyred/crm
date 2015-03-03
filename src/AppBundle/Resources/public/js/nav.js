@@ -16,6 +16,7 @@ var Nav = {
                 else
                     window.history.replaceState(document.title,code_html.title, code_html.url);
                 jQuery('#'+container).html(code_html.content);
+                Nav.backTopTop();
             },
 
             error : function(resultat, statut, erreur){
@@ -25,7 +26,6 @@ var Nav = {
 
             complete : function(resultat, statut) {
                 Nav.restartEvent('#'+container);
-                jQuery("html, body").animate({ scrollTop: 0 }, 350);
             }
         });
 
@@ -55,6 +55,7 @@ var Nav = {
                 jQuery('#'+container).html(code_html.content);
                 if (code_html.url != url)
                     window.history.pushState(document.title,code_html.title, code_html.url);
+                Nav.backTopTop();
             },
 
             error : function(resultat, statut, erreur){
@@ -64,7 +65,6 @@ var Nav = {
 
             complete : function(resultat, statut) {
                 Nav.restartEvent('#'+container);
-                jQuery("html, body").animate({ scrollTop: 0 }, 350);
             }
         });
 
@@ -114,6 +114,10 @@ var Nav = {
                 return false;
             }
         });
+    },
+
+    backTopTop: function() {
+        jQuery("html, body").animate({ scrollTop: 0 }, 350);
     }
 };
 

@@ -17,7 +17,7 @@
             {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_account_remove', {'account': account.getId()}), 'return confirm("'~'enigmatic.crm.account.action.remove_confirm' | trans~'");') }}
         {% endif %}
         {{ button.create('sync', 'enigmatic.crm.account.action.sync_with_societe_com'|trans, null, 'alert("Cette fonctionnalité n\'est pas encore active."); return false;') }}
-        {{ button.create('add', 'enigmatic.crm.account.action.add_agency'|trans, path('enigmatic_crm_account_add_agency', {'account': account.getId()}), null, 'speednav') }}
+        {{ button.create('add', 'enigmatic.crm.account.action.add_agency'|trans, path('enigmatic_crm_agency_account_add', {'account': account.getId()}), null, 'speednav') }}
         {{ button.create('add', 'enigmatic.crm.account.action.add_user'|trans, path('enigmatic_crm_account_add_owner', {'account': account.getId()}), null, 'speednav') }}
     </div>
 

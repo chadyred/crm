@@ -8,7 +8,7 @@
     {% import "AppBundle:macro:button.html.twig" as button %}
 
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_view', {'account': account.getId()}), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, account.getId()?path('enigmatic_crm_account_view', {'account': account.getId()}):path('enigmatic_crm_account_list'), null, 'speednav') }}
     </div>
 
     <h1>{% if account.getId() %}{% trans %}enigmatic.crm.header.titles.account_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.account_add{% endtrans %}{% endif %}</h1>
@@ -17,7 +17,7 @@
 
         {% if link_duplicate is defined %}
             {% if link_duplicate %}
-                <a href="{{ path('enigmatic_crm_account_link_to_agency', {'account': link_duplicate['account'], 'md5': link_duplicate['md5']}) }}">Lier ce compte à mon agence</a>
+                <a href="{{ path('enigmatic_crm_agency_account_link_to_agency', {'account': link_duplicate['account'], 'md5': link_duplicate['md5']}) }}">Lier ce compte à mon agence</a>
             {% endif %}
         {% endif %}
 

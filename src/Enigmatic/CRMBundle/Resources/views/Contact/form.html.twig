@@ -9,7 +9,7 @@
 
 
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_contact_view', {'contact': contact.getId()}), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, account?path('enigmatic_crm_account_view', {'account': account.getId()}):contact.getId()?path('enigmatic_crm_contact_view', {'contact': contact.getId()}):path('enigmatic_crm_contact_list'), null, 'speednav') }}
     </div>
 
     <h1>{% if contact.getId() %}{% trans %}enigmatic.crm.header.titles.contact_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.contact_add{% endtrans %}{% endif %}</h1>
