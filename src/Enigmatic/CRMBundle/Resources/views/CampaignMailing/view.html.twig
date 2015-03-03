@@ -1,5 +1,5 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
-{% block body_class %}{{ parent() }} mailing {% endblock %}
+
 {% block title %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} - {{ campaign.getName() }} - {{ parent() }}{% endblock %}
 {% block nav_active %}campaign_mailing{% endblock %}
 
@@ -15,20 +15,22 @@
             {{ button.create('send', 'Send test mail'|trans, path('enigmatic_crm_campaign_mailing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
         {% endif %}
         {% if is_granted('ROLE_RCA') %}
-            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_mailing_remove', {'campaign': campaign.getId()}), null, 'speednav') }}
+            {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_mailing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.agency.campaign_mailing.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
 
     <h1>{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} : {{ campaign.getName() }}</h1>
 
-    <div class="inner-content">
+    <div class="view">
         <h2>{% trans %}enigmatic.crm.campaign_mailing.view.title.mail{% endtrans %}</h2>
 
         <p>{% trans %}enigmatic.crm.campaign_mailing.field.emailSubject.name{% endtrans %} : <span>{{ campaign.getEmailSubject() }} </span></p>
-        {% trans %}enigmatic.crm.campaign_mailing.field.emailBody.name{% endtrans %} : <br/>
+        <p>{% trans %}enigmatic.crm.campaign_mailing.field.emailBody.name{% endtrans %} : <span>
         <p class="mail_content" style="max-height:200px;overflow:auto;">
             {{ campaign.getEmailBody() | raw }}
-        </p><br/>
+        </p>
+		</span>
+		</p>
 
         <h2>{% trans %}enigmatic.crm.campaign_mailing.view.title.config{% endtrans %}</h2>
         <p>{% trans %}enigmatic.crm.campaign_mailing.field.dateSended.name{% endtrans %} : <span>{{ campaign.getDateSended() | localizeddate('full', 'short') }}</span></p>

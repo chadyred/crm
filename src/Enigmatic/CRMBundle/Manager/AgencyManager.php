@@ -45,6 +45,7 @@ class AgencyManager
      * @return Agency
      */
     public function remove(Agency $agency, $flush = true) {
+        // @rp_todo : Remove les utilisateurs
         $this->em->remove($agency);
         if ($flush)
             $this->em->flush();

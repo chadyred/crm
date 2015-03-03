@@ -14,17 +14,18 @@
 
     <div class="action action_right">
         {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
+        {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_user_remove', {'user': user.getId()}), 'return confirm("'~'enigmatic.crm.user.action.remove_confirm' | trans~'");') }}
     </div>
 
     <h1>{{ user.getFirstname() }} {{ user.getName() }}</h1>
 
-    <section class="details">
+     <div class="view">
 
         <h2>{% trans %}enigmatic.crm.user.view.titles.details{% endtrans %}</h2>
 
-        {% trans %}enigmatic.crm.user.field.name.name{% endtrans %} : {{ user.getFirstname() }} {{ user.getName() }} <br/>
-        {% trans %}enigmatic.crm.user.field.email.name{% endtrans %} : {{ user.getEmail() }} <br/>
-        {% trans %}enigmatic.crm.user.field.role.name{% endtrans %} :
+        <p>{% trans %}enigmatic.crm.user.field.name.name{% endtrans %} : <span> {{ user.getFirstname() }} {{ user.getName() }}</span> </p>
+        <p>{% trans %}enigmatic.crm.user.field.email.name{% endtrans %} : <span> {{ user.getEmail() }}</span> </p>
+        <p>{% trans %}enigmatic.crm.user.field.role.name{% endtrans %} :<span>
         {% if user.hasRole('ROLE_ADMIN') %}
             {% trans %}enigmatic.crm.user.field.role.admin{% endtrans %}
         {% elseif user.hasRole('ROLE_RS') %}
@@ -35,14 +36,14 @@
             {% trans %}enigmatic.crm.user.field.role.ca{% endtrans %}
         {% else %}
             {% trans %}enigmatic.crm.user.field.role.empty{% endtrans %}
-        {% endif %} <br/>
-        {% trans %}enigmatic.crm.user.field.locked.name{% endtrans %} : {{ ('enigmatic.crm.user.field.locked.'~(user.isLocked()?0:1)) | trans }}
+        {% endif %} </span></p>
+        <p>{% trans %}enigmatic.crm.user.field.locked.name{% endtrans %} : <span>{{ ('enigmatic.crm.user.field.locked.'~(user.isLocked()?0:1)) | trans }}</span></p>
 
 
         <h2>{% trans %}enigmatic.crm.user.view.titles.agencies{% endtrans %}</h2>
 
-        {% trans %}enigmatic.crm.user.field.agencies.name{% endtrans %} : {% if user.getAgency() %}{{ user.getAgency().getName() }}{% endif %}
+        <p>{% trans %}enigmatic.crm.user.field.agencies.name{% endtrans %} : <span>{% if user.getAgency() %}{{ user.getAgency().getName() }}{% endif %}</span></p>
 
-    </section>
+    </div>
 
 {% endblock %}

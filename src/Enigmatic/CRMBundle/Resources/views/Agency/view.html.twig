@@ -14,6 +14,7 @@
 
     <div class="action action_right">
         {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_agency_update', {'agency': agency.getId()}), null, 'speednav') }}
+        {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_agency_remove', {'agency': agency.getId()}), 'return confirm("'~'enigmatic.crm.agency.action.remove_confirm' | trans~'");') }}
     </div>
 
     <h1>{{ agency.getName() }}</h1>

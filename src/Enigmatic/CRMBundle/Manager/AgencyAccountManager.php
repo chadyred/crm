@@ -52,6 +52,7 @@ class AgencyAccountManager
      * @return AgencyAccount
      */
     public function remove(AgencyAccount $agency_account, $flush = true) {
+        // @rp_todo : Remove les owners
         $this->em->remove($agency_account);
         if ($flush)
             $this->em->flush();

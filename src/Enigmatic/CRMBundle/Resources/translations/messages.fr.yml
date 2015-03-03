@@ -185,7 +185,7 @@ enigmatic:
                         empty_value: Selectionnez une agence
         agency:
             action:
-                remove_confirm: Souhaitez-vous réellement supprimer cette agence ?
+                remove_confirm: Souhaitez-vous réellement supprimer cette agence ? \n\nAttention ! Toutes les données en lien avec cette agence seront supprimées (utilisateurs, activités)
             field:
                 address:
                     name: Adresse
@@ -579,7 +579,7 @@ enigmatic:
                 user:     Invité
         user:
             action:
-                remove_confirm: Souhaitez-vous réellement supprimer cet utilisateur ?
+                remove_confirm: Souhaitez-vous réellement supprimer cet utilisateur ? \n\nAttention, toutes les activités de l'utilisateurs seront perdues
             form:
                 field:
                     firstname:

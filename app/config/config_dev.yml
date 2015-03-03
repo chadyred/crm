@@ -45,4 +45,4 @@ assetic:
     use_controller: true
 
 swiftmailer:
-    delivery_address: %email.super_admin%
+    delivery_address: mb@enigmatic.fr #%email.super_admin%
