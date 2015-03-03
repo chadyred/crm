@@ -16,7 +16,7 @@
             {{ button.create('send', 'Send test mail'|trans, path('enigmatic_crm_campaign_mailing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
         {% endif %}
         {% if is_granted('ROLE_RCA') %}
-            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_mailing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.agency.campaign_mailing.remove_confirm' | trans~'");') }}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_mailing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.campaign_mailing.action.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
 
