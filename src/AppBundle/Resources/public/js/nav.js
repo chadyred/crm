@@ -24,19 +24,8 @@ var Nav = {
             },
 
             complete : function(resultat, statut) {
-                jQuery('body').trigger("NavLoad")
-                jQuery('#'+container).find('a.speednav').click(function() {
-                    Nav.get(jQuery(this).attr('href'));
-                    return false;
-                });
-                jQuery('#'+container).find('form.speednav').submit(function() {
-                    if (jQuery(this).hasClass('speednav_error'))
-                        return true;
-                    else {
-                        Nav.post(jQuery(this));
-                        return false;
-                    }
-                });
+                Nav.restartEvent('#'+container);
+                jQuery("html, body").animate({ scrollTop: 0 }, "slow");
             }
         });
 
@@ -74,19 +63,8 @@ var Nav = {
             },
 
             complete : function(resultat, statut) {
-                jQuery('body').trigger("NavLoad")
-                jQuery('#'+container).find('a.speednav').click(function() {
-                    Nav.get(jQuery(this).attr('href'));
-                    return false;
-                });
-                jQuery('#'+container).find('form.speednav').submit(function() {
-                    if (jQuery(this).hasClass('speednav_error'))
-                        return true;
-                    else {
-                        Nav.post(jQuery(this));
-                        return false;
-                    }
-                });
+                Nav.restartEvent('#'+container);
+                jQuery("html, body").animate({ scrollTop: 0 }, "slow");
             }
         });
 
@@ -115,36 +93,31 @@ var Nav = {
 
             complete : function(resultat, statut) {
                 document.title = title;
-                jQuery('body').trigger("NavLoad")
-                jQuery('#'+container).find('a.speednav').click(function() {
-                    Nav.get(jQuery(this).attr('href'));
-                    return false;
-                });
-                jQuery('#'+container).find('form.speednav').submit(function() {
-                    Nav.post(jQuery(this));
-                    return false;
-                });
+                Nav.restartEvent('#'+container);
             }
         });
 
         return false;
+    },
+
+    restartEvent: function(container) {
+        jQuery('body').trigger("NavLoad");
+        jQuery(container).find('a.speednav').click(function() {
+            Nav.get(jQuery(this).attr('href'));
+            return false;
+        });
+        jQuery(container).find('form.speednav').submit(function() {
+            if (jQuery(this).hasClass('speednav_error'))
+                return true;
+            else {
+                Nav.post(jQuery(this));
+                return false;
+            }
+        });
     }
 };
 
 jQuery(window).on('popstate', function() {
     Nav.get(window.location.href, null, true);
 });
-
-jQuery('a.speednav').click(function() {
-    Nav.get(jQuery(this).attr('href'));
-    return false;
-});
-
-jQuery('form.speednav').submit(function() {
-    if (jQuery(this).hasClass('speednav_error'))
-        return true;
-    else {
-        Nav.post(jQuery(this));
-        return false;
-    }
-});
+Nav.restartEvent('body');
