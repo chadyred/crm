@@ -71,6 +71,7 @@
             {% for agency_account in account.getAgencies() %}
                 <li>
                     {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_agency_account_update', {'agency_account': agency_account.getId()}), null, 'speednav speednav_fix', 'account_owner') }}
+                    {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_agency_account_remove', {'agency_account': agency_account.getId()}), 'return confirm("'~'enigmatic.crm.agency_account.action.remove_confirm' | trans~'");') }}
                     <a class="speednav" href="{{ path('enigmatic_crm_agency_view', {'agency': agency_account.getAgency().getId()}) }}" title="">{{ agency_account.getAgency().getName() }}</a> <br/>
                     {% trans %}enigmatic.crm.account.field.potential.name{% endtrans %} : {{ ('enigmatic.crm.account.field.potential.'~agency_account.getPotential()) | trans }} <br/>
                     {% trans %}enigmatic.crm.account.field.description.name{% endtrans %} : <br/>{{ agency_account.getDescription() | nl2br }} <br/>

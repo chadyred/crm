@@ -16,6 +16,12 @@ enigmatic_crm_agency_account_update:
     requirements:
         agency_account: \d+
 
+enigmatic_crm_agency_account_remove:
+    locales:  { fr: "/supprimer-{agency_account}", en: "/remove-{agency_account}" }
+    defaults: { _controller: EnigmaticCRMBundle:AgencyAccount:remove }
+    requirements:
+        agency_account: \d+
+
 enigmatic_crm_agency_account_link_to_agency:
     locales:  { fr: "/lier-compte-{account}-{md5}", en: "/account-link-{account}-{md5}" }
     defaults: { _controller: EnigmaticCRMBundle:AgencyAccount:linkAccount }

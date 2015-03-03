@@ -214,6 +214,8 @@ enigmatic:
             title:
                 list: Agences
         agency_account:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer la laison avec cette agence ?
             message:
                 add: Le compte a été lié à une nouvelle agence
                 update: Les informations ont été modifiées
