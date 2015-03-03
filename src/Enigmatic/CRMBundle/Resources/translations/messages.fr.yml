@@ -485,6 +485,8 @@ enigmatic:
                     phones: Téléphones
             title:
                 list: Contacts
+        dashboard:
+            title: Synthèse
         header:
             nav:
                 accounts:
@@ -553,7 +555,10 @@ enigmatic:
                 user_add: Ajouter un utilisateur
                 user_view: Utilisateur
                 user_update: Modifier un utilisateur
-
+            welcome:
+                admin:    Administrateur
+                message:  Bienvenue
+                user:     Invité
         user:
             action:
                 remove_confirm: Souhaitez-vous réellement supprimer cet utilisateur ?
