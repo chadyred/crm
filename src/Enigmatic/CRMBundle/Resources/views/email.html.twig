@@ -1,6 +1,4 @@
 {% extends "AppBundle::email.html.twig" %}
 {% block subject %}{% endblock %}
-{% block body %}
-    {% block content %}{% endblock %}
-    {% block footer %}<footer>CRM LIP Intérim {{ 'now' | date('Y') }}</footer>{% endblock %}
-{% endblock %}
+{% block content %}{% endblock %}
+{% block footer %}<footer>CRM LIP Intérim {{ 'now' | date('Y') }}</footer>{% endblock %}

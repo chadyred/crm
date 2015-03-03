@@ -46,6 +46,9 @@ twig:
         resources:
             - ':default:fields.html.twig'
 
+    globals:
+        host_name: %host_name%
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
