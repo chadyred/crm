@@ -25,7 +25,7 @@ var Nav = {
 
             complete : function(resultat, statut) {
                 Nav.restartEvent('#'+container);
-                jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+                jQuery("html, body").animate({ scrollTop: 0 }, 350);
             }
         });
 
@@ -64,7 +64,7 @@ var Nav = {
 
             complete : function(resultat, statut) {
                 Nav.restartEvent('#'+container);
-                jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+                jQuery("html, body").animate({ scrollTop: 0 }, 350);
             }
         });
 

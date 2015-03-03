@@ -16,13 +16,13 @@ enigmatic_crm_activity_view_box:
 
 enigmatic_crm_activity_add:
     locales:  { fr: "/ajouter", en: "/add" }
-    defaults: { _controller: EnigmaticCRMBundle:Activity:add }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:add, activity: 0 }
     options:
         expose: true
 
 enigmatic_crm_activity_replann:
     locales:  { fr: "/replanifier-{activity}", en: "/replan-{activity}" }
-    defaults: { _controller: EnigmaticCRMBundle:Activity:add }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:add, account: 0 }
     requirements:
         activity: \d+
     options:

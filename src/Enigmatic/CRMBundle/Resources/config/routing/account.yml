@@ -38,7 +38,7 @@ enigmatic_crm_account_activity_list:
 
 enigmatic_crm_account_activity_add:
     locales:  { fr: "/ajouter-activite-{account}", en: "/add-activity-{account}" }
-    defaults: { _controller: EnigmaticCRMBundle:Activity:add }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:add, activity: 0 }
     requirements:
         account: \d+
 

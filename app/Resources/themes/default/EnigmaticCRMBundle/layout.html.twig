@@ -23,19 +23,16 @@
 
 {% endblock %}
 
-{% block body %}
-
-    
+{% block body %} 
 
         <header id="header">
             <div class="header_right">
-                <a class="speednav logout" href="{{ path('logout') }}"
-                   title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}">{% trans %}
-                    enigmatic.crm.header.logout.name{% endtrans %}</a>
+                <a class="speednav ico ico_logout" href="{{ path('logout') }}"
+                   title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}"><span>{% trans %}
+                    enigmatic.crm.header.logout.name{% endtrans %}</span></a>
             </div>
         </header>
-
-    
+   
 
     <aside class="sidebar">
 	<div id="logo"></div>
@@ -68,13 +65,13 @@
                 <li id="header_nav_activities">
                     <a class="speednav nav_link" href="{{ path('enigmatic_crm_activity_calendar') }}"
                        title="{% trans %}enigmatic.crm.header.nav.activities.title{% endtrans %}">
-                        <span class="nav_ico"><i class="ico ico_files-empty"></i></span>
+                        <span class="nav_ico"><i class="ico ico_calendar"></i></span>
                         {% trans %}enigmatic.crm.header.nav.activities.link{% endtrans %}
                     </a>
                 </li>
 
                 <li id="header_nav_mailing" class="nav_collapsible">
-                    <a class="nav_link" href="#">
+                    <a class="nav_link" href="">
                         <span class="nav_ico"><i class="ico ico_printer"></i></span>
                         {% trans %}enigmatic.crm.header.nav.campaign.link{% endtrans %}
                     </a>
@@ -89,7 +86,7 @@
                 </li>
                 {% if is_granted('ROLE_RS') %}
                     <li id="header_nav_config" class="nav_collapsible">
-                        <a class="nav_link" href="#">
+                        <a class="nav_link" href="">
                             <span class="nav_ico"><i class="ico ico_cog"></i></span>
                             {% trans %}enigmatic.crm.header.nav.system.link{% endtrans %}
                         </a>
@@ -109,7 +106,6 @@
     </aside>
 
     <div id="content">
-
         {{ parent() }}
 
         {% block content %}{% endblock %}

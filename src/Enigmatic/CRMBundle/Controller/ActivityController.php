@@ -152,7 +152,7 @@ class ActivityController extends Controller
             'replan'        => $replan,
             'box'           => null,
             'form'          => $form->createView(),
-        )), (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()));
+        ), (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted())));
     }
 
     /**
