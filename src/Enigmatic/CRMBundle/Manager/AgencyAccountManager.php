@@ -13,14 +13,16 @@ class AgencyAccountManager
     protected $em;
     protected $class;
     protected $userManager;
+    protected $accountOwnerManager;
 
     /**
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager) {
+    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager, AccountOwnerManager $accountOwnerManager) {
         $this->class = 'EnigmaticCRMBundle:AgencyAccount';
         $this->em  = $entityManager;
         $this->userManager  = $userManager;
+        $this->accountOwnerManager  = $accountOwnerManager;
     }
 
     /**
@@ -52,7 +54,10 @@ class AgencyAccountManager
      * @return AgencyAccount
      */
     public function remove(AgencyAccount $agency_account, $flush = true) {
-        // @rp_todo : Remove les owners
+
+        foreach ($this->accountOwnerManager->getByAccountAndAgency($agency_account->getAccount(), $agency_account->getAgency()) as $account_owner)
+            $this->accountOwnerManager->end($account_owner, false);
+
         $this->em->remove($agency_account);
         if ($flush)
             $this->em->flush();

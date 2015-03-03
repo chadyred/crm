@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * AccountOwner
  *
  * @ORM\Table(name="crm_account_owner")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\AccountOwnerRepository")
  */
 class AccountOwner
 {
@@ -99,29 +99,6 @@ class AccountOwner
     public function getDateCreated()
     {
         return $this->dateCreated;
-    }
-
-    /**
-     * Set dateEnd
-     *
-     * @param \DateTime $dateEnd
-     * @return AccountOwner
-     */
-    public function setDateEnd($dateEnd)
-    {
-        $this->dateEnd = $dateEnd;
-
-        return $this;
-    }
-
-    /**
-     * Get dateEnd
-     *
-     * @return \DateTime 
-     */
-    public function getDateEnd()
-    {
-        return $this->dateEnd;
     }
 
     /**

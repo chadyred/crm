@@ -10,6 +10,7 @@ class AgencyManager
 {
     protected $em;
     protected $class;
+    protected $userManager;
 
     /**
      * @param EntityManagerInterface $entityManager
@@ -17,7 +18,7 @@ class AgencyManager
     public function __construct(EntityManagerInterface $entityManager, UserManager $userManager) {
         $this->class = 'EnigmaticCRMBundle:Agency';
         $this->em  = $entityManager;
-        $this->$userManager  = $userManager;
+        $this->userManager  = $userManager;
     }
 
     /**
@@ -46,7 +47,12 @@ class AgencyManager
      * @return Agency
      */
     public function remove(Agency $agency, $flush = true) {
-        // @rp_todo : Remove les utilisateurs
+
+        foreach ($this->userManager->getAll() as $user) {
+            if ($user->getAgency() == $agency)
+                $this->userManager->remove($user);
+        }
+
         $this->em->remove($agency);
         if ($flush)
             $this->em->flush();

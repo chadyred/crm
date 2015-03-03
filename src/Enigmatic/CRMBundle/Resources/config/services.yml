@@ -12,7 +12,7 @@ services:
 
     enigmatic_crm.manager.agency_account:
         class: Enigmatic\CRMBundle\Manager\AgencyAccountManager
-        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user, @enigmatic_crm.manager.account_owner]
 
     enigmatic_crm.manager.account_owner:
         class: Enigmatic\CRMBundle\Manager\AccountOwnerManager
@@ -32,7 +32,7 @@ services:
 
     enigmatic_crm.manager.agency:
         class: Enigmatic\CRMBundle\Manager\AgencyManager
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
 
     enigmatic_crm.manager.user:
         class: Enigmatic\CRMBundle\Manager\UserManager

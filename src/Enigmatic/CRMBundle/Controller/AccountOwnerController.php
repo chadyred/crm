@@ -44,7 +44,7 @@ class AccountOwnerController extends Controller
         if (!$this->get('enigmatic_crm.service.grant')->grantAccountOwner($account_owner))
             throw new AccessDeniedException();
 
-        $this->get('enigmatic_crm.manager.account_owner')->remove($account_owner);
+        $this->get('enigmatic_crm.manager.account_owner')->end($account_owner);
 
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account_owner.message.remove'));
         return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account_owner->getAccount()->getId())));

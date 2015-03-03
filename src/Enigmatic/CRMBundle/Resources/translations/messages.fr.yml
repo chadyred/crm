@@ -439,7 +439,7 @@ enigmatic:
                 function:
                     name: Fonction
                 phone:
-                    name: Téléphone
+                    name: Téléphones
                     type:
                         1: Bureau
                         2: Domicile
