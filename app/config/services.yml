@@ -25,6 +25,11 @@ services:
         tags:
             -  { name: twig.extension }
 
+    enigmatic.siret_format:
+        class: AppBundle\Services\SiretFormat
+        tags:
+            -  { name: twig.extension }
+
     enigmatic.rewrite_to_url:
         class: AppBundle\Services\RewriteToUrl
         tags:

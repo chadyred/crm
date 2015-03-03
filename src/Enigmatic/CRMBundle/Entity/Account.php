@@ -5,12 +5,16 @@ namespace Enigmatic\CRMBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Enigmatic\CRMBundle\Validator\Siret;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Account
  *
- * @ORM\Table(name="crm_account")
+ * @ORM\Table(name="crm_account", uniqueConstraints={@UniqueConstraint(name="account_duplicate", columns={"name", "city_id"})}))
  * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\AccountRepository")
+ * @UniqueEntity(fields={"name", "city"}, message="enigmatic.crm.account.unique_entity")
  */
 class Account
 {
@@ -40,10 +44,9 @@ class Account
      *
      * @ORM\Column(name="siret", type="string", length=14, nullable=true)
      * @Assert\Length(min="14", max="14")
+     * @Siret()
      */
     private $siret;
-    // @rp_todo : validation du siret
-
     /**
      * @var string
      *

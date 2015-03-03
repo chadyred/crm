@@ -6,20 +6,21 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
+	{% import "AppBundle:macro:icon.html.twig" as icon %}
 
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_agency_list'), null, 'speednav') }}
     </div>
 
     <div class="action action_right">
-        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_agency_update', {'agency': agency.getId()}), null, 'speednav') }}
+        {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_agency_update', {'agency': agency.getId()}), null, 'speednav') }}
     </div>
 
     <h1>{{ agency.getName() }}</h1>
 
     <section class="details">
 
-    {% trans %}enigmatic.crm.agency.field.address.name{% endtrans %} :
+    <p>{% trans %}enigmatic.crm.agency.field.address.name{% endtrans %} :</p>
     <address>
         {{ agency.getAddress() }}<br/>
         {% if agency.getAddressCpl() %}

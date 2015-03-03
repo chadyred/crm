@@ -1,0 +1,23 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.account_owner.title.add{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}agency_account{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    <h1>{% if first %}{% if is_granted('ROLE_RS') %}{% trans %}enigmatic.crm.account_owner.title.first_add{% endtrans %}{% else %}{% trans %}enigmatic.crm.account_owner.title.first_add_rca{% endtrans %}{% endif %}{% else %}{% trans %}enigmatic.crm.account_owner.title.add{% endtrans %}{% endif %}</h1>
+
+    <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% trans %}enigmatic.crm.account_owner.form.submit.add{% endtrans %}">
+    </form>
+{% endblock %}
+
+

@@ -9,7 +9,7 @@
 
     {% if box == false %}
         <div class="action action_left">
-            {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+            {{ button.create('back', 'Back'|trans, path('enigmatic_crm_activity_list'), null, 'speednav') }}
         </div>
 
 

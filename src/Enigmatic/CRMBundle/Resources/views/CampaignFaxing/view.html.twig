@@ -15,20 +15,21 @@
 
     <div class="action action_right">
         {% if campaign.getState() != constant('CAMPAIGN_FAXING_SENDED', campaign) %}
-            {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_faxing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+            {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_campaign_faxing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+            {{ button.create('send', 'Send test fax'|trans, path('enigmatic_crm_campaign_faxing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
         {% endif %}
         {% if is_granted('ROLE_RCA') %}
-            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_faxing_remove', {'campaign': campaign.getId()}), null, 'speednav') }}
+            {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_faxing_remove', {'campaign': campaign.getId()}), null, 'speednav') }}
         {% endif %}
     </div>
 
     <h1>{% trans %}enigmatic.crm.header.titles.campaign_faxing_view{% endtrans %} : {{ campaign.getName() }}</h1>
 
-    <div>
+    <section class="details">
         <h2>{% trans %}enigmatic.crm.campaign_faxing.view.title.fax{% endtrans %}</h2>
         <ul class="faxing_contact" style="max-height:200px;overflow:auto;">
             {% for fax in campaign.getFaxs() %}
-                <li>{{ button.create('download', 'Download'|trans, path('enigmatic_crm_campaign_faxing_download', {'fax': fax.getId()})) }}</li>
+                <li>{{ icon.create('download', 'Download'|trans, path('enigmatic_crm_campaign_faxing_download', {'fax': fax.getId()})) }}</li>
             {% else %}
                 <li>Aucun</li>
             {% endfor %}
@@ -58,6 +59,6 @@
         </ul>
 
 
-    </div>
+    </section>
 
 {% endblock %}

@@ -436,9 +436,11 @@ class Contact
      */
     public function getFax()
     {
-        foreach ($this->getPhones() as $phone) {
-            if ($phone->getType() == ContactPhone::FAX)
-                return $phone->getNumero();
+        if (count($this->getPhones())) {
+            foreach ($this->getPhones() as $phone) {
+                if ($phone->getType() == ContactPhone::FAX)
+                    return $phone->getPhone();
+            }
         }
 
         return $this->getAccount()->getFax();

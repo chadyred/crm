@@ -6,13 +6,14 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
-
+	{% import "AppBundle:macro:icon.html.twig" as icon %}
+	
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_user_list'), null, 'speednav') }}
     </div>
 
     <div class="action action_right">
-        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
+        {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
     </div>
 
     <h1>{{ user.getFirstname() }} {{ user.getName() }}</h1>
@@ -37,9 +38,6 @@
         {% endif %} <br/>
         {% trans %}enigmatic.crm.user.field.locked.name{% endtrans %} : {{ ('enigmatic.crm.user.field.locked.'~(user.isLocked()?0:1)) | trans }}
 
-    </section>
-
-    <section>
 
         <h2>{% trans %}enigmatic.crm.user.view.titles.agencies{% endtrans %}</h2>
 

@@ -8,6 +8,14 @@ services:
 
     enigmatic_crm.manager.account:
         class: Enigmatic\CRMBundle\Manager\AccountManager
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.manager.agency_account:
+        class: Enigmatic\CRMBundle\Manager\AgencyAccountManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.account_owner:
+        class: Enigmatic\CRMBundle\Manager\AccountOwnerManager
         arguments: [@doctrine.orm.entity_manager]
 
     enigmatic_crm.manager.contact:
@@ -80,7 +88,13 @@ services:
         class: Enigmatic\CRMBundle\Form\AccountType
         tags:
             - { name: form.type, alias: enigmatic_crm_account }
-        arguments: []
+        arguments: [@security.authorization_checker]
+
+    enigmatic_crm.form.account_owner:
+        class: Enigmatic\CRMBundle\Form\AccountOwnerType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_account_owner }
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user]
 
     enigmatic_crm.form.account_import:
         class: Enigmatic\CRMBundle\Form\AccountImportType
@@ -110,6 +124,12 @@ services:
         class: Enigmatic\CRMBundle\Form\AgencyType
         tags:
             - { name: form.type, alias: enigmatic_crm_agency }
+        arguments: []
+
+    enigmatic_crm.form.agency_account:
+        class: Enigmatic\CRMBundle\Form\AgencyAccountType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency_account }
         arguments: []
 
     enigmatic_crm.form.agency_user:
@@ -148,6 +168,12 @@ services:
             - { name: form.type, alias: enigmatic_crm_campaign_faxing }
         arguments: []
 
+    enigmatic_crm.form.campaign_faxing_test:
+        class: Enigmatic\CRMBundle\Form\CampaignFaxingTestType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_faxing_test }
+        arguments: []
+
     enigmatic_crm.form.campaign_faxing_fax:
         class: Enigmatic\CRMBundle\Form\CampaignFaxingFaxType
         tags:
@@ -171,6 +197,10 @@ services:
     enigmatic_crm.service.calendar:
         class: Enigmatic\CRMBundle\Services\CalendarService
         arguments: [@enigmatic_crm.manager.user, @security.authorization_checker, , @translator.default]
+
+    enigmatic_crm.service.account:
+        class: Enigmatic\CRMBundle\Services\AccountService
+        arguments: [@enigmatic_crm.manager.account, @enigmatic_crm.manager.user]
 
 # PARAM CONVERTER
 

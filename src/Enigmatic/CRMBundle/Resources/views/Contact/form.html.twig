@@ -9,13 +9,13 @@
 
 
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_contact_view', {'contact': contact.getId()}), null, 'speednav') }}
     </div>
 
     <h1>{% if contact.getId() %}{% trans %}enigmatic.crm.header.titles.contact_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.contact_add{% endtrans %}{% endif %}</h1>
 
 
-    <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
+    <form id="contact" class="speednav" method="post" action="" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
 
         <input class="btn" type="submit" value="{% if contact.getId() %}{% trans %}enigmatic.crm.contact.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.contact.form.submit.add{% endtrans %}{% endif %}">

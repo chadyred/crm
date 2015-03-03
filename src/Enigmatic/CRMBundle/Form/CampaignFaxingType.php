@@ -56,7 +56,7 @@ class CampaignFaxingType extends AbstractType
                 'required'      => false,
                 'allow_add'     => true,
                 'allow_delete'  => true,
-                'label'         => 'enigmatic.crm.contact.form.field.fax.label',
+                'label'         => 'enigmatic.crm.campaign_faxing.form.field.fax.label',
                 'prototype'         => true,
                 'prototype_name'    => '__campaign_faxing_fax__',
                 'attr'              => array(

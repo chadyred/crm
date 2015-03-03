@@ -8,7 +8,7 @@
     {% import "AppBundle:macro:button.html.twig" as button %}
 
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_contact_list'), null, 'speednav') }}
     </div>
 
     <div class="action action_right">
@@ -24,13 +24,13 @@
     <div class="view">
 
         <div>
-            {% trans %}enigmatic.crm.contact.field.account.name{% endtrans %} : <a href="{{ path('enigmatic_crm_account_view', {'account': contact.getAccount().getId()}) }}" title="">{{ contact.getAccount.getName() }}</a> <br/>
-            {% trans %}enigmatic.crm.contact.field.email.name{% endtrans %} : <a href="mailto:{{ contact.getEmail() }}" title="">{{ contact.getEmail() }}</a> <br/>
-            {% trans %}enigmatic.crm.contact.field.function.name{% endtrans %} : {{ contact.getFunction() }} <br/>
-            {% trans %}enigmatic.crm.contact.field.birthday.name{% endtrans %} : {% if contact.getBirthday() %}{{ contact.getBirthday() | date('d/m/Y') }}{% endif %} <br/>
-            {% trans %}enigmatic.crm.contact.field.phone.name{% endtrans %} : <br/>
+            <p>{% trans %}enigmatic.crm.contact.field.account.name{% endtrans %} : <span><a href="{{ path('enigmatic_crm_account_view', {'account': contact.getAccount().getId()}) }}" title="">{{ contact.getAccount.getName() }}</a></span></p> 
+            <p>{% trans %}enigmatic.crm.contact.field.email.name{% endtrans %} : <span><a href="mailto:{{ contact.getEmail() }}" title="">{{ contact.getEmail() }}</a></span></p>
+            <p>{% trans %}enigmatic.crm.contact.field.function.name{% endtrans %} : <span>{{ contact.getFunction() }}</span></p>
+            <p>{% trans %}enigmatic.crm.contact.field.birthday.name{% endtrans %} : <span>{% if contact.getBirthday() %}{{ contact.getBirthday() | date('d/m/Y') }}{% endif %} </span></p>
+            <p>{% trans %}enigmatic.crm.contact.field.phone.name{% endtrans %} : 
                 {% for phone in contact.getPhones() %}
-                    <span class="ico_phone_{{ phone.getTYpe() }}">{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }}</span> : <span>{{ phone.getPhone() }}</span> <br/>
+                    <span class="ico_phone_{{ phone.getTYpe() }}">{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }}</span> : <span>{{ phoneFormat(phone.getPhone()) }}</span> </p>
                 {% endfor %}
             {% trans %}enigmatic.crm.contact.field.address.name{% endtrans %} :
             <address>

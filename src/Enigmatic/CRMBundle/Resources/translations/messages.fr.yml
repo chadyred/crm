@@ -2,6 +2,8 @@ enigmatic:
     crm:
         account:
             action:
+                add_agency: Lier à une agence
+                add_user: Assigné à
                 sync_with_societe_com: Synchroniser avec Societe.com
                 remove_confirm: Souhaitez-vous réellement supprimer ce compte ?
             contact:
@@ -52,6 +54,8 @@ enigmatic:
                         label: Téléphone pricipal
                     siret:
                         label: Numéro SIRET
+                    agencies:
+                        label: Agences
                 submit:
                     add: Ajouter le compte
                     import: Importer
@@ -77,6 +81,20 @@ enigmatic:
                     owners: Chargés d'affaires
             title:
                 list: Comptes
+        account_owner:
+            message:
+                add: Le compte a été lié à un nouvel utilisateur
+            form:
+                field:
+                    user:
+                        label: Utilisateur
+                        empty_value: Selectionnez un utilisateur
+                submit:
+                    add: Lier l'utilisateur
+            title:
+                add: Lier le compte à un utilisateur
+                first_add: Etape 3 : Lier le compte à un utilisateur
+                first_add_rca: Etape 2 : Lier le compte à un utilisateur
         account_import:
             form:
                 field:
@@ -187,6 +205,28 @@ enigmatic:
                     address: Adresse
             title:
                 list: Agences
+        agency_account:
+            message:
+                add: Le compte a été lié à une nouvelle agence
+                link_account: Le compte est lié à votre agence
+                link_account_error: Une erreur est survenue, le compte n'a pas été lié à votre agence
+            form:
+                field:
+                    agency:
+                        label: Agence
+                        empty_value: Selectionnez une agence
+                    potential:
+                        label: Potentiel TT
+                        1: TOP 100
+                        2: TOP 150
+                        3: Autre
+                    description:
+                        label: Informations complémentaires
+                submit:
+                    add: Lier l'agence
+            title:
+                add: Lier le compte à une agence
+                first_add: Etape 2 : Lier le compte à une agence
         calendar:
             error_load: Une erreur est survenue, impossible de récupérer les données ou la requête n'a pas pu aboutir ...
             event:
@@ -247,13 +287,18 @@ enigmatic:
                             label: Bloqué - Le faxing ne sera pas envoyé
                         waiting:
                             label: Prêt - Le faxing sera envoyé à la date indiqué
+                    test:
+                        phone:
+                            label: Numéro de fax
                 submit:
                     add: Ajouter la campagne
                     update: Modifier la campagne
+                    send_test: Envoyer le fax
             message:
                 add: La campagne a été ajoutée
                 remove: La campagne a été supprimée
                 update: La campagne a été modifiée
+                send_test: Le fax a été envoyé
             table:
                 empty: Aucune campagne
                 head:
@@ -497,6 +542,7 @@ enigmatic:
                 campaign_faxing_add: Ajouter une campagne de faxing
                 campaign_faxing_view: Campagne de faxing
                 campaign_faxing_update: Modifier une campagne de faxing
+                campaign_faxing_send_test: Envoyer un fax de test
                 campaign_mailing_list: Campagne de mailing
                 campaign_mailing_add: Ajouter une campagne de mailing
                 campaign_mailing_view: Campagne de mailing

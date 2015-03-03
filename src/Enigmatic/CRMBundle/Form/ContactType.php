@@ -54,7 +54,14 @@ class ContactType extends AbstractType
             ))
             ->add('birthday', 'date', array (
                 'label'         => 'enigmatic.crm.contact.form.field.birthday.label',
+                'widget'        => 'single_text',
+                'input'         => 'datetime',
+                'format'        => 'dd-MM-yyyy H:m',
                 'required'      => false,
+                'attr'          => array(
+                    'class'         => 'datepicker',
+                    'placeholder'   => 'dd-mm-yyyy h:m',
+                )
             ))
             ->add('address', 'text', array (
                 'label'         => 'enigmatic.crm.contact.form.field.address.label',

@@ -6,7 +6,7 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
-
+    
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
     </div>

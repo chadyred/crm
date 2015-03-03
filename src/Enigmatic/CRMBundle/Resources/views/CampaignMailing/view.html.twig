@@ -1,5 +1,5 @@
 {% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
-
+{% block body_class %}{{ parent() }} mailing {% endblock %}
 {% block title %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} - {{ campaign.getName() }} - {{ parent() }}{% endblock %}
 {% block nav_active %}campaign_mailing{% endblock %}
 
@@ -7,11 +7,9 @@
 
 {% import "AppBundle:macro:button.html.twig" as button %}
 
-    <div class="action action_left">
+    <div class="action">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
-    </div>
 
-    <div class="action action_right">
         {% if campaign.getState() != constant('CAMPAIGN_MAILING_SENDED', campaign) %}
             {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_mailing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
             {{ button.create('send', 'Send test mail'|trans, path('enigmatic_crm_campaign_mailing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
@@ -23,18 +21,18 @@
 
     <h1>{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} : {{ campaign.getName() }}</h1>
 
-    <div>
+    <div class="inner-content">
         <h2>{% trans %}enigmatic.crm.campaign_mailing.view.title.mail{% endtrans %}</h2>
 
-        {% trans %}enigmatic.crm.campaign_mailing.field.emailSubject.name{% endtrans %} : {{ campaign.getEmailSubject() }}<br/>
+        <p>{% trans %}enigmatic.crm.campaign_mailing.field.emailSubject.name{% endtrans %} : <span>{{ campaign.getEmailSubject() }} </span></p>
         {% trans %}enigmatic.crm.campaign_mailing.field.emailBody.name{% endtrans %} : <br/>
         <p class="mail_content" style="max-height:200px;overflow:auto;">
             {{ campaign.getEmailBody() | raw }}
         </p><br/>
 
         <h2>{% trans %}enigmatic.crm.campaign_mailing.view.title.config{% endtrans %}</h2>
-        {% trans %}enigmatic.crm.campaign_mailing.field.dateSended.name{% endtrans %} : {{ campaign.getDateSended() | localizeddate('full', 'short') }}<br/>
-        {% trans %}enigmatic.crm.campaign_mailing.field.state.name{% endtrans %} :
+        <p>{% trans %}enigmatic.crm.campaign_mailing.field.dateSended.name{% endtrans %} : <span>{{ campaign.getDateSended() | localizeddate('full', 'short') }}</span></p>
+        <p>{% trans %}enigmatic.crm.campaign_mailing.field.state.name{% endtrans %} : <span>
             {% if campaign.getState() == constant('CAMPAIGN_MAILING_LOCKED', campaign) %}
                 <span class="text-warning">{% trans %}enigmatic.crm.campaign_mailing.field.state.locked.name{% endtrans %}</span>
             {% elseif campaign.getState() == constant('CAMPAIGN_MAILING_WAITING', campaign) %}
@@ -42,7 +40,8 @@
             {% elseif campaign.getState() == constant('CAMPAIGN_MAILING_SENDED', campaign) %}
                 <span class="text-success">{% trans %}enigmatic.crm.campaign_mailing.field.state.sended.name{% endtrans %}</span>
             {% endif %}
-        <br/>
+			</span>
+        </p>
 
 
         <h2>{% trans %}enigmatic.crm.campaign_mailing.view.title.contacts{% endtrans %}</h2>

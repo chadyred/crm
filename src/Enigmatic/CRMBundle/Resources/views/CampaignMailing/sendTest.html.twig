@@ -7,6 +7,10 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId()}), null, 'speednav') }}
+    </div>
+
     <h1>{% trans %}enigmatic.crm.header.titles.campaign_mailing_send_test{% endtrans %}</h1>
 
     <form class="speednav" method="post" action="" {{ form_enctype(form) }}>

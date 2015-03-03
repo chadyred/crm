@@ -46,29 +46,30 @@ class AccountRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function findByNameAndCity($name, $city) {
+
+        $qb = $this->createQueryBuilder('account');
+        $qb ->where('account.name = :name')
+            ->andWhere('account.city = :city')
+            ->setParameter('name', $name)
+            ->setParameter('city', $city);
+        $qb = $this->state($qb, array(Account::VALID));
+
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     protected function join(QueryBuilder $qb, $add = false)
     {
         $qb->leftjoin('account.contacts', 'contacts');
-        $qb->leftjoin('account.activities', 'activities');
-        $qb->leftjoin('activities.replanned', 'activities_replanned');
-        $qb->leftjoin('activities.replannedBy', 'activities_replannedBy');
         $qb->leftjoin('account.owners', 'owners');
-//        $qb->leftjoin('owners.user', 'user');
-//        $qb->leftjoin('user.agencies', 'user_agency');
-//        $qb->leftjoin('user_agency.end', 'user_agency_end');
         $qb->leftjoin('owners.end', 'owners_end');
         $qb->leftjoin('account.agencies', 'agencies');
         $qb->leftjoin('account.city', 'city');
 
         if ($add) {
             $qb->addSelect('contacts');
-            $qb->addSelect('activities');
-            $qb->addSelect('activities_replanned');
-            $qb->addSelect('activities_replannedBy');
             $qb->addSelect('owners');
-//            $qb->addSelect('user');
-//            $qb->addSelect('user_agency');
-//            $qb->addSelect('user_agency_end');
             $qb->addSelect('owners_end');
             $qb->addSelect('agencies');
             $qb->addSelect('city');
@@ -109,7 +110,6 @@ class AccountRepository extends EntityRepository
                             $qb ->setParameter('search_agency', $value);
                             break;
                         case 'account_owner':
-                            $qb ->leftjoin('owners.end', 'owners_end');
                             $qb ->andWhere('owners_end IS NULL');
                             $qb ->andWhere('owners.user = :search_owner');
                             $qb ->setParameter('search_owner', $value);

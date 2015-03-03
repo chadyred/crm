@@ -99,6 +99,11 @@ class User
         return $this->getFirstname().' '.$this->getName();
     }
 
+    public function getUserWithAgencyName() {
+        return $this->getFirstname().' '.$this->getName().' ('.$this->getAgency()->getName().')';
+
+    }
+
     /**
      * Get id
      *

@@ -4,12 +4,15 @@ namespace Enigmatic\CRMBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\UniqueConstraint;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * AgencyAccount
  *
- * @ORM\Table(name="crm_agency_account")
+ * @ORM\Table(name="crm_agency_account", uniqueConstraints={@UniqueConstraint(name="agency_account", columns={"agency_id", "account_id"})}))
  * @ORM\Entity
+ * @UniqueEntity(fields={"agency", "account"}, message="enigmatic.crm.agency_account.unique_entity")
  */
 class AgencyAccount
 {
@@ -88,8 +91,10 @@ class AgencyAccount
     /**
      * Constructor
      */
-    public function __construct($potential = self::OTHER)
+    public function __construct($account = null, $agency = null, $potential = self::OTHER)
     {
+        $this->account = $account;
+        $this->agency = $agency;
         $this->potential = $potential;
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();

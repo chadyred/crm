@@ -97,6 +97,38 @@ class CampaignFaxingController extends Controller
     }
 
     /**
+     * @Secure(roles={"ROLE_CA"})
+     */
+    public function sendTestAction(CampaignFaxing $campaign)
+    {
+        $form = $this->createForm('enigmatic_crm_campaign_faxing_test', array('phone' => null));
+
+        $form->handleRequest($this->get('request'));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $num_fax = $data['phone'];
+            if (strlen($num_fax) == 12)
+                $num_fax = '00'.substr($num_fax, 1, 12);
+            else
+                $num_fax = '0033'.substr($num_fax, 1, 10);
+
+            $this->get('enigmatic_mailer')->sendMail(/*$num_fax . '@ecofax.fr'*/'rp@enigmatic.fr', $this->renderView('EnigmaticCRMBundle:CampaignFaxing/Email:faxing.html.twig', array(
+                'subject' => $this->container->getParameter('enigmatic_crm.ecofax.login'),
+                'content' => $this->container->getParameter('enigmatic_crm.ecofax.password'))
+            ));
+
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.campaign_faxing.message.send_test'));
+            return $this->redirect($this->generateUrl('enigmatic_crm_campaign_faxing_view', array('campaign'=> $campaign->getId())));
+        }
+
+        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:CampaignFaxing:sendTest.html.twig', array(
+            'campaign'   => $campaign,
+            'form'       => $form->createView()
+        )));
+    }
+
+    /**
      * @Secure(roles={"RCA"})
      */
     public function removeAction(CampaignFaxing $campaign)

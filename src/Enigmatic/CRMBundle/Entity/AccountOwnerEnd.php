@@ -34,7 +34,7 @@ class AccountOwnerEnd
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateEnd", type="datetime", nullable=true)
+     * @ORM\Column(name="dateEnd", type="datetime")
      * @Assert\DateTime()
      * @Assert\NotNull()
      */

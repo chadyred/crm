@@ -50,7 +50,7 @@ var Nav = {
 
         var url = jQuery(form).attr('action');
         if (!url)
-            url = document.URL;
+            url = window.location.pathname;//document.URL;
 
         if (typeof CKEDITOR != 'undefined')
             for ( instance in CKEDITOR.instances )
@@ -64,12 +64,13 @@ var Nav = {
             data: form.serialize(),
             success : function(code_html, statut){
                 jQuery('#'+container).html(code_html.content);
+                if (code_html.url != url)
+                    window.history.pushState(document.title,code_html.title, code_html.url);
             },
 
             error : function(resultat, statut, erreur){
                 jQuery(form).addClass('speednav_error');
                 jQuery(form).submit();
-                window.location.href = url;
             },
 
             complete : function(resultat, statut) {

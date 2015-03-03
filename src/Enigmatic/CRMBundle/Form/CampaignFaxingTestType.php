@@ -8,8 +8,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Constraints\Regex;
 
-class CampaignMailingTestType extends AbstractType
+class CampaignFaxingTestType extends AbstractType
 {
    
     /**
@@ -19,12 +20,15 @@ class CampaignMailingTestType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', 'email', array (
-                'label'         => 'enigmatic.crm.campaign_mailing.form.field.test.email.label',
+            ->add('email', 'text', array (
+                'label'         => 'enigmatic.crm.campaign_faxing.form.field.test.phone.label',
                 'required'      => true,
                 'constraints' => array(
-                    new Email(),
-                    new NotNull()
+                    new Regex(array('pattern' => '/^([+]{1}[0-9]{1})?[0-9]{10}$/')),
+                    new NotNull(),
+                ),
+                'attr'          => array(
+                    'pattern'   => '^([+]{1}[0-9]{1})?[0-9]{10}$'
                 )
             ))
         ;
@@ -45,6 +49,6 @@ class CampaignMailingTestType extends AbstractType
      */
     public function getName()
     {
-        return 'enigmatic_crm_campaign_mailing_test';
+        return 'enigmatic_crm_campaign_faxing_test';
     }
 }

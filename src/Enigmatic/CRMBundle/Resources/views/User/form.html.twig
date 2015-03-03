@@ -6,15 +6,15 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
-
+    
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_user_view', {'user': user.getId()}), null, 'speednav') }}
     </div>
 
     <h1>{% if user.getId() %}{% trans %}enigmatic.crm.header.titles.user_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.user_add{% endtrans %}{% endif %}</h1>
 
 
-    <form class="speednav" method="post" action="" {{ form_enctype(form) }}>
+    <form id="user" class="speednav" method="post" action="" {{ form_enctype(form) }}>
 
         {{ form_row(form.firstname) }}
         {{ form_row(form.name) }}

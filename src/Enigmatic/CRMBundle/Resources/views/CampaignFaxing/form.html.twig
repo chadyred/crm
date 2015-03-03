@@ -9,7 +9,7 @@
 
 
     <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_faxing_view', {'campaign': campaign.getId()}), null, 'speednav') }}
     </div>
 
     <h1>{% if campaign.getId() %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_add{% endtrans %}{% endif %}</h1>

@@ -31,3 +31,9 @@ enigmatic_crm_campaign_faxing_download:
     defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:download}
     requirements:
         faw: \d+
+
+enigmatic_crm_campaign_faxing_send_test:
+    locales:  { fr: "/envoyer-fax-test-{campaign}", en: "/send-test-fax-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:sendTest}
+    requirements:
+        campaign: \d+

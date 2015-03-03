@@ -60,8 +60,10 @@ class AccountOwner
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(Account $account = null, User $user = null)
     {
+        $this->account = $account;
+        $this->user = $user;
         $this->dateCreated = new \DateTime();
         $this->end = null;
     }
