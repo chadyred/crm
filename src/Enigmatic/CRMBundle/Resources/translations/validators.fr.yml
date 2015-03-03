@@ -16,3 +16,5 @@ enigmatic:
         campaign_mailing:
             dateSended:
                 invalid: Veuillez choisir une date future pour l'envoi
+        phone:
+            invalid_format: Le numéro saisi n'est pas au bon format

@@ -117,6 +117,7 @@ class Contact
      * @var ContactPhone
      *
      * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\ContactPhone", mappedBy="contact", cascade="all", orphanRemoval=true)
+     * @Assert\Valid()
      */
     private $phones;
 

@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class AgencyUserType extends AbstractType
 {
@@ -24,7 +25,7 @@ class AgencyUserType extends AbstractType
                 'expanded' => false,
                 'label' => 'enigmatic.crm.activity_user.form.field.agency.label',
                 'empty_value' => 'enigmatic.crm.activity_user.form.field.agency.empty_value',
-                'required' => true
+                'required' => true,
             ));
         ;
     }
@@ -35,7 +36,7 @@ class AgencyUserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enigmatic\CRMBundle\Entity\AgencyUser'
+            'data_class' => 'Enigmatic\CRMBundle\Entity\AgencyUser',
         ));
     }
 

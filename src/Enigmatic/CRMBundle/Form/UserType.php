@@ -69,7 +69,8 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Enigmatic\CRMBundle\Entity\User'
+            'data_class' => 'Enigmatic\CRMBundle\Entity\User',
+            'cascade_validation' => true
         ));
     }
 

@@ -130,7 +130,7 @@ class AgencyUser
      * @param \Enigmatic\CRMBundle\Entity\Agency $agency
      * @return AgencyUser
      */
-    public function setAgency(\Enigmatic\CRMBundle\Entity\Agency $agency)
+    public function setAgency(\Enigmatic\CRMBundle\Entity\Agency $agency = null)
     {
         $this->agency = $agency;
 

@@ -35,6 +35,7 @@ class ContactType extends AbstractType
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'label'         => 'enigmatic.crm.contact.form.field.phones.label',
+                'cascade_validation' => true,
                 'prototype'         => true,
                 'prototype_name'    => '__contact_phone__',
                 'attr'              => array(
@@ -56,11 +57,11 @@ class ContactType extends AbstractType
                 'label'         => 'enigmatic.crm.contact.form.field.birthday.label',
                 'widget'        => 'single_text',
                 'input'         => 'datetime',
-                'format'        => 'dd-MM-yyyy H:m',
+                'format'        => 'dd-MM-yyyy',
                 'required'      => false,
                 'attr'          => array(
                     'class'         => 'datepicker',
-                    'placeholder'   => 'dd-mm-yyyy h:m',
+                    'placeholder'   => 'dd-mm-yyyy',
                 )
             ))
             ->add('address', 'text', array (
@@ -89,7 +90,7 @@ class ContactType extends AbstractType
                     'expanded' => false,
                     'label' => 'enigmatic.crm.contact.form.field.account.label',
                     'empty_value' => 'enigmatic.crm.contact.form.field.account.empty_value',
-                    'required' => true
+                    'required' => true,
                 ));
             }
         });
@@ -112,7 +113,6 @@ class ContactType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Enigmatic\CRMBundle\Entity\Contact',
-            'cascade_validation'    => true
         ));
     }
 
