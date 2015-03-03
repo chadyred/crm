@@ -3,6 +3,7 @@
 namespace Enigmatic\CRMBundle\Form;
 
 use Enigmatic\CRMBundle\Entity\CampaignMailing;
+use Enigmatic\OROMailingBundle\Entity\Campaign;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;

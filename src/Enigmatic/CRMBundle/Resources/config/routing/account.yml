@@ -47,15 +47,3 @@ enigmatic_crm_account_contact_add:
     defaults: { _controller: EnigmaticCRMBundle:Contact:add }
     requirements:
         account: \d+
-
-enigmatic_crm_account_add_owner:
-    locales:  { fr: "/ajouter-utilisateur-{account}", en: "/owner-add-{account}" }
-    defaults: { _controller: EnigmaticCRMBundle:Account:addOwner, first: false }
-    requirements:
-        account: \d+
-
-enigmatic_crm_account_add_first_owner:
-    locales:  { fr: "/lien-utilisateur-{account}", en: "/owner-link-{account}" }
-    defaults: { _controller: EnigmaticCRMBundle:Account:addOwner, first: true }
-    requirements:
-        account: \d+

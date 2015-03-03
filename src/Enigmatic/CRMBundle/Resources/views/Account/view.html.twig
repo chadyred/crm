@@ -6,6 +6,7 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
 
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_list'), null, 'speednav') }}
@@ -17,8 +18,12 @@
             {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_account_remove', {'account': account.getId()}), 'return confirm("'~'enigmatic.crm.account.action.remove_confirm' | trans~'");') }}
         {% endif %}
         {{ button.create('sync', 'enigmatic.crm.account.action.sync_with_societe_com'|trans, null, 'alert("Cette fonctionnalité n\'est pas encore active."); return false;') }}
+        {% if is_granted('ROLE_RS') %}
         {{ button.create('add', 'enigmatic.crm.account.action.add_agency'|trans, path('enigmatic_crm_agency_account_add', {'account': account.getId()}), null, 'speednav') }}
-        {{ button.create('add', 'enigmatic.crm.account.action.add_user'|trans, path('enigmatic_crm_account_add_owner', {'account': account.getId()}), null, 'speednav') }}
+        {% endif %}
+        {% if is_granted('ROLE_RCA') %}
+        {{ button.create('add', 'enigmatic.crm.account.action.add_user'|trans, path('enigmatic_crm_account_owner_add', {'account': account.getId()}), null, 'speednav') }}
+        {% endif %}
     </div>
 
     <h1>{{ account.getName() }}</h1>
@@ -39,7 +44,13 @@
             {% endif %}
             {{ account.getCity().getName() }}, {{ account.getCity().getCanonicalZipcode() }}
         </address>
-        {{ google_map(map) }}
+
+        {% if map %}
+            {{ google_map(map) }}
+        {% else %}
+            <div class="map">{% trans %}enigmatic.crm.service.google.unavailable{% endtrans %}</div>
+        {% endif %}
+
         {% else %}
             -
         {% endif %}<br/>
@@ -52,33 +63,80 @@
 
     <section id="account_owner">
 
-        <h2>{% trans %}enigmatic.crm.account.view.titles.owners{% endtrans %}</h2>
+        <h2>{% if is_granted('ROLE_RS') %}{% trans %}enigmatic.crm.account.view.titles.agencies_infos{% endtrans %}{% else %}{% trans %}enigmatic.crm.account.view.titles.agency_infos{% endtrans %}{% endif %}</h2>
 
         {% if is_granted('ROLE_RS') %}
             {% trans %}enigmatic.crm.account.field.agencies.name{% endtrans %} :
             <ul>
-            {% for account_agency in account.getAgencies() %}
+            {% for agency_account in account.getAgencies() %}
                 <li>
-                    <a class="speednav" href="{{ path('enigmatic_crm_agency_view', {'agency': account_agency.getAgency().getId()}) }}" title="">{{ account_agency.getAgency().getName() }}</a> :
+                    {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_agency_account_update', {'agency_account': agency_account.getId()}), null, 'speednav speednav_fix', 'account_owner') }}
+                    <a class="speednav" href="{{ path('enigmatic_crm_agency_view', {'agency': agency_account.getAgency().getId()}) }}" title="">{{ agency_account.getAgency().getName() }}</a> <br/>
+                    {% trans %}enigmatic.crm.account.field.potential.name{% endtrans %} : {{ ('enigmatic.crm.account.field.potential.'~agency_account.getPotential()) | trans }} <br/>
+                    {% trans %}enigmatic.crm.account.field.description.name{% endtrans %} : <br/>{{ agency_account.getDescription() | nl2br }} <br/>
+                    {% trans %}enigmatic.crm.account.field.turnover.name{% endtrans %} {{ "now" | date('Y') }} :
+                    {% for turnover in agency_account.getTurnovers %}
+                        {% if turnover.getYear() == ("now" | date('Y')) %}
+                            {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
+                        {% endif %}
+                    {% endfor %}<br/>
+                    {% trans %}enigmatic.crm.account.field.turnover.name{% endtrans %} {{ ("now" | date('Y')) - 1 }} :
+                    {% for turnover in agency_account.getTurnovers %}
+                        {% if turnover.getYear() == (("now" | date('Y')) - 1)  %}
+                            {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
+                        {% endif %}
+                    {% endfor %}<br/>
 
-                    {{ ('enigmatic.crm.account.field.potential.'~account_agency.getPotential()) | trans }}
+                    {% trans %}enigmatic.crm.account.field.owners.name{% endtrans %} :
+                    <ul>
                     {% for owner in account.getOwners() %}
-                        {% if owner.getUser().getAgency() == account_agency.getAgency() and owner.getEnd() != null %}
-                        <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': owner.getUser().getId()}) }}" title="">{{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}</a>{% if loop.last == false %}, {% endif %}
+                        {% if owner.getUser().getAgency() == agency_account.getAgency() and owner.getEnd() == null %}
+                            <li>
+                                <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': owner.getUser().getId()}) }}" title="">{{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}</a>
+                                {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_account_owner_remove', {'account_owner': owner.getId()}), 'return confirm("'~'enigmatic.crm.account_owner.action.remove_confirm' | trans~'");') }}
+                            </li>
                         {% endif %}
                     {% endfor %}
+                    </ul>
                 </li>
             {% else %}
                 {% trans %}enigmatic.crm.account.table.empty_owner{% endtrans %}
             {% endfor %}
             </ul>
-        {% else %}
+        {% elseif agency_account %}
+
+            {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_agency_account_update', {'agency_account': agency_account.getId()}), null, 'speednav speednav_fix', 'account_owner') }}
+            {% trans %}enigmatic.crm.account.field.potential.name{% endtrans %} : {{ ('enigmatic.crm.account.field.potential.'~agency_account.getPotential()) | trans }} <br/>
+            {% trans %}enigmatic.crm.account.field.description.name{% endtrans %} : <br/>{{ agency_account.getDescription() | nl2br }} <br/>
+            {% trans %}enigmatic.crm.account.field.turnover.name{% endtrans %} {{ "now" | date('Y') }} :
+            {% for turnover in agency_account.getTurnovers %}
+                {% if turnover.getYear() == ("now" | date('Y')) %}
+                    {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
+                {% endif %}
+            {% endfor %}<br/>
+            {% trans %}enigmatic.crm.account.field.turnover.name{% endtrans %} {{ ("now" | date('Y')) - 1 }} :
+            {% for turnover in agency_account.getTurnovers %}
+                {% if turnover.getYear() == (("now" | date('Y')) - 1)  %}
+                    {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
+                {% endif %}
+            {% endfor %}<br/>
+
+            <br/>
+
+            {% if is_granted('ROLE_RCA') %}
+                {{ icon.create('add', 'enigmatic.crm.account.action.add_user'|trans, path('enigmatic_crm_account_owner_add', {'account': account.getId()}), null, 'speednav') }}
+            {% endif %}
             {% trans %}enigmatic.crm.account.field.owners.name{% endtrans %} :
+            <ul>
             {% for owner in account.getOwners() %}
-                <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': owner.getUser().getId()}) }}" title="">{{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}</a>{% if loop.last == false %}, {% endif %}
-            {% else %}
-                {% trans %}enigmatic.crm.account.table.empty_owner{% endtrans %}
+                {% if owner.getEnd() == null and owner.getUser().getAgency() == agency_account.getAgency() %}
+                <li>
+                    {{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}
+                    {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_account_owner_remove', {'account_owner': owner.getId()}), 'return confirm("'~'enigmatic.crm.account_owner.action.remove_confirm' | trans~'");') }}
+                </li>
+                {% endif %}
             {% endfor %}
+            </ul>
         {% endif %}
 
     </section>

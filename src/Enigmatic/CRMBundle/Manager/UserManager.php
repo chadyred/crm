@@ -68,7 +68,10 @@ class UserManager
      * @return User
      */
     public function getCurrent() {
-        return $this->em->getRepository($this->class)->findOneByUser($this->tokenStorage->getToken()->getUser());
+        if ($this->tokenStorage->getToken())
+            return $this->em->getRepository($this->class)->findOneByUser($this->tokenStorage->getToken()->getUser());
+        else
+            return null;
     }
 
     /**

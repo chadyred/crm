@@ -6,12 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * AgencyAccount
  *
  * @ORM\Table(name="crm_agency_account", uniqueConstraints={@UniqueConstraint(name="agency_account", columns={"agency_id", "account_id"})}))
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Enigmatic\CRMBundle\Repository\AgencyAccountRepository")
  * @UniqueEntity(fields={"agency", "account"}, message="enigmatic.crm.agency_account.unique_entity")
  */
 class AgencyAccount
@@ -59,7 +60,8 @@ class AgencyAccount
     /**
      * @var AgencyAccountTurnover
      *
-     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\AgencyAccountTurnover", mappedBy="agencyAccount")
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\AgencyAccountTurnover", mappedBy="agencyAccount", cascade="all", orphanRemoval=true)
+     * @OrderBy({"year" = "DESC"})
      */
     private $turnovers;
 

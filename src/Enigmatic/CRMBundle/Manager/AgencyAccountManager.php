@@ -12,13 +12,15 @@ class AgencyAccountManager
 {
     protected $em;
     protected $class;
+    protected $userManager;
 
     /**
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager) {
-        $this->class = 'EnigmaticCRMBundle:Account';
+    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager) {
+        $this->class = 'EnigmaticCRMBundle:AgencyAccount';
         $this->em  = $entityManager;
+        $this->userManager  = $userManager;
     }
 
     /**
@@ -63,6 +65,14 @@ class AgencyAccountManager
      */
     public function get($id) {
         return $this->em->getRepository($this->class)->find($id);
+    }
+
+    /**
+     * @param Account $account
+     * @return AgencyAccount
+     */
+    public function getOneByAccount(Account $account) {
+        return $this->em->getRepository($this->class)->findOneByAccountAndAgency($account, $this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
     }
 
     /**

@@ -12,7 +12,7 @@ services:
 
     enigmatic_crm.manager.agency_account:
         class: Enigmatic\CRMBundle\Manager\AgencyAccountManager
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
 
     enigmatic_crm.manager.account_owner:
         class: Enigmatic\CRMBundle\Manager\AccountOwnerManager
@@ -130,6 +130,12 @@ services:
         class: Enigmatic\CRMBundle\Form\AgencyAccountType
         tags:
             - { name: form.type, alias: enigmatic_crm_agency_account }
+        arguments: []
+
+    enigmatic_crm.form.agency_account_turnover:
+        class: Enigmatic\CRMBundle\Form\AgencyAccountTurnoverType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency_account_turnover }
         arguments: []
 
     enigmatic_crm.form.agency_user:

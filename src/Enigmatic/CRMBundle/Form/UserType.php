@@ -43,19 +43,21 @@ class UserType extends AbstractType
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) use($options) {
-                if ($event->getData()->getAgency() != $event->getData()->getNewAgency()->getAgency()) {
-                    if ($event->getData()->getAgency()) {
-                        $last_agency_user = $event->getData()->getAgencies()->first();
-                        $last_agency_user->setEnd(new AgencyUserEnd($last_agency_user));
-                    }
-                    $event->getData()->getNewAgency()->setUser($event->getData());
-                    $event->getData()->addAgency($event->getData()->getNewAgency());
+                if ($event->getData()->getNewAgency()) {
+                    if ($event->getData()->getAgency() != $event->getData()->getNewAgency()->getAgency()) {
+                        if ($event->getData()->getAgency()) {
+                            $last_agency_user = $event->getData()->getAgencies()->first();
+                            $last_agency_user->setEnd(new AgencyUserEnd($last_agency_user));
+                        }
+                        $event->getData()->getNewAgency()->setUser($event->getData());
+                        $event->getData()->addAgency($event->getData()->getNewAgency());
 
-                    foreach ($event->getData()->getAssignedAccount() as $user_owner) {
-                        if (!$user_owner->getEnd())
-                            $user_owner->setEnd(new AccountOwnerEnd($user_owner));
-                    }
+                        foreach ($event->getData()->getAssignedAccount() as $user_owner) {
+                            if (!$user_owner->getEnd())
+                                $user_owner->setEnd(new AccountOwnerEnd($user_owner));
+                        }
 
+                    }
                 }
             }
         );

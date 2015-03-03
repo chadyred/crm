@@ -4,7 +4,9 @@ namespace Enigmatic\CRMBundle\Services;
 
 
 use Enigmatic\CRMBundle\Entity\Account;
+use Enigmatic\CRMBundle\Entity\AccountOwner;
 use Enigmatic\CRMBundle\Entity\Activity;
+use Enigmatic\CRMBundle\Entity\AgencyAccount;
 use Enigmatic\CRMBundle\Entity\CampaignFaxing;
 use Enigmatic\CRMBundle\Entity\CampaignMailing;
 use Enigmatic\CRMBundle\Entity\Contact;
@@ -117,6 +119,38 @@ class GrantService
                         $grant = true;
                 }
             }
+        }
+
+        return $grant;
+    }
+
+    public function grantAgencyAccount(AgencyAccount $agencyAccount) {
+
+        $grant = false;
+        if ($this->authorizationChecker->isGranted('ROLE_RS')) {
+            $grant = true;
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_RCA')) {
+            $grant = true;
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+            $grant = true;
+        }
+
+        return $grant;
+    }
+
+    public function grantAccountOwner(AccountOwner $accountOwner) {
+
+        $grant = false;
+        if ($this->authorizationChecker->isGranted('ROLE_RS')) {
+            $grant = true;
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_RCA')) {
+            $grant = true;
+        }
+        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+            $grant = true;
         }
 
         return $grant;

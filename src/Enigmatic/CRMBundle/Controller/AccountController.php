@@ -44,7 +44,8 @@ class AccountController extends Controller
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:view.html.twig', array(
             'account'   => $account,
-            'map'       => $this->get('enigmatic_crm.service.map')->generateAction($account->getAddress().', '.($account->getCity()?$account->getCity()->getName():'').' '.($account->getCity()?$account->getCity()->getCanonicalZipcode():''), null, '400px', '400px;')
+            'map'       => $this->get('enigmatic_crm.service.map')->generateAction($account->getAddress().', '.($account->getCity()?$account->getCity()->getName():'').' '.($account->getCity()?$account->getCity()->getCanonicalZipcode():''), null, '400px', '400px;'),
+            'agency_account' => $this->get('enigmatic_crm.manager.agency_account')->getOneByAccount($account)
         )));
     }
 
@@ -61,7 +62,7 @@ class AccountController extends Controller
             $this->get('enigmatic_crm.manager.account')->save($account);
 
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account.message.add'));
-            return $this->redirect(count($account->getOwners())?$this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())):(count($account->getAgencies())?$this->generateUrl('enigmatic_crm_account_add_first_owner', array('account'=> $account->getId())):$this->generateUrl('enigmatic_crm_agency_account_add_first_agency', array('account'=> $account->getId()))));
+            return $this->redirect(count($account->getOwners())?$this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())):(count($account->getAgencies())?$this->generateUrl('enigmatic_crm_account_owner_add_first', array('account'=> $account->getId())):$this->generateUrl('enigmatic_crm_agency_account_add_first', array('account'=> $account->getId()))));
         }
         elseif ($form->isSubmitted())
             $link_duplicate = $this->get('enigmatic_crm.service.account')->generateLinkDuplicate($form);
@@ -113,8 +114,6 @@ class AccountController extends Controller
 
 
 
-
-
     /**
      * @Secure(roles={"ROLE_RCA"})
      */
@@ -158,31 +157,4 @@ class AccountController extends Controller
             'form'          => $form->createView(),
         )));
     }
-
-    /**
-     * @Secure(roles={"ROLE_RCA"})
-     */
-    public function addOwnerAction(Account $account, $first = false)
-    {
-        if (!$this->get('enigmatic_crm.service.grant')->grantAccount($account))
-            throw new AccessDeniedException();
-
-        $account_owner = $this->get('enigmatic_crm.manager.account_owner')->create($account);
-        $form = $this->createForm('enigmatic_crm_account_owner', $account_owner);
-
-        $form->handleRequest($this->get('request'));
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('enigmatic_crm.manager.account_owner')->save($account_owner);
-
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account_owner.message.add'));
-            return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
-        }
-
-        return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:AccountOwner:form.html.twig', array(
-            'account_owner'     => $account_owner,
-            'first'             => $first,
-            'form'              => $form->createView(),
-        )));
-    }
-
 }

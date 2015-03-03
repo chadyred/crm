@@ -28,7 +28,11 @@
         {% endif %}
         {{ agency.getCity().getName() }}, {{ agency.getCity().getCanonicalZipcode() }}
     </address>
-    {{ google_map(map) }}
+        {% if map %}
+            {{ google_map(map) }}
+        {% else %}
+            <div class="map">{% trans %}enigmatic.crm.service.google.unavailable{% endtrans %}</div>
+        {% endif %}
     <br/>
 
     </section>

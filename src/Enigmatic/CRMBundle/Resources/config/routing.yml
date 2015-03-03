@@ -7,6 +7,11 @@ enigmatic_crm_account:
     type: be_simple_i18n
     prefix:  { fr: "/comptes", en: "/accounts" }
 
+enigmatic_crm_account_owner:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/accountOwner.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/comptes/utilisateur", en: "/accounts/user" }
+
 enigmatic_crm_contact:
     resource: "@EnigmaticCRMBundle/Resources/config/routing/contact.yml"
     type: be_simple_i18n

@@ -4,11 +4,17 @@ enigmatic_crm_agency_account_add:
     requirements:
         account: \d+
 
-enigmatic_crm_agency_account_add_first_agency:
+enigmatic_crm_agency_account_add_first:
     locales:  { fr: "/lien-{account}", en: "/-link-{account}" }
     defaults: { _controller: EnigmaticCRMBundle:AgencyAccount:add, first: true }
     requirements:
         account: \d+
+
+enigmatic_crm_agency_account_update:
+    locales:  { fr: "/modifier-{agency_account}", en: "/update-{agency_account}" }
+    defaults: { _controller: EnigmaticCRMBundle:AgencyAccount:update }
+    requirements:
+        agency_account: \d+
 
 enigmatic_crm_agency_account_link_to_agency:
     locales:  { fr: "/lier-compte-{account}-{md5}", en: "/account-link-{account}-{md5}" }

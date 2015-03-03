@@ -41,9 +41,9 @@ class AgencyAccountTurnover
     private $year;
 
     /**
-     * @var integer
+     * @var float
      *
-     * @ORM\Column(name="turnover", type="integer")
+     * @ORM\Column(name="turnover", type="float")
      * @Assert\NotNull()
      * @Assert\Range(min="0")
      */
@@ -86,12 +86,12 @@ class AgencyAccountTurnover
     /**
      * Set turnover
      *
-     * @param integer $turnover
+     * @param float $turnover
      * @return AgencyAccountTurnover
      */
     public function setTurnover($turnover)
     {
-        $this->turnover = $turnover;
+        $this->turnover = str_replace(',', '.', $turnover);
 
         return $this;
     }
@@ -99,7 +99,7 @@ class AgencyAccountTurnover
     /**
      * Get turnover
      *
-     * @return integer 
+     * @return float
      */
     public function getTurnover()
     {

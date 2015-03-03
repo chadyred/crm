@@ -30,7 +30,12 @@ class MapService
             $coordonnees = $geocoder->geocode($address);
         }
         catch (ChainNoResultException $e) {
-            $coordonnees = $geocoder->geocode('France');
+            try {
+                $coordonnees = $geocoder->geocode('France');
+            }
+            catch (ChainNoResultException $e) {
+                return false;
+            }
         }
 
         $info_content = '<div style="min-width:150px;text-align:center;">'.$info_bulle.'</div>';

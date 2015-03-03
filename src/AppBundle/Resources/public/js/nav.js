@@ -1,6 +1,6 @@
 var Nav = {
 
-    get : function (url, container, back) {
+    get : function (url, container, back, fix) {
 
         if (!container)
             container = 'content';
@@ -11,12 +11,16 @@ var Nav = {
             dataType: "json",
             cache: true,
             success : function(code_html, statut){
-                if (!back)
-                    window.history.pushState(document.title,code_html.title, code_html.url);
-                else
-                    window.history.replaceState(document.title,code_html.title, code_html.url);
+                if (container == 'content') {
+                    if (!back)
+                        window.history.pushState(document.title, code_html.title, code_html.url);
+                    else
+                        window.history.replaceState(document.title, code_html.title, code_html.url);
+                }
+                if (!fix ) {
+                    Nav.backTopTop();
+                }
                 jQuery('#'+container).html(code_html.content);
-                Nav.backTopTop();
             },
 
             error : function(resultat, statut, erreur){
@@ -32,7 +36,7 @@ var Nav = {
         return false;
     },
 
-    post : function (form, container) {
+    post : function (form, container, fix) {
 
         if (!container)
             container = 'content';
@@ -53,9 +57,13 @@ var Nav = {
             data: form.serialize(),
             success : function(code_html, statut){
                 jQuery('#'+container).html(code_html.content);
-                if (code_html.url != url)
-                    window.history.pushState(document.title,code_html.title, code_html.url);
-                Nav.backTopTop();
+                if (container == 'content') {
+                    if (code_html.url != url)
+                        window.history.pushState(document.title, code_html.title, code_html.url);
+                }
+                if (!fix ) {
+                    Nav.backTopTop();
+                }
             },
 
             error : function(resultat, statut, erreur){
@@ -103,14 +111,34 @@ var Nav = {
     restartEvent: function(container) {
         jQuery('body').trigger("NavLoad");
         jQuery(container).find('a.speednav').click(function() {
-            Nav.get(jQuery(this).attr('href'));
+            var container = null;
+            var fix = false;
+            if (jQuery(this).attr('data-type')) {
+                if (jQuery('#'+jQuery(this).attr('data-type')) != 'undefined')
+                    container = jQuery(this).attr('data-type');
+            }
+            if (jQuery(this).hasClass('speednav_fix'))
+                fix = true;
+
+            Nav.get(jQuery(this).attr('href'), container, null,  fix);
+
             return false;
         });
         jQuery(container).find('form.speednav').submit(function() {
             if (jQuery(this).hasClass('speednav_error'))
                 return true;
             else {
-                Nav.post(jQuery(this));
+                var container = null;
+                var fix = false;
+                if (jQuery(this).attr('data-type')) {
+                    if (jQuery('#'+jQuery(this).attr('data-type')) != 'undefined')
+                        container = jQuery(this).attr('data-type');
+                }
+                if (jQuery(this).hasClass('speednav_fix'))
+                    fix = true;
+
+                Nav.post(jQuery(this), container, fix);
+
                 return false;
             }
         });

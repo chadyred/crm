@@ -46,7 +46,7 @@ class AgencyAccountController extends Controller
             $this->get('enigmatic_crm.manager.agency_account')->save($agency_account);
 
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.agency_account.message.add'));
-            return $this->redirect($first?$this->generateUrl('enigmatic_crm_account_add_first_owner', array('account'=> $account->getId())):$this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
+            return $this->redirect($first?$this->generateUrl('enigmatic_crm_account_owner_add_first', array('account'=> $account->getId())):$this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
         }
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:AgencyAccount:form.html.twig', array(
@@ -68,6 +68,7 @@ class AgencyAccountController extends Controller
 
         $form->handleRequest($this->get('request'));
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->get('enigmatic_crm.manager.agency_account')->save($agency_account);
 
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.agency_account.message.update'));
@@ -76,6 +77,7 @@ class AgencyAccountController extends Controller
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:AgencyAccount:form.html.twig', array(
             'agency_account'    => $agency_account,
+            'first'             => false,
             'form'              => $form->createView(),
         )));
     }

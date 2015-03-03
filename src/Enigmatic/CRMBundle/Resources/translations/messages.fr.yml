@@ -34,6 +34,10 @@ enigmatic:
                     1: TOP 100
                     2: TOP 150
                     3: Autre
+                description:
+                    name: Commentaire
+                turnover:
+                    name: Chiffre d'affaire
             form:
                 field:
                     activity:
@@ -78,12 +82,16 @@ enigmatic:
                     activities: Activités
                     contacts: Contacts
                     details: Informations du compte
-                    owners: Chargés d'affaires
+                    agencies_infos: Informations des agences
+                    agency_infos: Chargés d'affaires / Potentiel TT / CA
             title:
                 list: Comptes
         account_owner:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette asignation ?
             message:
                 add: Le compte a été lié à un nouvel utilisateur
+                remove: L'utilisateur n'est plus assigné à ce compte
             form:
                 field:
                     user:
@@ -224,10 +232,16 @@ enigmatic:
                         3: Autre
                     description:
                         label: Informations complémentaires
+                    turnovers:
+                        label: Chiffre d'affaire
+                        turnover:
+                            placeholder: Chiffre d'affaire
                 submit:
                     add: Lier l'agence
+                    update: Modifier
             title:
                 add: Lier le compte à une agence
+                update: Modifier les infos
                 first_add: Etape 2 : Lier le compte à une agence
         calendar:
             error_load: Une erreur est survenue, impossible de récupérer les données ou la requête n'a pas pu aboutir ...
@@ -628,3 +642,6 @@ enigmatic:
                     agencies: Agence(s)
             title:
                 list: Utilisateurs
+        service:
+            google:
+                unavailable: Le service google map est indisponible temporairement
