@@ -14,9 +14,10 @@ class AgencyManager
     /**
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager, UserManager $userManager) {
         $this->class = 'EnigmaticCRMBundle:Agency';
         $this->em  = $entityManager;
+        $this->$userManager  = $userManager;
     }
 
     /**

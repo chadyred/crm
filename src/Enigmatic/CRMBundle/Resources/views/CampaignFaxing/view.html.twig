@@ -15,11 +15,11 @@
 
     <div class="action action_right">
         {% if campaign.getState() != constant('CAMPAIGN_FAXING_SENDED', campaign) %}
-            {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_campaign_faxing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+            {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_faxing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
             {{ button.create('send', 'Send test fax'|trans, path('enigmatic_crm_campaign_faxing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
         {% endif %}
         {% if is_granted('ROLE_RCA') %}
-            {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_faxing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.agency.campaign_faxing.remove_confirm' | trans~'");') }}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_faxing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.agency.campaign_faxing.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
 

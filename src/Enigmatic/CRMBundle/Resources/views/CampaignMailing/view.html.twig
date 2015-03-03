@@ -6,6 +6,7 @@
 {% block content %}
 
 {% import "AppBundle:macro:button.html.twig" as button %}
+{% import "AppBundle:macro:icon.html.twig" as icon %}
 
     <div class="action">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
@@ -15,7 +16,7 @@
             {{ button.create('send', 'Send test mail'|trans, path('enigmatic_crm_campaign_mailing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
         {% endif %}
         {% if is_granted('ROLE_RCA') %}
-            {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_mailing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.agency.campaign_mailing.remove_confirm' | trans~'");') }}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_mailing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.agency.campaign_mailing.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
 

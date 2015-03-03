@@ -13,8 +13,8 @@
     </div>
 
     <div class="action action_right">
-        {{ icon.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
-        {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_user_remove', {'user': user.getId()}), 'return confirm("'~'enigmatic.crm.user.action.remove_confirm' | trans~'");') }}
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
+        {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_user_remove', {'user': user.getId()}), 'return confirm("'~'enigmatic.crm.user.action.remove_confirm' | trans~'");') }}
     </div>
 
     <h1>{{ user.getFirstname() }} {{ user.getName() }}</h1>

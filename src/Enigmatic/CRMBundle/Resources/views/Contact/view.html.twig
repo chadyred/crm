@@ -14,7 +14,7 @@
     <div class="action action_right">
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_contact_update', {'contact': contact.getId()}), null, 'speednav') }}
         {% if is_granted('ROLE_RS') %}
-            {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_contact_remove', {'contact': contact.getId()}), 'return confirm("'~'enigmatic.crm.agency.contact.remove_confirm' | trans~'");') }}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_contact_remove', {'contact': contact.getId()}), 'return confirm("'~'enigmatic.crm.agency.contact.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
 
