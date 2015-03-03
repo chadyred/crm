@@ -28,11 +28,15 @@
             <p>{% trans %}enigmatic.crm.contact.field.email.name{% endtrans %} : <span><a href="mailto:{{ contact.getEmail() }}" title="">{{ contact.getEmail() }}</a></span></p>
             <p>{% trans %}enigmatic.crm.contact.field.function.name{% endtrans %} : <span>{{ contact.getFunction() }}</span></p>
             <p>{% trans %}enigmatic.crm.contact.field.birthday.name{% endtrans %} : <span>{% if contact.getBirthday() %}{{ contact.getBirthday() | date('d/m/Y') }}{% endif %} </span></p>
-            <p>{% trans %}enigmatic.crm.contact.field.phone.name{% endtrans %} : 
+            <p>{% trans %}enigmatic.crm.contact.field.phone.name{% endtrans %} :
+			<ul>
                 {% for phone in contact.getPhones() %}
-                    <span class="ico_phone_{{ phone.getTYpe() }}">{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }}</span> : <span>{{ phoneFormat(phone.getPhone()) }}</span> </p>
+                    <li>{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }} : <span>{{ phoneFormat(phone.getPhone()) }}</span></li>
                 {% endfor %}
-            {% trans %}enigmatic.crm.contact.field.address.name{% endtrans %} :
+			</ul>
+			</p>
+			
+            <p>{% trans %}enigmatic.crm.contact.field.address.name{% endtrans %} :<span>
             <address>
                 {{ contact.getAddress() }} <br/>
                 {% if contact.getAddressCpl() %}
@@ -42,7 +46,8 @@
                 {{ contact.getCity().getName() }} {{ contact.getCity().getCanonicalZipcode() }}
                 {% endif %}
             </address>
-            <br/>
+            </span>
+			</p>
             {% if contact.getCity() %}
                 {% if map %}
                     {{ google_map(map) }}
@@ -51,7 +56,7 @@
                 {% endif %}
             {% endif %}
             <br/>
-            {% trans %}enigmatic.crm.contact.field.description.name{% endtrans %} : <p>{{ contact.getDescription() | nl2br }}</p><br/>
+            <p>{% trans %}enigmatic.crm.contact.field.description.name{% endtrans %} : <span>{{ contact.getDescription() | nl2br }}</span></p>
 
         </div>
 
