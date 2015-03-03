@@ -13,4 +13,4 @@ fos_user:
 #            template:   EnigmaticDefaultBundle:Email:inscription.html.twig
     resetting:
         email:
-            template:   UserBundle:Email:accountResetting.html.twig
+            template:   UserBundle:Resetting:Email/reset.html.twig

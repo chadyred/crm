@@ -21,3 +21,7 @@ user_confirmation:
         _controller: FrameworkBundle:Redirect:urlRedirect
         path: /
         permanent: true
+
+user_profile:
+    resource: "@UserBundle/Resources/config/routing/profile.yml"
+    prefix: /profil

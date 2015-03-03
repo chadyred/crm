@@ -535,6 +535,9 @@ enigmatic:
                     users:
                         link: Utilisateurs
                         title: ''
+                    change_password:
+                        link: Modification du mot de passe
+                        title: ''
             logout:
                 name: Déconnexion
                 title: Déconnexion

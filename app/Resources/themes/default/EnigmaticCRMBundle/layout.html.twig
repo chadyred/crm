@@ -26,10 +26,8 @@
 {% block body %} 
 
         <header id="header">
-            <div class="header_left">
-                {{ render(controller('EnigmaticCRMBundle:Default:getUserWelcome')) }}
-            </div>
             <div class="header_right">
+			 {{ render(controller('EnigmaticCRMBundle:Default:getUserWelcome')) }}
                 {% if app.user %}
                 <a class="speednav ico ico_logout" href="{{ path('logout') }}" title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}"><span>{% trans %}enigmatic.crm.header.logout.name{% endtrans %}</span></a>
                 {% endif %}
@@ -87,22 +85,26 @@
                                 enigmatic.crm.header.nav.campaign.faxing.link{% endtrans %}</a></li>
                     </ul>
                 </li>
-                {% if is_granted('ROLE_RS') %}
+
                     <li id="header_nav_config" class="nav_collapsible">
                         <a class="nav_link" href="">
                             <span class="nav_ico"><i class="ico ico_cog"></i></span>
                             {% trans %}enigmatic.crm.header.nav.system.link{% endtrans %}
                         </a>
                         <ul class="submenu">
+                            {% if is_granted('ROLE_RS') %}
                             <li id="header_nav_agency"><a class="speednav" href="{{ path('enigmatic_crm_agency_list') }}"
                                    title="{% trans %}enigmatic.crm.header.nav.system.agencys.title{% endtrans %}">{% trans %}
                                     enigmatic.crm.header.nav.system.agencys.link{% endtrans %}</a></li>
                             <li id="header_nav_user"><a class="speednav" href="{{ path('enigmatic_crm_user_list') }}"
                                    title="{% trans %}enigmatic.crm.header.nav.system.users.title{% endtrans %}">{% trans %}
                                     enigmatic.crm.header.nav.system.users.link{% endtrans %}</a></li>
+                            {% endif %}
+                            <li id="header_nav_user"><a class="speednav" href="{{ path('user_change_password') }}"
+                                                        title="{% trans %}enigmatic.crm.header.nav.system.change_password.title{% endtrans %}">{% trans %}
+                                    enigmatic.crm.header.nav.system.change_password.link{% endtrans %}</a></li>
                         </ul>
                     </li>
-                {% endif %}
             </ul>
         </nav>
 		{% endif %}
