@@ -4,6 +4,8 @@
 
     <h1>{% trans %}user.resetting.title{% endtrans %}</h1>
 
+    <div class="view">
+
     <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
 
         {% if invalid_username is defined %}
@@ -18,5 +20,7 @@
             <input class="btn" type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
         </div>
     </form>
+
+    </div>
 {% endblock %}
 

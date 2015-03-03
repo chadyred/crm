@@ -2,5 +2,7 @@
 
 {% block content %}
     <h1>{% trans %}user.resetting.title{% endtrans %}</h1>
+    <div class="view">
     <p>{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}</p>
+    </div>
 {% endblock %}
