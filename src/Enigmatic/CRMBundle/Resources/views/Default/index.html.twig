@@ -2,12 +2,13 @@
 
 {% block title %}{% trans %}enigmatic.crm.header.titles.home{% endtrans %} - {{ parent() }}{% endblock %}
 {% block nav_active %}home{% endblock %}
+{% block body_class %}{{ parent() }} synthese{% endblock %}
 
 {% block content %}
 
     <h1>{% trans %}enigmatic.crm.dashboard.title{% endtrans %}</h1>
 
-    <div class="view">
+    <div class="graph_synthese view">
 
         <div class="search" id="dashboard_search">
             <form class="speednav" action="" method="post">
@@ -125,6 +126,10 @@
 
             </tbody>
         </table>
+		
+		
+		
+		
 
         <div>
             <h2>Types d'activités</h2>
@@ -132,10 +137,12 @@
                 <canvas id="chart-area"></canvas>
             </div>
         </div>
+		</div>
 
+	<div class="calendar_synthese view">
         <div id="calendar"></div>
-
-    </div>
+		</div>
+  
 
 {% endblock %}
 
@@ -258,6 +265,7 @@
 //                defaultDate: '2015-02-12',
                 editable: true,
                 eventLimit: true, // allow "more" link when too many events
+                height: 850,
                 events: {
                     url: '{{ path('enigmatic_crm_activity_calendar_event') }}',
                     error: function() {

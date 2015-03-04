@@ -13,11 +13,17 @@
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_list'), null, 'speednav') }}
     </div>
 
-    <form method="post" action="" {{ form_enctype(form) }}>
+    <div class="view">
 
-        {{ form_widget(form) }}
+        <a href="/bundles/enigmaticcrm/media/import.csv">{% trans %}enigmatic.crm.account_import.action.download_model{% endtrans %}</a>
 
-        <input class="btn" type="submit" value="{% trans %}enigmatic.crm.account.form.submit.import{% endtrans %}">
-        {{ button.create('cancel', 'Cancel'|trans, path('enigmatic_crm_account_list'), null, 'speednav' ) }}
-    </form>
+        <form method="post" action="" {{ form_enctype(form) }}>
+
+            {{ form_widget(form) }}
+
+            <input class="btn" type="submit" value="{% trans %}enigmatic.crm.account.form.submit.import{% endtrans %}">
+            {{ button.create('cancel', 'Cancel'|trans, path('enigmatic_crm_account_list'), null, 'speednav' ) }}
+        </form>
+
+    </div>
 {% endblock %}

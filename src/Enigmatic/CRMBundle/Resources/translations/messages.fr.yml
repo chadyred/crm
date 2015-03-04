@@ -105,6 +105,8 @@ enigmatic:
                 first_add: Etape 3 : Lier le compte à un utilisateur
                 first_add_rca: Etape 2 : Lier le compte à un utilisateur
         account_import:
+            action:
+                download_model: Télécharger le model d'import
             form:
                 field:
                     file:

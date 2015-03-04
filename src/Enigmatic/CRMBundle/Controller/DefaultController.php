@@ -68,7 +68,7 @@ class DefaultController extends Controller
             'params'            => $params,
             'current_agency'    => $this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null,
             'current_user'      => $this->get('enigmatic_crm.manager.user')->getCurrent(),
-            'colors'            => array('#00C015', '#5076C0', '#C00303','#C00EB7', '#512FC0', '#8BC000', '#638FC0', '#45207E', '#7E1455', '#1B7E67', '#6B7E2D', '#7E5A2D',
+            'colors'            => array('#e94b3b', '#f98e33', '#23ae89','#2ec1cc', '#7c78ca', '#8BC000', '#638FC0', '#45207E', '#7E1455', '#1B7E67', '#6B7E2D', '#7E5A2D',
                 '#203D7E', '#7E2A5B', '#597E76', '#3A0D13', "#203A24", "#3A3607", "#BB70E5", "#964842")
         )));
     }

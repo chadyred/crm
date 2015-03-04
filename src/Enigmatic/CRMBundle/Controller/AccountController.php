@@ -133,20 +133,31 @@ class AccountController extends Controller
             foreach ($reader as $row) {
                 $row = array_map(function($str){return iconv("Windows-1252", "UTF-8", $str);}, $row);
 
+                dump($row);
+
                 $account = $account_manager->create();
                 $account->setName($row['Nom']);
                 $account->setSiret($row['Siret']);
                 $account->setAddress($row['Adresse']);
                 $account->setAddressCpl($row['Adresse Cpl']);
                 $account->setPhone($row['Telephone']);
+                $account->setFax($row['Fax']);
+                $account->setActivity($row['Activite']);
+                $account->setCity($this->get('enigmatic_city.manager.city')->getByZipcode($row['Code postal']));
 
-                if ($this->get('validator')->validate($account))
-                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('ok'));
-
-//                    $account_manager->save($account);
+                dump($account);
+                $errors = $this->get('validator')->validate($account);
+                if (count($errors)) {
+                    echo ('error');
+                    foreach($errors as $error)
+                        echo $error->getPropertyPath().' : '.$error->getMessage();
+                        dump($error);
+                }
                 else
-                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('erreur'));
+                    echo ('ok');
             }
+
+            exit();
 
 
 //            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account.message.update'));
