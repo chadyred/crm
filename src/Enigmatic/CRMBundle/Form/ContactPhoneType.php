@@ -18,9 +18,8 @@ class ContactPhoneType extends AbstractType
         $builder
             ->add('type', 'genemu_jqueryselect2_choice', array(
                 'choices'       => array(
-                    ContactPhone::HOME      =>  'enigmatic.crm.contact.form.field.phones.type.home.label',
-                    ContactPhone::MOBILE    =>  'enigmatic.crm.contact.form.field.phones.type.mobile.label',
                     ContactPhone::WORK      =>  'enigmatic.crm.contact.form.field.phones.type.work.label',
+                    ContactPhone::MOBILE    =>  'enigmatic.crm.contact.form.field.phones.type.mobile.label',
                     ContactPhone::FAX       =>  'enigmatic.crm.contact.form.field.phones.type.fax.label',
                     ContactPhone::OTHER     =>  'enigmatic.crm.contact.form.field.phones.type.other.label',
                 ),

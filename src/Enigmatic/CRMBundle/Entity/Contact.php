@@ -2,8 +2,10 @@
 
 namespace Enigmatic\CRMBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping\OrderBy;
 
 /**
  * Contact
@@ -118,6 +120,7 @@ class Contact
      *
      * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\ContactPhone", mappedBy="contact", cascade="all", orphanRemoval=true)
      * @Assert\Valid()
+     * @OrderBy({"type" = "ASC"})
      */
     private $phones;
 
@@ -147,6 +150,7 @@ class Contact
         $this->account = $account;
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();
+        $this->phones = new ArrayCollection();
     }
 
     /**
@@ -428,6 +432,33 @@ class Contact
     public function getPhones()
     {
         return $this->phones;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return \Enigmatic\CRMBundle\Entity\ContactPhone
+     */
+    public function getPhone()
+    {
+        $phone = null;
+
+        foreach ($this->getPhones() as $p) {
+            if ($p->getType() == ContactPhone::WORK)
+                return $p;
+            elseif ($p->getType() == ContactPhone::MOBILE) {
+                if ($phone == null)
+                    $phone = $p;
+                elseif ($phone->getType() != ContactPhone::WORK)
+                    $phone = $p;
+            }
+            elseif ($p->getType() == ContactPhone::OTHER) {
+                if ($phone == null)
+                    $phone = $p;
+            }
+        }
+
+        return $phone;
     }
 
     /**

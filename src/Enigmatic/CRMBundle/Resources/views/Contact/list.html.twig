@@ -46,9 +46,9 @@
                 <td class="onclick">{{ contact.getEmail() }}</td>
                 <td class="onclick">{{ contact.getFunction() }}</td>
                 <td class="onclick">
-                    {% for phone in contact.getPhones%}
-                        <span>{{ phoneFormat(phone.getPhone()) }}</span>
-                    {% endfor %}
+                    {% if contact.getPhone() %}
+                        <span>{{ phoneFormat(contact.getPhone().getPhone()) }}</span>
+                    {% endif %}
                 </td>
                 <td></td>
             </tr>

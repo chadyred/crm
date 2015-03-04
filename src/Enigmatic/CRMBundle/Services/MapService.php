@@ -12,6 +12,8 @@ class MapService
 {
     public function generateAction($address, $info_bulle = '', $width = '100%', $height = '100%') {
 
+        dump($address);
+
         $geocoder = new \Geocoder\Geocoder();
         $adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
         $chain    = new \Geocoder\Provider\ChainProvider(array(

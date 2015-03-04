@@ -27,7 +27,7 @@
 
         <header id="header">
             <div class="header_right">
-			 {{ render(controller('EnigmaticCRMBundle:Default:getUserWelcome')) }}
+			 <span class="nom_user">{{ render(controller('EnigmaticCRMBundle:Default:getUserWelcome')) }}</span>
                 {% if app.user %}
                 <a class="speednav ico ico_logout" href="{{ path('logout') }}" title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}"><span>{% trans %}enigmatic.crm.header.logout.name{% endtrans %}</span></a>
                 {% endif %}
@@ -36,7 +36,7 @@
    
 
     <aside class="sidebar">
-	<div id="logo"></div>
+        <a id="logo" class="speednav" href="{{ path('enigmatic_crm_home') }}" title=""></a>
 		{% if app.user %}
         <nav>
             <ul>
@@ -100,7 +100,7 @@
                                    title="{% trans %}enigmatic.crm.header.nav.system.users.title{% endtrans %}">{% trans %}
                                     enigmatic.crm.header.nav.system.users.link{% endtrans %}</a></li>
                             {% endif %}
-                            <li id="header_nav_user"><a class="speednav" href="{{ path('user_change_password') }}"
+                            <li id="header_nav_change_password"><a class="speednav" href="{{ path('user_change_password') }}"
                                                         title="{% trans %}enigmatic.crm.header.nav.system.change_password.title{% endtrans %}">{% trans %}
                                     enigmatic.crm.header.nav.system.change_password.link{% endtrans %}</a></li>
                         </ul>
@@ -143,7 +143,7 @@
             dateTimePicker();
             runSelect2();
             $('.form_collection').each(function () {
-                collectionStart($(this).attr('id'), false);
+                collectionStart($(this).attr('id'), true);
             });
         }
 

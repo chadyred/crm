@@ -11,6 +11,15 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
+        $activities = array();
+        $_activities = $this->get('enigmatic_crm.manager.activity')->getAll();
+        foreach ($_activities as $activity) {
+            if (isset($activities[$activity->getUser()->getId()][$activity->getType()->getType()]))
+                $activities[$activity->getUser()->getId()][$activity->getType()->getType()] ++;
+            else
+                $activities[$activity->getUser()->getId()][$activity->getType()->getType()] = 1;
+        }
+
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Default:index.html.twig', array()));
     }
 

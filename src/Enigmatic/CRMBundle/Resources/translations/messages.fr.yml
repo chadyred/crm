@@ -233,7 +233,7 @@ enigmatic:
                         2: TOP 150
                         3: Autre
                     description:
-                        label: Informations complémentaires
+                        label: Commentaire
                     turnovers:
                         label: Chiffre d'affaire
                         turnover:
@@ -460,7 +460,7 @@ enigmatic:
                     city:
                         label: Ville
                     description:
-                        label: Description
+                        label: Commentaire
                     email:
                         label: Adresse mail
                     firstname:
@@ -578,7 +578,6 @@ enigmatic:
                 user_update: Modifier un utilisateur
             welcome:
                 admin:    Administrateur
-                message:  Bienvenue
                 user:     Invité
         user:
             action:
@@ -627,7 +626,7 @@ enigmatic:
                         roles:
                             ca:
                                 label: Chargé d'affaires
-                            label: Droits:
+                            label: Droits
                             rca:
                                 label: Resonsable de chargés d'affaires
                             rs:

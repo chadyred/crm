@@ -43,7 +43,7 @@ class ContactType extends AbstractType
                     'data-prototype_name'       => '__contact_phone__',
                     'data-min'                  => '0',
                     'data-max'                  => '5',
-                    'data-auto_add'             => 'true',
+                    'data-auto_add'             => 'false',
                     'data-title'                => '',
                     'data-text_link_add'        => 'Ajouter un numéro',
                     'data-text_link_suppr'      => 'Supprimer ce numéro',

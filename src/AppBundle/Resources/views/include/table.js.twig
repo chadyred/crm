@@ -94,9 +94,9 @@
 
         loader: function (visible) {
             if (visible)
-                jQuery('.table_pager').append('<div id="loading">{% trans %}Loading{% endtrans %}</div>')
+                jQuery('.table').before('<div id="table_loading">{% trans %}Loading{% endtrans %}</div>')
             else
-                jQuery('.table_pager > #loading').remove();
+                jQuery('#table_loading').remove();
         },
 
         lock_on : function () {
@@ -109,5 +109,17 @@
             this.loader(false);
         }
     };
+
+    jQuery("input.search_data").keypress(function (event) {
+        if(event.keyCode == 13){
+            Table{{ params['entity'] }}Management.parseSearch();
+            Table{{ params['entity'] }}Management.getList();
+        }
+    });
+
+    jQuery("select.search_data").change(function (event) {
+        Table{{ params['entity'] }}Management.parseSearch();
+        Table{{ params['entity'] }}Management.getList();
+    });
 
 </script>

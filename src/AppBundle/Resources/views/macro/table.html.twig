@@ -3,7 +3,7 @@
 {% endmacro %}
 
 {% macro th_search_input(name, search) %}
-    <th><input type="text" data="{{ name }}" value="{% if search[name] is defined %}{{ search[name] }}{% endif %}" /></th>
+    <th><input class="search_data" type="text" data="{{ name }}" value="{% if search[name] is defined %}{{ search[name] }}{% endif %}" /></th>
 {% endmacro %}
 
 {% macro search_link(type_name) %}

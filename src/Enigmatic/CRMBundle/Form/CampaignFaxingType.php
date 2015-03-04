@@ -62,7 +62,7 @@ class CampaignFaxingType extends AbstractType
                 'attr'              => array(
                     'class'                     => 'form_collection',
                     'data-prototype_name'       => '__campaign_faxing_fax__',
-                    'data-min'                  => '0',
+                    'data-min'                  => '1',
                     'data-max'                  => '10',
                     'data-auto_add'             => 'true',
                     'data-title'                => '',
