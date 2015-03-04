@@ -44,6 +44,14 @@ class AgencyRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function findAll() {
+
+        $qb = $this->createQueryBuilder('agency');
+        $qb = $this->join($qb, true);
+
+        return $qb->getQuery()->getResult();
+    }
+
     protected function join(QueryBuilder $qb, $add = false)
     {
         $qb->leftjoin('agency.accounts', 'accounts');

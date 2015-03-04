@@ -59,7 +59,7 @@
             $(City.search_city_result).fadeIn();
             if ($result.length) {
                 $.each($result, function (i, item) {
-                    $(City.search_city_result).append('<div id="city_choice_' + item.id + '" data-id="' + item.id + '" class="city_choice_item city_choice_item_row_' + i % 2 + '" title=""><span class="city_name">' + item.name + '</span>, <span class="city_zipcode">' + item.zipcode + '</span><br/><em class="city_department">' + item.department + '</em></div>');
+                    $(City.search_city_result).append('<div id="city_choice_' + item.id + '" data-id="' + item.id + '" class="city_choice_item city_choice_item_row_' + i % 2 + '" title=""><span class="city_name">' + item.name + '</span>, <span class="city_zipcode">' + item.zipcode + '</span></div>');
                 });
             }
             else

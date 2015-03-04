@@ -79,7 +79,7 @@ class ActivityManager
     /**
      * @return Array
      */
-    public function getAllByDate(\DateTime $from, \DateTime $to, $params = array(), $replanned = false) {
+    public function getAllByDate(\DateTime $from = null, \DateTime $to = null, $params = array(), $replanned = false) {
         return $this->em->getRepository($this->class)->findAllByDate($from, $to, $params, $replanned);
     }
 

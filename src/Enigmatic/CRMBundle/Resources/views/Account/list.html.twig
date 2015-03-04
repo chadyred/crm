@@ -57,7 +57,7 @@
                 <td class="onclick">
                     {% if account.getCity() %}
                         <address>
-                            {{ account.getAddress() }}<br/>
+                            {{ account.getAddress() }}{% if account.getAddress() %}<br/>{% endif %}
                             {% if account.getAddressCpl() %}
                                 {{ account.getAddressCpl() }}<br/>
                             {% endif %}
@@ -76,9 +76,9 @@
                 </td>
                 <td class="onclick">
                     {% for owner in account.getOwners() %}
-                        <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': owner.getUser().getId()}) }}" title="">{{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}</a>{% if loop.last == false %}, {% endif %}
-                    {% else %}
-                        {% trans %}enigmatic.crm.account.table.empty_owner{% endtrans %}
+                        {% if owner.getEnd() == null %}
+                            {{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }} <br/>
+                        {% endif %}
                     {% endfor %}
                 </td>
                 {% if is_granted('ROLE_RS') == false %}

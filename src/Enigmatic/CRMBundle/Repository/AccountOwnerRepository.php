@@ -33,4 +33,20 @@ class AccountOwnerRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findAllByDate(\DateTime $from = null, \DateTime $to = null) {
+
+        $qb = $this->createQueryBuilder('account_owner');
+        if ($from)
+            $qb ->andWhere('account_owner.dateCreated >= :from')
+                ->setParameter('from', $from->format('Y-m-d H:i:s'));
+        if ($to)
+            $qb ->andWhere('account_owner.dateCreated < :to')
+                ->setParameter('to', $to->format('Y-m-d H:i:s'));
+
+        $qb ->leftjoin('account_owner.end', 'account_owner_end')
+            ->andWhere('account_owner_end.dateEnd IS NULL');
+
+        return $qb->getQuery()->getResult();
+    }
 }

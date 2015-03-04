@@ -46,6 +46,14 @@ class UserRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function findAll() {
+
+        $qb = $this->createQueryBuilder('user');
+        $qb = $this->join($qb, true);
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findOneByUser(User $user) {
 
         $qb = $this->createQueryBuilder('user');

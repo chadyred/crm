@@ -27,8 +27,6 @@ class AccountService
             $_agency = $this->userManager->getCurrent()->getAgency();
             $account = $this->accountManager->getByNameAndCity($data->getName(), $data->getCity());
 
-            dump($account);
-
             if ($account instanceof Account) {
                 foreach ($account->getAgencies() as $agency) {
                     if ($agency == $_agency)

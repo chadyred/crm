@@ -45,14 +45,16 @@ class ActivityRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
-    public function findAllByDate(\DateTime $from, \DateTime $to, $params = array(), $replanned = false) {
+    public function findAllByDate(\DateTime $from = null, \DateTime $to = null, $params = array(), $replanned = false) {
 
         $qb = $this->createQueryBuilder('activity');
         $qb = $this->join($qb, true);
-        $qb ->where('activity.dateStart >= :from or activity.dateEnd >= :from')
-            ->andWhere('activity.dateStart < :to or activity.dateEnd < :from')
-            ->setParameter('from', $from->format('Y-m-d H:i:s'))
-            ->setParameter('to', $to->format('Y-m-d H:i:s'));
+        if ($from)
+            $qb ->andWhere('activity.dateStart >= :from or activity.dateEnd >= :from')
+                ->setParameter('from', $from->format('Y-m-d H:i:s'));
+        if ($to)
+            $qb ->andWhere('activity.dateStart < :to or activity.dateEnd < :from')
+                ->setParameter('to', $to->format('Y-m-d H:i:s'));
         if (isset($params['search']))
             $qb = $this->search($qb, $params['search']);
         if (isset($params['order']))

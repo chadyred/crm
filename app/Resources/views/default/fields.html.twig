@@ -36,6 +36,16 @@
     </select>
 {% endblock %}
 
+{% block enigmatic_city_row %}
+    {% spaceless %}
+        <div class="form_row form_city">
+            {{ form_label(form) }}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock %}
+
 {% block enigmatic_city_widget %}
     {% spaceless %}
         <input type="text" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}"{% endif %}

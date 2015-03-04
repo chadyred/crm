@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block body %} 
-
+<div class="wrapper">
         <header id="header">
             <div class="header_right">
 			 <span class="nom_user">{{ render(controller('EnigmaticCRMBundle:Default:getUserWelcome')) }}</span>
@@ -115,8 +115,9 @@
 
         {% block content %}{% endblock %}
     </div>
-
+	</div>
 {% endblock %}
+
 
 {% block javascripts %}
 
@@ -128,6 +129,7 @@
     '@AppBundle/Resources/public/js/datetimepicker.js'
     '@AppBundle/Resources/public/js/select2.min.js'
     '@AppBundle/Resources/public/js/system.js'
+    '@AppBundle/Resources/public/js/chart.min.js'
     '@FOSJsRoutingBundle/Resources/public/js/router.js'
     '@EnigmaticCRMBundle/Resources/public/js/moment.min.js'
     '@EnigmaticCRMBundle/Resources/public/js/fullcalendar.min.js'

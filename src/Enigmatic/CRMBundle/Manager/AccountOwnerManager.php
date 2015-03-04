@@ -81,6 +81,13 @@ class AccountOwnerManager
     }
 
     /**
+     * @return Array
+     */
+    public function getAllByDate(\DateTime $from = null, \DateTime $to = null) {
+        return $this->em->getRepository($this->class)->findAllByDate($from, $to);
+    }
+
+    /**
      * @param Account $account
      * @param Agency $agency
      * @return Array

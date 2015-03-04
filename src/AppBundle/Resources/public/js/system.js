@@ -11,6 +11,16 @@ function notify($message, $type, $persistant) {
 }
 
 function dateTimePicker() {
+    $('.datetimepicker2').datetimepicker({
+        inline:false,
+        //value: $(this).val(),
+        //mask:'31-12-9999 24:59',
+        format:'d-m-Y H:i',
+        dayOfWeekStart : 1,
+        lang:'fr',
+        step:5,
+        defaultTime: '00:00'
+    });
     $('.datetimepicker').datetimepicker({
         inline:true,
         //value: $(this).val(),
