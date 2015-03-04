@@ -6,13 +6,12 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
-    
-    <div class="action action_left">
-        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
-    </div>
 
     <h1>{% if replan %}{% trans %}enigmatic.crm.header.titles.activity_replan{% endtrans %}{% elseif activity.getId() %}{% trans %}enigmatic.crm.header.titles.activity_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.activity_add{% endtrans %}{% endif %}</h1>
 
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
 
     {% if activity.getReplanned() %}
         <div class="alert_message alert_message_info">

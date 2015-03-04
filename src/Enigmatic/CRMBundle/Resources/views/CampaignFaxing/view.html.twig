@@ -8,6 +8,7 @@
     {% import "AppBundle:macro:button.html.twig" as button %}
     {% import "AppBundle:macro:icon.html.twig" as icon %}
 
+    <h1>{% trans %}enigmatic.crm.header.titles.campaign_faxing_view{% endtrans %} : {{ campaign.getName() }}</h1>
 
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_faxing_list'), null, 'speednav') }}
@@ -22,8 +23,6 @@
             {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_faxing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.campaign_faxing.action.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
-
-    <h1>{% trans %}enigmatic.crm.header.titles.campaign_faxing_view{% endtrans %} : {{ campaign.getName() }}</h1>
 
     <section class="details">
         <h2>{% trans %}enigmatic.crm.campaign_faxing.view.title.fax{% endtrans %}</h2>

@@ -7,13 +7,13 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <h1>{% if first %}{% trans %}enigmatic.crm.agency_account.title.first_add{% endtrans %}{% elseif agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.title.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.title.add{% endtrans %}{% endif %}</h1>
+
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav speednav_fix') }}
     </div>
 
-    <h1>{% if first %}{% trans %}enigmatic.crm.agency_account.title.first_add{% endtrans %}{% elseif agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.title.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.title.add{% endtrans %}{% endif %}</h1>
-
-    <form class="speednav speednav_fix" method="post" action="{% if agency_account.getId() %}{{ path('enigmatic_crm_agency_account_update', {'agency_account': agency_account.getId()}) }}{% else %}{% endif %}" {{ form_enctype(form) }}>
+    <form id="agency_account" class="view speednav speednav_fix" method="post" action="{% if agency_account.getId() %}{{ path('enigmatic_crm_agency_account_update', {'agency_account': agency_account.getId()}) }}{% else %}{% endif %}" {{ form_enctype(form) }}>
         {{ form_widget(form) }}
         <input class="btn" type="submit" value="{% if agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.form.submit.add{% endtrans %}{% endif %}">
     </form>

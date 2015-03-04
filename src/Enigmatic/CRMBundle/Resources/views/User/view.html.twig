@@ -7,7 +7,9 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 	{% import "AppBundle:macro:icon.html.twig" as icon %}
-	
+
+    <h1>{{ user.getFirstname() }} {{ user.getName() }}</h1>
+
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_user_list'), null, 'speednav') }}
     </div>
@@ -16,8 +18,6 @@
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_user_update', {'user': user.getId()}), null, 'speednav') }}
         {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_user_remove', {'user': user.getId()}), 'return confirm("'~'enigmatic.crm.user.action.remove_confirm' | trans~'");') }}
     </div>
-
-    <h1>{{ user.getFirstname() }} {{ user.getName() }}</h1>
 
      <div class="view">
 

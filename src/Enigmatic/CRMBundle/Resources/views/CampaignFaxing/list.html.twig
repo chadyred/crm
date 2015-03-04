@@ -9,12 +9,12 @@
     {% import "AppBundle:macro:icon.html.twig" as icon %}
     {% import "AppBundle:macro:button.html.twig" as button %}
 
+    <h1>{% trans %}enigmatic.crm.campaign_faxing.title.list{% endtrans %}</h1>
+
+
     <div class="action action_left">
         {{ button.create('add', 'Add'|trans, path('enigmatic_crm_campaign_faxing_add'), null, 'speednav') }}
     </div>
-
-    <h1>{% trans %}enigmatic.crm.campaign_faxing.title.list{% endtrans %}</h1>
-
 
     <div class="table_pager">
         {% include 'AppBundle:include:pager.html.twig' %}
