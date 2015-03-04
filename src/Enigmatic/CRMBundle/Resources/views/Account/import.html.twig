@@ -18,6 +18,6 @@
         {{ form_widget(form) }}
 
         <input class="btn" type="submit" value="{% trans %}enigmatic.crm.account.form.submit.import{% endtrans %}">
-        {{ button.create('back', 'Cancel'|trans, path('enigmatic_crm_account_list'), null, 'speednav' ) }}
+        {{ button.create('cancel', 'Cancel'|trans, path('enigmatic_crm_account_list'), null, 'speednav' ) }}
     </form>
 {% endblock %}

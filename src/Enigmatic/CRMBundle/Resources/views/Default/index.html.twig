@@ -9,121 +9,131 @@
 
     <div class="view">
 
-    <div class="search">
-        <form class="speednav" action="" method="post">
+        <div class="search" id="dashboard_search">
+            <form class="speednav" action="" method="post">
 
-            <div class="form_row">
-                <label for="date_start">De : </label>
-                <input id="date_start" type="text" name="date_start" class="datetimepicker2" value="{% if params['date_start'] %}{{ params['date_start'] | date ('d-m-Y H:i') }}{% endif %}" />
-            </div>
+                <div class="form_row">
+                    <label for="date_start">De : </label>
+                    <input id="date_start" type="text" name="date_start" class="datetimepicker2"
+                           value="{% if params['date_start'] %}{{ params['date_start'] | date ('d-m-Y H:i') }}{% endif %}"/>
+                </div>
 
-            <div class="form_row">
-                <label for="date_end">à : </label>
-                <input id="date_end" type="text" name="date_end" class="datetimepicker2" value="{% if params['date_end'] %}{{ params['date_end'] | date ('d-m-Y H:i') }}{% endif %}" />
-            </div>
+                <div class="form_row">
+                    <label for="date_end">à : </label>
+                    <input id="date_end" type="text" name="date_end" class="datetimepicker2"
+                           value="{% if params['date_end'] %}{{ params['date_end'] | date ('d-m-Y H:i') }}{% endif %}"/>
+                </div>
 
-            <input class="btn" type="submit" value="Générer" />
-        </form>
-    </div>
+                <input class="btn" type="submit" value="Générer"/>
+            </form>
+        </div>
 
-    <table class="table table_striped table_extended" id="">
-        <thead>
-        <tr>
-            <th>Utilisateur</th>
-            <th colspan="3">Nombre d'activités</th>
-            <th colspan="4">Nombre de comptes assignés</th>
-        </tr>
-        <tr>
-            <th></th>
-            <th>Appel</th>
-            <th>RDV</th>
-            <th>Total</th>
-            <th>TOP 100</th>
-            <th>TOP 150</th>
-            <th>Autre</th>
-            <th>Total</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        {% for agency in agencies %}
-            <tr class="agency_row">
-                <td>{{ agency.getName() }}</td>
-                <td colspan="7"></td>
+        <table class="table table_striped table_extended" id="">
+            <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th colspan="3">Nombre d'activités</th>
+                <th colspan="4">Nombre de comptes assignés</th>
             </tr>
-            {% for user in users %}
-                {% if user.getAgency() == agency %}
-                    <tr class="user_row">
-                        <td>
-                            <input type="checkbox" class="user_checkbox" value="{{ user.getId() }}" />
-                            {{ user.getFirstname() }} {{ user.getName() }}
-                        </td>
+            <tr>
+                <th></th>
+                <th>Appel</th>
+                <th>RDV</th>
+                <th>Total</th>
+                <th>TOP 100</th>
+                <th>TOP 150</th>
+                <th>Autre</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
 
-                        <td>
-                            {% set sub_total = 0 %}
-                            {% if activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::CALL')] is defined %}
-                                {{ activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::CALL')] }}
-                                {% set sub_total = sub_total + activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::CALL')] %}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::RDV')] is defined %}
-                                {{ activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::RDV')] }}
-                                {% set sub_total = sub_total + activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::RDV')] %}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ sub_total }}
-                        </td>
-
-                        <td>
-                            {% set sub_total = 0 %}
-                            {% if accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')] is defined %}
-                                {{ accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')] }}
-                                {% set sub_total = sub_total + accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')] %}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% set sub_total = 0 %}
-                            {% if accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')] is defined %}
-                                {{ accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')] }}
-                                {% set sub_total = sub_total + accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')] %}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% set sub_total = 0 %}
-                            {% if accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')] is defined %}
-                                {{ accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')] }}
-                                {% set sub_total = sub_total + accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')] %}
-                            {% else %}
-                                0
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ sub_total }}
-                        </td>
-
+            {% for agency in agencies %}
+                {% if is_granted('ROLE_RS') or (is_granted('ROLE_CA') and is_granted('ROLE_RS') == false and agency == current_agency) %}
+                    <tr class="agency_row">
+                        <td>{{ agency.getName() }}</td>
+                        <td colspan="7"></td>
                     </tr>
+                    {% for user in users %}
+                        {% if is_granted('ROLE_RCA') or (is_granted('ROLE_CA') and is_granted('ROLE_RCA') == false and user == current_user) %}
+                            {% if user.getAgency() == agency %}
+                                <tr class="user_row">
+                                    <td>
+                                        {% if is_granted('ROLE_RCA') %}<input type="checkbox" class="user_checkbox"
+                                                                              value="{{ user.getId() }}" />{% endif %}
+                                        {{ user.getFirstname() }} {{ user.getName() }}
+                                    </td>
+
+                                    <td>
+                                        {% set sub_total = 0 %}
+                                        {% if activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::CALL')] is defined %}
+                                            {{ activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::CALL')] }}
+                                            {% set sub_total = sub_total + activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::CALL')] %}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::RDV')] is defined %}
+                                            {{ activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::RDV')] }}
+                                            {% set sub_total = sub_total + activities[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\ActivityType::RDV')] %}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ sub_total }}
+                                    </td>
+
+                                    <td>
+                                        {% set sub_total = 0 %}
+                                        {% if accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')] is defined %}
+                                            {{ accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')] }}
+                                            {% set sub_total = sub_total + accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')] %}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% set sub_total = 0 %}
+                                        {% if accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')] is defined %}
+                                            {{ accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')] }}
+                                            {% set sub_total = sub_total + accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')] %}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% set sub_total = 0 %}
+                                        {% if accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')] is defined %}
+                                            {{ accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')] }}
+                                            {% set sub_total = sub_total + accounts_onwers[user.getId()][constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')] %}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ sub_total }}
+                                    </td>
+
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
             {% endfor %}
-        {% endfor %}
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <div>
         <div>
-            <canvas id="canvas"></canvas>
+            <h2>Types d'activités</h2>
+            <div style="width:500px;">
+                <canvas id="chart-area"></canvas>
+            </div>
         </div>
-    </div>
+
+        <div id="calendar"></div>
 
     </div>
 
@@ -133,39 +143,175 @@
 
     {{ parent() }}
 
-    <script>
-        var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-        var lineChartData = {
-            labels : ["January","February","March","April","May","June","July"],
-            datasets : [
-                {
-                    label: "My First dataset",
-                    fillColor : "rgba(220,220,220,0.2)",
-                    strokeColor : "rgba(220,220,220,1)",
-                    pointColor : "rgba(220,220,220,1)",
-                    pointStrokeColor : "#fff",
-                    pointHighlightFill : "#fff",
-                    pointHighlightStroke : "rgba(220,220,220,1)",
-                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+    <script type="text/javascript">
+
+        var date_start = jQuery('#date_start');
+        var date_end = jQuery('#date_end');
+
+        jQuery(function(){
+            date_start.datetimepicker({
+                format:'d-m-Y H:i',
+                dayOfWeekStart : 1,
+                lang:'fr',
+                step:5,
+                onShow:function( ct ){
+                    this.setOptions({
+                        maxDate:date_end.val()?date_end.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
+                    })
                 },
-                {
-                    label: "My Second dataset",
-                    fillColor : "rgba(151,187,205,0.2)",
-                    strokeColor : "rgba(151,187,205,1)",
-                    pointColor : "rgba(151,187,205,1)",
-                    pointStrokeColor : "#fff",
-                    pointHighlightFill : "#fff",
-                    pointHighlightStroke : "rgba(151,187,205,1)",
-                    data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-                }
-            ]
-
-        }
-
-        var ctx = document.getElementById("canvas").getContext("2d");
-        window.myLine = new Chart(ctx).Line(lineChartData, {
-            responsive: true
+                timepicker:true
+            });
+            date_end.datetimepicker({
+                format:'d-m-Y H:i',
+                dayOfWeekStart : 1,
+                lang:'fr',
+                step:5,
+                onShow:function( ct ){
+                    this.setOptions({
+                        minDate:date_start.val()?date_start.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
+                    })
+                },
+                timepicker:true
+            });
         });
+    </script>
+
+    <script>
+        var doughnutData = [
+            {% set color = 0 %}
+            {% if is_granted('ROLE_RS') %}
+            {% for g in g_activities_rs %}
+            {% for key,gt in g %}
+            {
+                value: {{ gt }},
+                color: "{{ colors[color] }}",
+                highlight: "#CCCCCC",
+                label: "{{ key }}"
+            },
+            {% set color = color + 1 %}
+            {% endfor %}
+            {% endfor %}
+            {% elseif is_granted('ROLE_RCA') %}
+            {% if g_activities_rca[current_agency.getId()] is defined %}
+            {% for g in g_activities_rca[current_agency.getId()] %}
+            {% for key,gt in g %}
+            {
+                value: {{ gt }},
+                color: "{{ colors[color] }}",
+                highlight: "#CCCCCC",
+                label: "{{ key }}"
+            },
+            {% set color = color + 1 %}
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+            {% elseif is_granted('ROLE_CA') %}
+            {% if g_activities_rca[current_user.getId()] is defined %}
+
+            {% for g in g_activities_ca[current_user.getId()] %}
+            {% for key,gt in g %}
+            {
+                value: {{ gt }},
+                color: "{{ colors[color] }}",
+                highlight: "#CCCCCC",
+                label: "{{ key }}"
+            },
+            {% set color = color + 1 %}
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+
+        ];
+
+        var ctx = document.getElementById("chart-area").getContext("2d");
+        window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive: true});
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+//                    left: 'prev,next today',
+//                    center: 'title',
+//                    right: 'month,agendaWeek,agendaDay'
+                },
+                now: '{{ "now"|date('c') }}',
+                scrollTime: '08:00:00',
+                minTime: '00:00:00',
+                maxTime: '24:00:00',
+                slotDuration: '00:15:00',
+                defaultView: 'agendaDay',
+                businessHours: {
+                    start: '08:00',
+                    end: '18:00',
+                    dow: [ 1, 2, 3, 4, 5 ]
+                },
+                start: '10:00',
+                end: '18:00',
+                lang: '{{ app.request.locale }}',
+//                defaultDate: '2015-02-12',
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: {
+                    url: '{{ path('enigmatic_crm_activity_calendar_event') }}',
+                    error: function() {
+                        $('#script-warning').show();
+                    }
+                },
+                loading: function(bool) {
+                    $('#loader').toggle(bool);
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+                    Nav.get(Routing.generate('enigmatic_crm_activity_view.{{ app.request.locale }}', {'activity': calEvent.id}));
+                },
+                eventDrop: function( event, jsEvent, ui, view ) {
+                    Event.saveDate(event.id, event.start.format('DD-MM-YYYY HH:mm'), event.end.format('DD-MM-YYYY HH:mm'));
+                },
+                eventResize: function(event, delta, revertFunc) {
+                    Event.saveDate(event.id, event.start.format('DD-MM-YYYY HH:mm'), event.end.format('DD-MM-YYYY HH:mm'));
+                },
+                eventRender: function(event, element) {
+                    element.find('.fc-title').html('<strong style="font-size:1.2em">' + event.title + '</strong> ('+event.activity_type+')');
+                    if (event.activity_author)
+                        element.find('.fc-title').append('<br/>{% trans %}enigmatic.crm.calendar.event.by{% endtrans %} : ' + event.activity_author + '');
+                    {% if is_granted('ROLE_RS') %}
+                    if (event.activity_agency)
+                        element.find('.fc-title').append('<br/>(' + event.activity_agency + ')');
+                    {% endif %}
+                    element.find('.fc-title').append('<br/><em>' + event.activity_type_name + '</em>');
+                    if (event.activity_replanned)
+                        element.find('.fc-title').append('<br/>{% trans %}enigmatic.crm.calendar.event.replannified_to{% endtrans %} : ' + event.activity_replanned + '');
+                    if (event.description)
+                        element.find('.fc-title').append('<br/><br/>' + event.description);
+                }
+            });
+        });
+
+        var Event = {
+            saveDate: function(event_id, start, end) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: Routing.generate('enigmatic_crm_activity_calendar_event_save.{{ app.request.locale }}', {activity: event_id}),
+                    dataType: "json",
+                    data: {'date_start': start, 'date_end': end},
+                    cache: true,
+                    success : function(code_html, statut) {
+                        if (!code_html.success)
+                            $('#script-warning').show();
+                    },
+
+                    error : function(resultat, statut, erreur) {
+                        $('#script-warning').show();
+                    }
+                });
+            },
+        }
 
 
     </script>
