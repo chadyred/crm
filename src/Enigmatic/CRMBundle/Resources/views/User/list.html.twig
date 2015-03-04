@@ -26,6 +26,7 @@
                 {{ table.th('email', 'enigmatic.crm.user.table.head.email'|trans, 20, params['order'], params['entity']) }}
                 {{ table.th('agency', 'enigmatic.crm.user.table.head.agency'|trans, 20, null, params['entity']) }}
                 {{ table.th('locked', 'enigmatic.crm.user.table.head.locked'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('roles', 'enigmatic.crm.user.table.head.roles'|trans, 20, params['order'], params['entity']) }}
                 {{ table.th('lastLogin', 'enigmatic.crm.user.table.head.lastLogin'|trans, 20, params['order'], params['entity']) }}
                 {{ table.th('action', 'Action', 10, null, params['entity']) }}
             </tr>
@@ -33,6 +34,7 @@
                 {{ table.th_search_input('name', params['search']) }}
                 {{ table.th_search_input('email', params['search']) }}
                 {{ table.th_search_input('agency', params['search']) }}
+                <th></th>
                 <th></th>
                 <th></th>
                 {{ table.search_link(params['entity']) }}
@@ -46,6 +48,17 @@
                 <td>{{ user.getUser().getEmail() }}</td>
                 <td>{% if user.getAgency() %}{{ user.getAgency().getName }}{% endif %}</td>
                 <td>{% if user.isLocked() %}Inactif{% else %}Actif{% endif %}</td>
+                <td> {% if user.hasRole('ROLE_ADMIN') %}
+                        {% trans %}enigmatic.crm.user.field.role.admin{% endtrans %}
+                    {% elseif user.hasRole('ROLE_RS') %}
+                        {% trans %}enigmatic.crm.user.field.role.rs{% endtrans %}
+                    {% elseif user.hasRole('ROLE_RCA') %}
+                        {% trans %}enigmatic.crm.user.field.role.rca{% endtrans %}
+                    {% elseif user.hasRole('ROLE_CA') %}
+                        {% trans %}enigmatic.crm.user.field.role.ca{% endtrans %}
+                    {% else %}
+                        {% trans %}enigmatic.crm.user.field.role.empty{% endtrans %}
+                    {% endif %}</td>
                 <td>{% if user.getLastLogin() %}{{ user.getLastLogin() | date ('d-m-Y H:i') }}{% else %}Jamais{% endif %}</td>
                 <td></td>
             </tr>

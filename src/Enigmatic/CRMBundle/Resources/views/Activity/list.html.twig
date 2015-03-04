@@ -9,15 +9,18 @@
         {% import "AppBundle:macro:icon.html.twig" as icon %}
         {% import "AppBundle:macro:button.html.twig" as button %}
 
-        <div class="action action_left">
-            {% if account == null %}
-                {{ button.create('calendrier', 'Calendar'|trans, path('enigmatic_crm_activity_calendar'), null, 'speednav') }}
-            {% endif %}
+       
+        <h1>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h1>
+		
+		 <div class="action action_left">            
             {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
         </div>
-
-        <h1>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h1>
-
+		
+		{% if account == null %}
+		<div class="action action_right">	
+			<a class="speednav" href="{{ path('enigmatic_crm_activity_calendar') }}"><span>calendar</span></a>
+		</div>
+		{% endif %}
 
         <div class="table_pager">
             {% include 'AppBundle:include:pager.html.twig' %}
@@ -48,7 +51,7 @@
             <tbody>
             {% for activity in activities %}
                 <tr onclick="Nav.get('{{ path('enigmatic_crm_activity_view', {'activity': activity.getId() }) }}')" id="item_{{ activity.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
-                    <td>{{ activity.getType().getTitle() }} {% if activity.getReplannedBy() %}<span class="text-info">(Replannification)</span>{% endif %}</td>
+                    <td>{{ activity.getType().getTitle() }} {% if activity.getReplannedBy() %}<span class="text-replannication"> (Replannification)</span>{% endif %}</td>
                     <td>{{ activity.getAccount().getName() }}</td>
                     <td>{{ activity.getUser().getFirstname() }} {{ activity.getUser().getName() }}</td>
                     <td>{{ activity.getDateStart() | date('d-m-Y H:i') }}</td>
@@ -67,7 +70,7 @@
 
 {% block javascripts %}
 
-    {% if account == null and app.request.isXmlHttpRequest() %}
+    {% if account == null %}
         {{ parent() }}
     {% endif %}
 

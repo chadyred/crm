@@ -29,6 +29,7 @@
                 {{ table.th('owner', 'enigmatic.crm.account.table.head.owner'|trans, 20, null, params['entity']) }}
                 {% if is_granted('ROLE_RS') == false %}
                 {{ table.th('potential', 'enigmatic.crm.account.table.head.potential'|trans, 10, params['order'], params['entity']) }}
+                {{ table.th('turnover', 'enigmatic.crm.account.table.head.turnover'|trans, 10, params['order'], params['entity']) }}
                 {% endif %}
                 {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
             </tr>
@@ -38,14 +39,15 @@
                 {{ table.th_search_input('phone', params['search']) }}
                 {{ table.th_search_input('owner', params['search']) }}
                 {% if is_granted('ROLE_RS') == false %}
-                <th>
-                    <select class="search_data" data="potential">
-                        <option value="">Tous</option>
-                        <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')) | trans }}</option>
-                        <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')) | trans }}</option>
-                        <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')) | trans }}</option>
-                    </select>
-                </th>
+                    <th>
+                        <select class="search_data" data="potential">
+                            <option value="">Tous</option>
+                            <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')) | trans }}</option>
+                            <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')) | trans }}</option>
+                            <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')) | trans }}</option>
+                        </select>
+                    </th>
+                    {{ table.th_search_input('turnover', params['search']) }}
                 {% endif %}
                 {{ table.search_link(params['entity']) }}
             </tr>
@@ -85,6 +87,15 @@
                 <td class="onclick">
                     {% for account_agency in account.getAgencies() %}
                         {{ ('enigmatic.crm.account.field.potential.'~account_agency.getPotential()) | trans }}
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for account_agency in account.getAgencies() %}
+                        {% for turnover in account_agency %}
+                            {% if turnover == ("now" | date('Y')) %}
+                                {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
                 </td>
                 {% endif %}
