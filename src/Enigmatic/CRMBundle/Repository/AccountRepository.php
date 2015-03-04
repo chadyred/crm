@@ -46,6 +46,20 @@ class AccountRepository extends EntityRepository
         return $qb->getQuery()->getOneOrNullResult();
     }
 
+    public function getER($params = array(), $states = array(Account::VALID)) {
+
+        $qb = $this->createQueryBuilder('account');
+
+        $qb = $this->join($qb, true);
+        if (isset($params['search']))
+            $qb = $this->search($qb, $params['search']);
+        if (isset($params['order']))
+            $qb = $this->order($qb, $params['order']);
+        $qb = $this->state($qb, $states);
+
+        return $qb;
+    }
+
     public function findByNameAndCity($name, $city) {
 
         $qb = $this->createQueryBuilder('account');
@@ -65,6 +79,7 @@ class AccountRepository extends EntityRepository
         $qb->leftjoin('account.owners', 'owners');
         $qb->leftjoin('owners.end', 'owners_end');
         $qb->leftjoin('account.agencies', 'agencies');
+        $qb->leftjoin('agencies.turnovers', 'turnovers');
         $qb->leftjoin('account.city', 'city');
 
         if ($add) {
@@ -72,6 +87,7 @@ class AccountRepository extends EntityRepository
             $qb->addSelect('owners');
             $qb->addSelect('owners_end');
             $qb->addSelect('agencies');
+            $qb->addSelect('turnovers');
             $qb->addSelect('city');
         }
 
@@ -95,6 +111,10 @@ class AccountRepository extends EntityRepository
                         case 'potential':
                             $qb ->andWhere('agencies.potential = :search_potential');
                             $qb ->setParameter('search_potential', $value);
+                            break;
+                        case 'turnover':
+                            $qb ->andWhere('turnovers.turnover = :search_turnover');
+                            $qb ->setParameter('search_turnover', $value);
                             break;
                         case 'address_full':
                             $qb ->andWhere('account.address LIKE :search_address_full OR account.addressCpl LIKE :search_address_full OR city.canonicalName LIKE :search_address_full OR city.zipcode LIKE :search_address_full');

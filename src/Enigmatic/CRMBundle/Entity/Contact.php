@@ -136,7 +136,7 @@ class Contact
     /**
      * @var Agency
      *
-     * @ORM\ManyToMany(targetEntity="Enigmatic\CRMBundle\Entity\Agency", mappedBy="contacts")
+     * @ORM\ManyToMany(targetEntity="Enigmatic\CRMBundle\Entity\Agency", mappedBy="contacts", cascade="persist")
      */
     private $agencies;
 
@@ -145,12 +145,14 @@ class Contact
     /**
      * Constructor
      */
-    public function __construct(Account $account = null)
+    public function __construct(Account $account = null, Agency $agency = null)
     {
         $this->account = $account;
         $this->dateCreated = new \DateTime();
         $this->dateUpdated = new \DateTime();
         $this->phones = new ArrayCollection();
+        if ($agency)
+            $this->addAgency($agency);
     }
 
     /**
@@ -510,6 +512,7 @@ class Contact
     public function addAgency(\Enigmatic\CRMBundle\Entity\Agency $agencies)
     {
         $this->agencies[] = $agencies;
+        $agencies->addContact($this);
 
         return $this;
     }

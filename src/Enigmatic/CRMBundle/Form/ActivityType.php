@@ -2,25 +2,32 @@
 
 namespace Enigmatic\CRMBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Enigmatic\CRMBundle\Entity\Activity;
 use Enigmatic\CRMBundle\Manager\ActivityTypeManager;
+use Enigmatic\CRMBundle\Manager\UserManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Translation\Translator;
 
 class ActivityType extends AbstractType
 {
+    protected $authorizationChecker;
+    protected $userManager;
     protected $activityTypeManager;
     protected $translator;
 
     /**
-     * @param ActivityTypeManager $activityTypeManager
+     * @param AuthorizationChecker $authorizationChecker
      */
-    public function __construct(ActivityTypeManager $activityTypeManager, Translator $translator)
+    public function __construct(AuthorizationChecker $authorizationChecker, UserManager $userManager, ActivityTypeManager $activityTypeManager, Translator $translator)
     {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->userManager = $userManager;
         $this->activityTypeManager = $activityTypeManager;
         $this->translator = $translator;
     }
@@ -72,6 +79,16 @@ class ActivityType extends AbstractType
                     'label' => 'enigmatic.crm.activity.form.field.account.label',
                     'empty_value' => 'enigmatic.crm.activity.form.field.account.empty_value',
                     'required' => true,
+                    'query_builder' => function (EntityRepository $er) use ($event) {
+                        if ($this->authorizationChecker->isGranted('ROLE_RCA') && !$this->authorizationChecker->isGranted('ROLE_RS'))
+                            $params['search']['agency'] = ($this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
+                        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+                            $params['search']['agency'] = ($this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
+                            $params['search']['account_owner'] = $this->userManager->getCurrent();
+                        }
+
+                        return $er->getER($params);
+                    },
                 ));
             }
 

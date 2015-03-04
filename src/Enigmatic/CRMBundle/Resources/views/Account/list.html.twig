@@ -89,10 +89,10 @@
                         {{ ('enigmatic.crm.account.field.potential.'~account_agency.getPotential()) | trans }}
                     {% endfor %}
                 </td>
-                <td>
+                <td class="onclick">
                     {% for account_agency in account.getAgencies() %}
-                        {% for turnover in account_agency %}
-                            {% if turnover == ("now" | date('Y')) %}
+                        {% for turnover in account_agency.getTurnovers() %}
+                            {% if turnover.getYear() == ("now" | date('Y')) %}
                                 {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
                             {% endif %}
                         {% endfor %}

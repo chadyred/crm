@@ -30,7 +30,7 @@
         {% endif %}
 
         {% if activity.getId() and box == true %}
-            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), "return confirmRemove();" ) }}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), 'return confirm("'~'enigmatic.crm.activity.action.remove_confirm' | trans~'");') }}
 
             <script type="text/javascript">
                 function confirmRemove() {

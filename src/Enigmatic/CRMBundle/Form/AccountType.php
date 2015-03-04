@@ -70,38 +70,7 @@ class AccountType extends AbstractType
                 'label'         => 'enigmatic.crm.account.form.field.city.label',
             ))
         ;
-
-//        if ($this->authorizationChecker->isGranted('ROLE_RS')) {
-//            $builder->add('agencies', 'collection', array(
-//                'type'          => 'enigmatic_crm_agency_account',
-//                'required'      => false,
-//                'allow_add'     => true,
-//                'allow_delete'  => true,
-//                'label'         => 'enigmatic.crm.account.form.field.agencies.label',
-//                'prototype'         => true,
-//                'prototype_name'    => '__agencies__',
-//                'attr'              => array(
-//                    'class'                     => 'form_collection',
-//                    'data-prototype_name'       => '__agencies__',
-//                    'data-min'                  => '0',
-//                    'data-max'                  => '0',
-//                    'data-auto_add'             => 'true',
-//                    'data-title'                => '',
-//                    'data-text_link_add'        => 'Lier à une agence',
-//                    'data-text_link_suppr'      => 'Supprimer cette liaison',
-//                )
-//            ));
-//        }
-
-//        $builder->addEventListener(
-//            FormEvents::SUBMIT,
-//            function (FormEvent $event) use($options) {
-//                if (count($event->getData()->getAgencies()))
-//                    foreach($event->getData()->getAgencies() as $agency_account) {
-//                        $agency_account->setAccount($event->getData());
-//                    }
-//            }
-//        );
+        
     }
     
     /**

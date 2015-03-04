@@ -29,7 +29,7 @@
     <h1>{{ account.getName() }}</h1>
 
     <section id="account_view" class="view">
-
+	<div class="infos_compte">
         <h2>{% trans %}enigmatic.crm.account.view.titles.details{% endtrans %}</h2>
 
         <p>{% trans %}enigmatic.crm.account.field.name.name{% endtrans %} : <span>{{ account.getName() }}</span> </p>
@@ -46,7 +46,11 @@
         </address>
 		</p>
 
-        {% if map %}
+        <p>{% trans %}enigmatic.crm.account.field.phone.name{% endtrans %} : <span>{% if account.getPhone() %}{{ phoneFormat(account.getPhone()) }}{% endif %} </span></p>
+        <p>{% trans %}enigmatic.crm.account.field.fax.name{% endtrans %} : <span>{% if account.getFax() %}{{ phoneFormat(account.getFax()) }}{% endif %} </span></p>
+        <p>{% trans %}enigmatic.crm.account.field.activity.name{% endtrans %} : <span>{{ account.getActivity() }} </span></p>
+	</div>	
+		{% if map %}
             {{ google_map(map) }}
         {% else %}
             <div class="map">{% trans %}enigmatic.crm.service.google.unavailable{% endtrans %}</div>
@@ -55,10 +59,6 @@
         {% else %}
             -
         {% endif %}<br/>
-
-        <p>{% trans %}enigmatic.crm.account.field.phone.name{% endtrans %} : <span>{% if account.getPhone() %}{{ phoneFormat(account.getPhone()) }}{% endif %} </span></p>
-        <p>{% trans %}enigmatic.crm.account.field.fax.name{% endtrans %} : <span>{% if account.getFax() %}{{ phoneFormat(account.getFax()) }}{% endif %} </span></p>
-        <p>{% trans %}enigmatic.crm.account.field.activity.name{% endtrans %} : <span>{{ account.getActivity() }} </span></p>
 
     </section>
 
@@ -144,7 +144,9 @@
                 {% if owner.getEnd() == null and owner.getUser().getAgency() == agency_account.getAgency() %}
                 <li>
                     {{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}
+                    {% if is_granted('ROLE_RCA') %}
                     {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_account_owner_remove', {'account_owner': owner.getId()}), 'return confirm("'~'enigmatic.crm.account_owner.action.remove_confirm' | trans~'");') }}
+                    {% endif %}
                 </li>
                 {% endif %}
             {% endfor %}
@@ -176,7 +178,7 @@
                 {% endif %}
                 <div class="contact_phones">
                     {% for phone in contact.getPhones%}
-                        <span>{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }}</span> :
+                        <span>{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }}</span> : 
                         <span>{{ phoneFormat(phone.getPhone()) }}<br/></span>
                     {% endfor %}
                 </div>

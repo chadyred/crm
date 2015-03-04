@@ -6,18 +6,23 @@ use Doctrine\ORM\EntityManagerInterface;
 use Enigmatic\CRMBundle\Entity\Account;
 use Enigmatic\CRMBundle\Entity\Contact;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class ContactManager
 {
     protected $em;
     protected $class;
+    protected $authorizationChecker;
+    protected $userManager;
 
     /**
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager, AuthorizationChecker $authorizationChecker, UserManager $userManager) {
         $this->class = 'EnigmaticCRMBundle:Contact';
         $this->em  = $entityManager;
+        $this->authorizationChecker  = $authorizationChecker;
+        $this->userManager  = $userManager;
     }
 
     /**
@@ -25,7 +30,12 @@ class ContactManager
      * @return Contact
      */
     public function create(Account $account = null) {
-        return new Contact($account);
+        if (!$this->authorizationChecker->isGranted('ROLE_RS'))
+            $contact = new Contact($account, $this->userManager->getCurrent()->getAgency());
+        else
+            $contact = new Contact($account);
+
+        return $contact;
     }
 
     /**

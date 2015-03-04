@@ -9,11 +9,17 @@
     {% import "AppBundle:macro:table.html.twig" as table %}
     {% import "AppBundle:macro:icon.html.twig" as icon %}
     {% import "AppBundle:macro:button.html.twig" as button %}
-
-    <div class="action action_left">
-        {{ button.create('list', 'List'|trans, path('enigmatic_crm_activity_list'), null, 'speednav') }}
+ 
+ <h1>{% trans %}enigmatic.crm.activity.title.calendar{% endtrans %}</h1>
+ 
+    <div class="action action_left">		
         {{ button.create('add', 'Add'|trans, path('enigmatic_crm_activity_add'), "return Event.add();") }}
     </div>
+	<div class="action action_right">
+	<span class="speednav calendar" href="#">Calendrier</span> |
+	<a class="speednav liste" href="{{ path('enigmatic_crm_activity_list') }}">Liste</a>	
+	
+	</div>
 
     <div id="script-warning" style="display:none;">
         <div class="alert_message alert_message_error">
@@ -140,7 +146,9 @@
                             submitActivity();
                             return false;
                         });
-                        $('#form_activity .btn_back').attr("onclick", 'return Event.back();');
+                        $('#calendar_popup .btn_back').click(function() {
+                            return Event.back();
+                        });
                         jQuery('body').trigger("NavLoad")
                     }
                 });
@@ -165,8 +173,12 @@
                             submitActivity();
                             return false;
                         });
-                        $('#form_activity .btn_back').attr("onclick", 'return Event.back();');
-                        $('#form_activity .btn_replan').attr("onclick", 'return Event.replann('+event_id+');');
+                        $('#calendar_popup .btn_back').click(function() {
+                            return Event.back();
+                        });
+                        $('#form_activity .btn_replan').click(function() {
+                            return Event.replann(event_id);
+                        });
                         jQuery('body').trigger("NavLoad")
                     }
                 });
@@ -190,7 +202,9 @@
                             submitActivity();
                             return false;
                         });
-                        $('#form_activity .btn_back').attr("onclick", 'return Event.back();');
+                        $('#calendar_popup .btn_back').click(function() {
+                            return Event.back();
+                        });
                         jQuery('body').trigger("NavLoad")
 
                     }
@@ -213,7 +227,7 @@
                 data: $('#form_activity').serialize(),
                 success : function(code_html, statut){
                     if (code_html.success) {
-                        $('#calendar_popup').fadeOut('250');
+                        Event.back();
                         $('#calendar').fullCalendar('refetchEvents');
                     }
                     else {

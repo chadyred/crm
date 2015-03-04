@@ -20,7 +20,7 @@ services:
 
     enigmatic_crm.manager.contact:
         class: Enigmatic\CRMBundle\Manager\ContactManager
-        arguments: [@doctrine.orm.entity_manager]
+        arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @enigmatic_crm.manager.user]
 
     enigmatic_crm.manager.activity:
         class: Enigmatic\CRMBundle\Manager\ActivityManager
@@ -106,7 +106,7 @@ services:
         class: Enigmatic\CRMBundle\Form\ContactType
         tags:
             - { name: form.type, alias: enigmatic_crm_contact }
-        arguments: []
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user]
 
     enigmatic_crm.form.contact_phone:
         class: Enigmatic\CRMBundle\Form\ContactPhoneType
@@ -118,7 +118,7 @@ services:
         class: Enigmatic\CRMBundle\Form\ActivityType
         tags:
             - { name: form.type, alias: enigmatic_crm_activity }
-        arguments: [@enigmatic_crm.manager.activity_type, @translator.default]
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user, @enigmatic_crm.manager.activity_type, @translator.default]
 
     enigmatic_crm.form.agency:
         class: Enigmatic\CRMBundle\Form\AgencyType

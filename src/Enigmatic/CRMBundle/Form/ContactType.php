@@ -2,14 +2,29 @@
 
 namespace Enigmatic\CRMBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
+use Enigmatic\CRMBundle\Manager\UserManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 class ContactType extends AbstractType
 {
+    protected $authorizationChecker;
+    protected $userManager;
+
+    /**
+     * @param AuthorizationChecker $authorizationChecker
+     */
+    public function __construct(AuthorizationChecker $authorizationChecker, UserManager $userManager)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->userManager = $userManager;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -91,6 +106,17 @@ class ContactType extends AbstractType
                     'label' => 'enigmatic.crm.contact.form.field.account.label',
                     'empty_value' => 'enigmatic.crm.contact.form.field.account.empty_value',
                     'required' => true,
+                    'query_builder' => function (EntityRepository $er) use ($event) {
+
+                        if ($this->authorizationChecker->isGranted('ROLE_RCA') && !$this->authorizationChecker->isGranted('ROLE_RS'))
+                            $params['search']['agency'] = ($this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
+                        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+                            $params['search']['agency'] = ($this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
+                            $params['search']['account_owner'] = $this->userManager->getCurrent();
+                        }
+
+                        return $er->getER($params);
+                    },
                 ));
             }
         });
