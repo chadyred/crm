@@ -2,6 +2,14 @@ enigmatic_crm_account_list:
     path:     /
     defaults: { _controller: EnigmaticCRMBundle:Account:list }
 
+enigmatic_crm_account_list_param:
+    path:     /{potential}-{agency}-{user}
+    defaults: { _controller: EnigmaticCRMBundle:Account:list }
+    requirements:
+        potential: \d+
+        agency: \d+
+        user: \d+
+
 enigmatic_crm_account_view:
     path:     /{account}
     defaults: { _controller: EnigmaticCRMBundle:Account:view }

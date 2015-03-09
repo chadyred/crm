@@ -53,7 +53,7 @@ class ActivityRepository extends EntityRepository
             $qb ->andWhere('activity.dateStart >= :from or activity.dateEnd >= :from')
                 ->setParameter('from', $from->format('Y-m-d H:i:s'));
         if ($to)
-            $qb ->andWhere('activity.dateStart < :to or activity.dateEnd < :from')
+            $qb ->andWhere('activity.dateStart < :to or activity.dateEnd < :to')
                 ->setParameter('to', $to->format('Y-m-d H:i:s'));
         if (isset($params['search']))
             $qb = $this->search($qb, $params['search']);
@@ -97,6 +97,10 @@ class ActivityRepository extends EntityRepository
                             $qb ->andWhere('type.title LIKE :search_type');
                             $qb ->setParameter('search_type', '%'.$value.'%');
                             break;
+                        case 'type_type':
+                            $qb ->andWhere('type.type = :search_type_type');
+                            $qb ->setParameter('search_type_type', $value);
+                            break;
                         case 'account_name':
                             $qb ->andWhere('account.name LIKE :search_account_name');
                             $qb ->setParameter('search_account_name', '%'.$value.'%');
@@ -104,6 +108,10 @@ class ActivityRepository extends EntityRepository
                         case 'user_name':
                             $qb ->andWhere('user.name LIKE :search_user_name OR user.firstname LIKE :search_user_name');
                             $qb ->setParameter('search_user_name', '%'.$value.'%');
+                            break;
+                        case 'user':
+                            $qb ->andWhere('user = :search_user');
+                            $qb ->setParameter('search_user', $value);
                             break;
                         case 'dateStart':
                             $value = \DateTime::createFromFormat('d-m-Y H:i:s', $value.':00');

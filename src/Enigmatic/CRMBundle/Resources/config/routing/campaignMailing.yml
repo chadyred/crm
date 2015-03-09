@@ -31,3 +31,9 @@ enigmatic_crm_campaign_mailing_send_test:
     defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:sendTest}
     requirements:
         campaign: \d+
+
+enigmatic_crm_campaign_mailing_download:
+    locales:  { fr: "/telecharger-piece-jointe-{file}", en: "/download-attach-{file}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:download}
+    requirements:
+        file: \d+

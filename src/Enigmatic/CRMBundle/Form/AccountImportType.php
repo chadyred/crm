@@ -31,6 +31,21 @@ class AccountImportType extends AbstractType
                     ),
                 )
             ))
+            ->add('agency', 'genemu_jqueryselect2_entity', array(
+                'class' => 'EnigmaticCRMBundle:Agency',
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'enigmatic.crm.agency_account.form.field.agency.label',
+                'required' => true
+            ))
+            ->add('owner', 'genemu_jqueryselect2_entity', array(
+                'class' => 'EnigmaticCRMBundle:User',
+                'property' => 'userWithAgencyName',
+                'multiple' => true,
+                'expanded' => false,
+                'label' => 'enigmatic.crm.account_owner.form.field.user.label',
+                'required' => true
+            ))
             ->add('sync_societe_com', 'choice', array(
                 'choices'       => array(
                     true   =>   'enigmatic.crm.account_import.form.field.sync_societe_com.label',

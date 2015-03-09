@@ -3,7 +3,9 @@
 namespace Enigmatic\CRMBundle\Controller;
 use Ddeboer\DataImport\Reader\CsvReader;
 use Enigmatic\CRMBundle\Entity\Account;
+use Enigmatic\CRMBundle\Entity\Agency;
 use Enigmatic\CRMBundle\Entity\AgencyAccount;
+use Enigmatic\CRMBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -13,13 +15,20 @@ class AccountController extends Controller
     /**
      * @Secure(roles={"ROLE_CA"})
      */
-    public function listAction()
+    public function listAction($potential = null, Agency $agency = null, User $user = null)
     {
         $params = $this->get('enigmatic_crm.service.list')->parseRequest($this->get('request')->request->all());
 
+        if ($potential)
+            $params['search']['potential'] = $potential;
+        if ($agency)
+            $params['search']['agency'] = $agency;
+        if ($user)
+            $params['search']['account_owner'] = $user;
+
         if ($this->get('security.authorization_checker')->isGranted('ROLE_RCA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS'))
             $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
-        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA')) {
+        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS')) {
             $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
             $params['search']['account_owner'] = $this->get('enigmatic_crm.manager.user')->getCurrent();
         }
@@ -133,8 +142,6 @@ class AccountController extends Controller
             foreach ($reader as $row) {
                 $row = array_map(function($str){return iconv("Windows-1252", "UTF-8", $str);}, $row);
 
-                dump($row);
-
                 $account = $account_manager->create();
                 $account->setName($row['Nom']);
                 $account->setSiret($row['Siret']);
@@ -145,23 +152,26 @@ class AccountController extends Controller
                 $account->setActivity($row['Activite']);
                 $account->setCity($this->get('enigmatic_city.manager.city')->getByZipcode($row['Code postal']));
 
-                dump($account);
                 $errors = $this->get('validator')->validate($account);
                 if (count($errors)) {
-                    echo ('error');
-                    foreach($errors as $error)
-                        echo $error->getPropertyPath().' : '.$error->getMessage();
-                        dump($error);
+                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error'));
+//                    foreach($errors as $error)
+//                        echo $error->getPropertyPath().' : '.$error->getMessage();
                 }
-                else
-                    echo ('ok');
+                else {
+                    $account_manager->save($account);
+                    foreach($data['agency'] as $agency) {
+                        $this->get('enigmatic_crm.manager.agency_account')->save($this->get('enigmatic_crm.manager.agency_account')->create($account, $agency));
+                    }
+                    foreach($data['owner'] as $user) {
+                        $this->get('enigmatic_crm.manager.account_owner')->save($this->get('enigmatic_crm.manager.account_owner')->create($account, $user));
+                    }
+                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('success'));
+                }
             }
 
-            exit();
-
-
-//            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account.message.update'));
-//            return $this->redirect($this->generateUrl('enigmatic_crm_account_view', array('account'=> $account->getId())));
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account.message.update'));
+            return $this->redirect($this->generateUrl('enigmatic_crm_account_import'));
         }
 
         return $this->get('enigmatic.render')->render($this->renderView('EnigmaticCRMBundle:Account:import.html.twig', array(

@@ -60,6 +60,25 @@ class CampaignMailingType extends AbstractType
                 'label' => 'enigmatic.crm.campaign_mailing.form.field.contact.label',
                 'required' => false
             ))
+            ->add('files', 'collection', array(
+                'type'          => 'enigmatic_crm_campaign_mailing_file',
+                'required'      => false,
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'label'         => 'enigmatic.crm.campaign_mailing.form.field.files.label',
+                'prototype'         => true,
+                'prototype_name'    => '__campaign_mailing_file__',
+                'attr'              => array(
+                    'class'                     => 'form_collection',
+                    'data-prototype_name'       => '__campaign_mailing_file__',
+                    'data-min'                  => '0',
+                    'data-max'                  => '10',
+                    'data-auto_add'             => 'false',
+                    'data-title'                => '',
+                    'data-text_link_add'        => 'Ajouter une pièce jointe',
+                    'data-text_link_suppr'      => 'Supprimer cette pièce jointe',
+                )
+            ))
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($builder) {
@@ -78,7 +97,11 @@ class CampaignMailingType extends AbstractType
         $builder->addEventListener(
             FormEvents::SUBMIT,
             function (FormEvent $event) {
-
+                if (count($event->getData()->getFiles())) {
+                    foreach ($event->getData()->getFiles() as $file) {
+                        $file->setCampaign($event->getData());
+                    }
+                }
             }
         );
     }

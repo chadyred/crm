@@ -43,7 +43,7 @@ class CalendarService
             'activity_type_name' => $activity->getType()->getTitle(),
             'description' => $activity->getComment(),
             'start' => $activity->getDateStart()->format('c'),
-            'end' => $activity->getDateEnd()->format('c'),
+            'end' => (($activity->getDateStart() == $activity->getDateEnd())?$activity->getDateEnd()->modify('+15 mins')->format('c'):$activity->getDateEnd()->format('c')),
             'editable' => ($activity->getReplanned()?false:($this->authorizationChecker->isGranted('ROLE_RCA')?true:(($activity->getUser() == $this->userManager->getCurrent())?true:false))),
             'color' => $this->getColor($activity, $activity->getReplanned(), $activity->getType()->getType())
         );

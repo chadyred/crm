@@ -38,6 +38,7 @@ function dateTimePicker() {
         dayOfWeekStart : 1,
         lang:'fr',
         step:5,
+        datepicker:true,
         timepicker:false
     });
 }

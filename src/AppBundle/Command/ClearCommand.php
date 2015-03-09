@@ -52,8 +52,10 @@ class ClearCommand extends ContainerAwareCommand
         $progress->advance();
 
         // Vidage des caches APC
-        exec('php app/console apc:clear --env='.$env);
-        $output_fin[] = '<comment>Clean cache APC : </comment><info>OK</info>';
+        if (shell_exec('php app/console apc:clear --env='.$env) != 'NULL')
+            $output_fin[] = '<comment>Clean cache APC : </comment><info>OK</info>';
+        else
+            $output_fin[] = '<comment>Clean cache APC : </comment><error>ERROR</error>';
         $progress->advance();
 
         exec('php app/console assetic:dump --env='.$env);

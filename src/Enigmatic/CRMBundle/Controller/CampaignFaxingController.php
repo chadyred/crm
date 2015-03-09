@@ -23,7 +23,7 @@ class CampaignFaxingController extends Controller
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_RCA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS'))
             $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
-        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA')) {
+        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS')) {
             $params['search']['createdBy'] = $this->get('enigmatic_crm.manager.user')->getCurrent();
         }
 
@@ -113,7 +113,15 @@ class CampaignFaxingController extends Controller
             else
                 $num_fax = '0033'.substr($num_fax, 1, 10);
 
-            $this->get('enigmatic_mailer')->sendMail(/*$num_fax . '@ecofax.fr'*/'rp@enigmatic.fr', $this->renderView('EnigmaticCRMBundle:CampaignFaxing/Email:faxing.html.twig', array(
+            $mail = $this->get('enigmatic_mailer');
+
+            $i = 1;
+            foreach ($campaign->getFaxs() as $fax) {
+                $mail->addAttach($fax->getAbsolutePath(), 'fax' . $i . '.pdf');
+                $i++;
+            }
+
+            $mail->sendMail(($num_fax . '@ecofax.fr')/*'rp@enigmatic.fr'*/, $this->renderView('EnigmaticCRMBundle:CampaignFaxing/Email:faxing.html.twig', array(
                 'subject' => $this->container->getParameter('enigmatic_crm.ecofax.login'),
                 'content' => $this->container->getParameter('enigmatic_crm.ecofax.password'))
             ));
@@ -129,7 +137,7 @@ class CampaignFaxingController extends Controller
     }
 
     /**
-     * @Secure(roles={"RCA"})
+     * @Secure(roles={"ROLE_RCA"})
      */
     public function removeAction(CampaignFaxing $campaign)
     {

@@ -109,6 +109,13 @@ class CampaignMailing
     private $contacts;
 
     /**
+     * @var CampaignMailingFile
+     *
+     * @ORM\OneToMany(targetEntity="Enigmatic\CRMBundle\Entity\CampaignMailingFile", mappedBy="campaign", cascade="all", orphanRemoval=true)
+     */
+    private $files;
+
+    /**
      * Constructor
      * @param User $owner
      * @param Integer $state
@@ -121,6 +128,7 @@ class CampaignMailing
         $this->owner = $owner;
         $this->state = $state;
         $this->contacts = new ArrayCollection();
+        $this->files = new ArrayCollection();
     }
 
     public function validateDateSended(ExecutionContextInterface $context)
@@ -364,5 +372,39 @@ class CampaignMailing
     public function getContacts()
     {
         return $this->contacts;
+    }
+
+    /**
+     * Add file
+     *
+     * @param \Enigmatic\CRMBundle\Entity\CampaignMailingFile $file
+     * @return CampaignMailing
+     */
+    public function addFile(\Enigmatic\CRMBundle\Entity\CampaignMailingFile $file)
+    {
+        $this->file[] = $file;
+
+        return $this;
+    }
+    
+
+    /**
+     * Remove files
+     *
+     * @param \Enigmatic\CRMBundle\Entity\CampaignMailingFile $files
+     */
+    public function removeFile(\Enigmatic\CRMBundle\Entity\CampaignMailingFile $files)
+    {
+        $this->files->removeElement($files);
+    }
+
+    /**
+     * Get files
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFiles()
+    {
+        return $this->files;
     }
 }

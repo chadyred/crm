@@ -47,7 +47,7 @@ class AgencyAccountType extends AbstractType
                     ));
                 }
                 $event->getForm()
-                    ->add('potential', 'choice', array(
+                    ->add('potential', 'genemu_jqueryselect2_choice', array(
                         'choices'       => array(
                             AgencyAccount::TOP_150   =>  'enigmatic.crm.agency_account.form.field.potential.'.AgencyAccount::TOP_150,
                             AgencyAccount::TOP_100   =>  'enigmatic.crm.agency_account.form.field.potential.'.AgencyAccount::TOP_100,

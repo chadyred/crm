@@ -36,7 +36,15 @@ class SendCampaignsCommand extends ContainerAwareCommand
                     foreach ($campaign->getContacts() as $contact) {
                         if ($contact->getEmail()) {
 
-                            $this->getContainer()->get('enigmatic_mailer')->sendMail('rp@enigmatic.fr'/*$contact->getEmail()*/, $this->getContainer()->get('templating')->render('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
+                            $mail = $this->getContainer()->get('enigmatic_mailer');
+                            $i = 1;
+                            if (count($campaign->getFiles()))
+                                foreach ($campaign->getFiles() as $file) {
+                                    $mail->addAttach($file->getAbsolutePath(), 'pj' . $i .'.'.substr(strrchr($file->getPath(),'.'), 1));
+                                    $i++;
+                                }
+
+                            $mail->sendMail($contact->getEmail(), $this->getContainer()->get('templating')->render('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
                                     'subject' => $campaign->getEmailSubject(),
                                     'content' => $campaign->getEmailBody())
                             ), 'spool');
@@ -87,7 +95,7 @@ class SendCampaignsCommand extends ContainerAwareCommand
                                 else
                                     $num_fax = '0033'.substr($num_fax, 1, 10);
 
-                                $mail->sendMail(/*$num_fax . '@ecofax.fr'*/'rp@enigmatic.fr', $this->getContainer()->get('templating')->render('EnigmaticCRMBundle:CampaignFaxing/Email:faxing.html.twig', array(
+                                $mail->sendMail($num_fax . '@ecofax.fr', $this->getContainer()->get('templating')->render('EnigmaticCRMBundle:CampaignFaxing/Email:faxing.html.twig', array(
                                         'subject' => $this->getContainer()->getParameter('enigmatic_crm.ecofax.login'),
                                         'content' => $this->getContainer()->getParameter('enigmatic_crm.ecofax.password'))
                                 ), 'spool');

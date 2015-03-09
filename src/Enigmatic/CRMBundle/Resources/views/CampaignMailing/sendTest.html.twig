@@ -18,7 +18,7 @@
         {{ form_widget(form) }}
 
         <input class="btn" type="submit" value="{% trans %}enigmatic.crm.campaign_mailing.form.submit.send_test{% endtrans %}">
-        {{ button.create('back', 'Cancel'|trans, path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId}), null, 'speednav' ) }}
+        {{ button.create('cancel', 'Cancel'|trans, path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId}), null, 'speednav' ) }}
 
     </form>
 

@@ -2,6 +2,14 @@ enigmatic_crm_activity_list:
     path:     /
     defaults: { _controller: EnigmaticCRMBundle:Activity:list }
 
+enigmatic_crm_activity_list_param:
+    path:     /{type}-{agency}-{user}
+    defaults: { _controller: EnigmaticCRMBundle:Activity:list }
+    requirements:
+        type: \d+
+        agency: \d+
+        user: \d+
+
 enigmatic_crm_activity_view:
     path:     /{activity}
     defaults: { _controller: EnigmaticCRMBundle:Activity:view, box: false}

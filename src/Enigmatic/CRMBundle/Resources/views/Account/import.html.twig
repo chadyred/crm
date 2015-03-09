@@ -17,7 +17,7 @@
 
         <a href="/bundles/enigmaticcrm/media/import.csv">{% trans %}enigmatic.crm.account_import.action.download_model{% endtrans %}</a>
 
-        <form method="post" action="" {{ form_enctype(form) }}>
+        <form method="post" action="" {{ form_enctype(form) }} id="import_compte">
 
             {{ form_widget(form) }}
 

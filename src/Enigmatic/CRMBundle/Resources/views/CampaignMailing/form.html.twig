@@ -13,7 +13,7 @@
         {{ button.create('back', 'Back'|trans, campaign.getId()?path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId()}):path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
     </div>
 
-    <form id="campaign_form" class="speednav" method="post" action="" {{ form_enctype(form) }}>
+    <form id="campaign_form" method="post" action="" {{ form_enctype(form) }}>
 
 
         {{ form_row(form.name) }}

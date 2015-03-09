@@ -24,13 +24,13 @@
         {% endif %}
     </div>
 
-    <section class="details">
+    <div class="view">
         <h2>{% trans %}enigmatic.crm.campaign_faxing.view.title.fax{% endtrans %}</h2>
         <ul class="faxing_contact" style="max-height:200px;overflow:auto;">
             {% for fax in campaign.getFaxs() %}
                 <li>{{ icon.create('download', 'Download'|trans, path('enigmatic_crm_campaign_faxing_download', {'fax': fax.getId()})) }}</li>
             {% else %}
-                <li>Aucun</li>
+                <li>{% trans %}enigmatic.crm.campaign_faxing.field.fax.empty{% endtrans %}</li>
             {% endfor %}
         </ul>
 
@@ -58,6 +58,6 @@
         </ul>
 
 
-    </section>
+    </div>
 
 {% endblock %}

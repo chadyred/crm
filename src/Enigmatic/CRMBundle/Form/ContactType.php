@@ -108,9 +108,10 @@ class ContactType extends AbstractType
                     'required' => true,
                     'query_builder' => function (EntityRepository $er) use ($event) {
 
+                        $params = array();
                         if ($this->authorizationChecker->isGranted('ROLE_RCA') && !$this->authorizationChecker->isGranted('ROLE_RS'))
                             $params['search']['agency'] = ($this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
-                        elseif ($this->authorizationChecker->isGranted('ROLE_CA')) {
+                        elseif ($this->authorizationChecker->isGranted('ROLE_CA') && !$this->authorizationChecker->isGranted('ROLE_RS')) {
                             $params['search']['agency'] = ($this->userManager->getCurrent()?$this->userManager->getCurrent()->getAgency():null);
                             $params['search']['account_owner'] = $this->userManager->getCurrent();
                         }

@@ -15,6 +15,9 @@ enigmatic:
                     mimeTypes: Veuillez utiliser un format PDF
         campaign_mailing:
             dateSended:
-                invalid: Veuillez choisir une date future pour l'envoi
+                invalid: Veuillez choisir une date future pour l'envoi*
+            files:
+                file:
+                    mimeTypes: Veuillez utiliser un format pdf, doc ou docx
         phone:
             invalid_format: Le numéro saisi n'est pas au bon format

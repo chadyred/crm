@@ -9,16 +9,22 @@
         {% import "AppBundle:macro:icon.html.twig" as icon %}
         {% import "AppBundle:macro:button.html.twig" as button %}
 
-       
-        <h1>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h1>
-		
-		 <div class="action action_left">            
+
+        {% if account %}
+            <h2>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h2>
+        {% else %}
+            <h1>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h1>
+        {% endif %}
+
+		 <div class="action action_left">
             {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
         </div>
-		
+
 		{% if account == null %}
-		<div class="action action_right">	
-			<a class="speednav" href="{{ path('enigmatic_crm_activity_calendar') }}"><span>calendar</span></a>
+		<div class="action action_right">
+		 {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
+			<a class="calendar speednav" href="{{ path('enigmatic_crm_activity_calendar') }}">Calendrier</a> |
+			<span class="liste speednav" href="#">Liste</span>
 		</div>
 		{% endif %}
 
@@ -58,6 +64,8 @@
                     <td>{{ activity.getComment() | nl2br }}</td>
                     <td></td>
                 </tr>
+            {% else %}
+                <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.activity.table.empty{% endtrans %}</td></tr>
             {% endfor %}
             </tbody>
         </table>

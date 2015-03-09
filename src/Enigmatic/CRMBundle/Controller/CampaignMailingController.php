@@ -3,6 +3,7 @@
 namespace Enigmatic\CRMBundle\Controller;
 
 use Enigmatic\CRMBundle\Entity\CampaignMailing;
+use Enigmatic\CRMBundle\Entity\CampaignMailingFile;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -19,7 +20,7 @@ class CampaignMailingController extends Controller
 
         if ($this->get('security.authorization_checker')->isGranted('ROLE_RCA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS'))
             $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
-        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA')) {
+        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS')) {
             $params['search']['createdBy'] = $this->get('enigmatic_crm.manager.user')->getCurrent();
         }
 
@@ -102,7 +103,16 @@ class CampaignMailingController extends Controller
         $form->handleRequest($this->get('request'));
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->get('enigmatic_mailer')->sendMail($data['email'], $this->renderView('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
+
+            $mail = $this->get('enigmatic_mailer');
+            $i = 1;
+            if (count($campaign->getFiles()))
+                foreach ($campaign->getFiles() as $file) {
+                    $mail->addAttach($file->getAbsolutePath(), 'pj' . $i .'.'.substr(strrchr($file->getPath(),'.'), 1));
+                    $i++;
+                }
+
+            $mail->sendMail($data['email'], $this->renderView('EnigmaticCRMBundle:CampaignMailing:Email/mailing.html.twig', array(
                     'subject' => $campaign->getEmailSubject(),
                     'content' => $campaign->getEmailBody())
             ));
@@ -118,7 +128,7 @@ class CampaignMailingController extends Controller
     }
 
     /**
-     * @Secure(roles={"RCA"})
+     * @Secure(roles={"ROLE_RCA"})
      */
     public function removeAction(CampaignMailing $campaign)
     {
@@ -129,5 +139,22 @@ class CampaignMailingController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.campaign_mailing.message.remove'));
         return $this->redirect($this->generateUrl('enigmatic_crm_campaign_mailing_list'));
+    }
+
+    /**
+     * @Secure(roles={"ROLE_CA"})
+     */
+    public function downloadAction(CampaignMailingFile $file)
+    {
+        if (!$this->get('enigmatic_crm.service.grant')->grantCampaignMailing($file->getCampaign()))
+            throw new AccessDeniedException();
+
+        $fichier = $file->getAbsolutePath();
+        $filename = 'pj.'.substr(strrchr($fichier,'.'), 1);
+
+        return new Response(file_get_contents($fichier), 200, array(
+            'Content-Type' => 'application/force-download',
+            'Content-disposition' => 'filename='.$filename
+        ));
     }
 }

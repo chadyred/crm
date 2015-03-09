@@ -5,7 +5,7 @@ function collectionStart($container, $add) {
     if (!container.hasClass('collection_init')) {
         container.addClass('collection_init');
 
-        container.after('<a class="link_collection link_collection_add" href="javascript:collectionAdd(\''+$container+'\', true);"><span>'+(container.attr('data-text_link_add'))+'</span></a>');
+        container.before('<a class="link_collection link_collection_add" href="javascript:collectionAdd(\''+$container+'\', true);"><span>'+(container.attr('data-text_link_add'))+'</span></a>');
 
         var index = container.children().length;
 

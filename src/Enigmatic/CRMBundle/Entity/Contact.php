@@ -216,7 +216,7 @@ class Contact
      */
     public function getName()
     {
-        return $this->name;
+        return strtoupper($this->name);
     }
 
     /**
@@ -525,6 +525,16 @@ class Contact
     public function removeAgency(\Enigmatic\CRMBundle\Entity\Agency $agencies)
     {
         $this->agencies->removeElement($agencies);
+    }
+
+    public function hasAgency(\Enigmatic\CRMBundle\Entity\Agency $agency)
+    {
+        foreach ($this->getAgencies() as $a) {
+            if ($a == $agency)
+                return true;
+        }
+
+        return false;
     }
 
     /**

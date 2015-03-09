@@ -30,6 +30,11 @@ services:
         tags:
             -  { name: twig.extension }
 
+    enigmatic.clone_var:
+        class: AppBundle\Services\CloneVar
+        tags:
+            -  { name: twig.extension }
+
     enigmatic.rewrite_to_url:
         class: AppBundle\Services\RewriteToUrl
         tags:

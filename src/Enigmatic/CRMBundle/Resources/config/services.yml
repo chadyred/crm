@@ -82,6 +82,17 @@ services:
             - { name: doctrine.event_listener, event: preRemove }
             - { name: doctrine.event_listener, event: postRemove }
 
+    enigmatic_crm.listener.campaign_mailing_file.doctrine:
+        class: Enigmatic\CRMBundle\Listener\CampaignMailingFileListener
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+            - { name: doctrine.event_listener, event: postRemove }
+
 # FORM
 
     enigmatic_crm.form.account:
@@ -160,6 +171,12 @@ services:
         class: Enigmatic\CRMBundle\Form\CampaignMailingType
         tags:
             - { name: form.type, alias: enigmatic_crm_campaign_mailing }
+        arguments: []
+
+    enigmatic_crm.form.campaign_mailing_file:
+        class: Enigmatic\CRMBundle\Form\CampaignMailingFileType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_mailing_file }
         arguments: []
 
     enigmatic_crm.form.campaign_mailing_test:

@@ -10,9 +10,11 @@
 
     <h1>{% trans %}enigmatic.crm.header.titles.campaign_mailing_view{% endtrans %} : {{ campaign.getName() }}</h1>
 
-    <div class="action">
+    <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
+    </div>
 
+    <div class="action action_right">
         {% if campaign.getState() != constant('CAMPAIGN_MAILING_SENDED', campaign) %}
             {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_mailing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
             {{ button.create('send', 'Send test mail'|trans, path('enigmatic_crm_campaign_mailing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
@@ -32,6 +34,14 @@
         </p>
 		</span>
 		</p>
+        <p>{% trans %}enigmatic.crm.campaign_mailing.field.files.name{% endtrans %} :
+        <ul class="mailing_file">
+            {% for file in campaign.getFiles() %}
+                <li>{{ icon.create('download', 'Download'|trans, path('enigmatic_crm_campaign_mailing_download', {'file': file.getId()})) }}</li>
+            {% else %}
+                <li>{% trans %}enigmatic.crm.campaign_mailing.field.files.empty{% endtrans %}</li>
+            {% endfor %}
+        </ul>
 
         <h2>{% trans %}enigmatic.crm.campaign_mailing.view.title.config{% endtrans %}</h2>
         <p>{% trans %}enigmatic.crm.campaign_mailing.field.dateSended.name{% endtrans %} : <span>{{ campaign.getDateSended() | localizeddate('full', 'short') }}</span></p>

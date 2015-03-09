@@ -20,6 +20,7 @@ var Nav = {
                 if (!fix ) {
                     Nav.backTopTop();
                 }
+
                 jQuery('#'+container).html(code_html.content);
             },
 
@@ -150,6 +151,12 @@ var Nav = {
 };
 
 jQuery(window).on('popstate', function() {
-    Nav.get(window.location.href, null, true);
+    try {
+        if (event.state) {
+            Nav.get(window.location.href, null, true);
+        }
+    } catch (err) {
+        Nav.get(window.location.href, null, true);
+    }
 });
 Nav.restartEvent('body');

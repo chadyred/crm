@@ -70,7 +70,7 @@ enigmatic:
                 update: Le compte a été modifié
             table:
                 empty: Aucun compte n'est disponible
-                empty_owner: Aucun
+                empty_owner: Aucune agence n'est assigné à ce compte
                 head:
                     address: Adresse
                     name: Société
@@ -181,6 +181,7 @@ enigmatic:
                 type:
                     1: Appel
                     2: Rendez-vous
+                    3: Mailing / Faxing
         activity_user:
             form:
                 field:
@@ -266,6 +267,7 @@ enigmatic:
                     name: Date d'envois
                 fax:
                     name: Fax
+                    empty: Aucun
                 state:
                     name: Etat
                     locked:
@@ -298,6 +300,8 @@ enigmatic:
                         label: Nom de la campagne
                     fax:
                         label: Fax
+                        file:
+                            label: Fichier (pdf)
                     dateSended:
                         label: Date de l'envois
                     owner:
@@ -359,6 +363,9 @@ enigmatic:
                         name: Prêt à envoyé
                     sended:
                         name: Envoyé
+                files:
+                    name: Pièces jointes
+                    empty: Aucune
             form:
                 contacts:
                     available:
@@ -396,6 +403,10 @@ enigmatic:
                             label: Bloqué - Le mailing ne sera pas envoyé
                         waiting:
                             label: Prêt - Le mailing sera envoyé à la date indiqué
+                    files:
+                        label: Pièces jointes
+                        file:
+                            label: Fichier (pdf, doc, docx)
                     test:
                         email:
                             label: Email

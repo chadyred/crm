@@ -157,7 +157,7 @@ class User
      */
     public function getName()
     {
-        return $this->name;
+        return strtoupper($this->name);
     }
 
     /**
