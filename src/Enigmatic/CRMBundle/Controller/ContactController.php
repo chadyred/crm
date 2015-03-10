@@ -124,6 +124,13 @@ class ContactController extends Controller
         $params['search']['hasFax'] = $this->get('request')->request->get('hasFax');
         $params['search']['hasEmail'] = $this->get('request')->request->get('hasEmail');
 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_RCA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS'))
+            $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
+        elseif ($this->get('security.authorization_checker')->isGranted('ROLE_CA') && !$this->get('security.authorization_checker')->isGranted('ROLE_RS')) {
+            $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
+            $params['search']['account_owner'] = $this->get('enigmatic_crm.manager.user')->getCurrent();
+        }
+
         $contacts = $this->get('enigmatic_crm.manager.contact')->getList(0, null, $params);
 
         $tab_result = array();

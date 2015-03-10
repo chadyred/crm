@@ -20,14 +20,12 @@
 
                 <div class="form_row">
                     <label for="date_start">De : </label>
-                    <input id="date_start" type="text" name="date_start" class="datetimepicker2"
-                           value="{% if params['date_start'] %}{{ params['date_start'] | date ('d-m-Y') }}{% endif %}"/>
+                    <input id="date_start" type="text" name="date_start" value="{% if params['date_start'] %}{{ params['date_start'] | date ('d-m-Y') }}{% endif %}"/>
                 </div>
 
                 <div class="form_row">
                     <label for="date_end">à : </label>
-                    <input id="date_end" type="text" name="date_end" class="datetimepicker2"
-                           value="{% if params['date_end'] %}{{ params['date_end'] | date ('d-m-Y') }}{% endif %}"/>
+                    <input id="date_end" type="text" name="date_end" value="{% if params['date_end'] %}{{ params['date_end'] | date ('d-m-Y') }}{% endif %}"/>
                 </div>
 
                 <input class="btn" type="submit" value="Générer"/>
@@ -324,10 +322,10 @@
                 timepicker:false,
                 dayOfWeekStart : 1,
                 lang:'fr',
-                step:5,
                 onShow:function( ct ){
                     this.setOptions({
-                        maxDate:date_end.val()?date_end.val().substr(0,10):false
+                        maxDate:date_end.val()?date_end.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
                     })
                 }
             });
@@ -336,10 +334,10 @@
                 timepicker:false,
                 dayOfWeekStart : 1,
                 lang:'fr',
-                step:5,
                 onShow:function( ct ){
                     this.setOptions({
-                        minDate:date_start.val()?date_start.val().substr(0,10):false
+                        minDate:date_start.val()?date_start.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
                     })
                 }
             });
@@ -516,7 +514,7 @@
         var ctx = document.getElementById("canvas").getContext("2d");
         window.myLine = new Chart(ctx).Line(lineChartData, {
             responsive: true,
-            animation: false,
+            animation: false
         });
 
 

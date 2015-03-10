@@ -14,9 +14,11 @@
     <div class="action action_left">
         {{ button.create('add', 'Add'|trans, path('enigmatic_crm_account_add'), null, 'speednav') }}
     </div>
+    {% if is_granted('ROLE_RCA') %}
     <div class="action action_right">
         {{ button.create('import', 'Import'|trans, path('enigmatic_crm_account_import'), null, 'speednav') }}
     </div>
+    {% endif %}
 
     <div class="table_pager">
         {% include 'AppBundle:include:pager.html.twig' %}

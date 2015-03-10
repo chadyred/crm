@@ -38,10 +38,7 @@ class DefaultController extends Controller
             $params['user'][$this->get('enigmatic_crm.manager.user')->getCurrent()->getId()] = $this->get('enigmatic_crm.manager.user')->getCurrent()->getId();
 
 
-//        if ($this->get('request')->request->get('total'))
-//            $params['total'] = true;
-//        else
-            $params['total'] = true;
+        $params['total'] = true;
 
         $params['date_end'] = $this->get('request')->request->get('date_end');
         if ($params['date_end']) {
@@ -69,7 +66,7 @@ class DefaultController extends Controller
         $activities_agency = array();
         $activities_total = array();
         $activities_graph = array();
-        foreach ($this->get('enigmatic_crm.manager.activity')->getAllByDate($params['date_start'], $params['date_end']) as $activity) {
+        foreach ($this->get('enigmatic_crm.manager.activity')->getAllByDate($params['date_start'], $params['date_end'], null, false) as $activity) {
             // User
             $this->incrementVar($activities[$activity->getUser()->getId()][$activity->getType()->getType()]);
             // Agency
