@@ -27,3 +27,38 @@
 
     </div>
 {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        var agencies = jQuery('#enigmatic_crm_account_import_agencies');
+        var owners = jQuery('#enigmatic_crm_account_import_owners');
+
+        jQuery(agencies).on('change', function() {
+            jQuery.ajax({
+                type: "POST",
+                url: '{{ path('enigmatic_crm_user_search') }}',
+                dataType: "json",
+                data: {agencies: jQuery(agencies).val()},
+                cache: true,
+                success: function (code_html, statut) {
+                    if (code_html.success) {
+                        jQuery(owners).html('');
+                        data = code_html.result;
+                        jQuery.each(data, function(i, item) {
+                            jQuery(owners).append('<option value="'+data[i]['id']+'">'+data[i]['firstname']+' '+data[i]['name']+' ('+data[i]['agency']+')</option>');
+                        });
+                    }
+                },
+
+                error: function (resultat, statut, erreur) {
+                    alert('{% trans %}enigmatic.crm.account.errors.load{% endtrans %}');
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

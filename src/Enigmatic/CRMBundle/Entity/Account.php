@@ -43,7 +43,6 @@ class Account
      * @var string
      *
      * @ORM\Column(name="siret", type="string", length=14, nullable=true)
-     * @Assert\Length(min="14", max="14")
      * @Siret()
      */
     private $siret;

@@ -36,6 +36,19 @@ class UserRepository extends EntityRepository
         return new Paginator($qb);
     }
 
+    public function getER($params = array()) {
+
+        $qb = $this->createQueryBuilder('user');
+
+        $qb = $this->join($qb, true);
+        if (isset($params['search']))
+            $qb = $this->search($qb, $params['search']);
+        if (isset($params['order']))
+            $qb = $this->order($qb, $params['order']);
+
+        return $qb;
+    }
+
     public function find($id) {
 
         $qb = $this->createQueryBuilder('user');
@@ -105,8 +118,30 @@ class UserRepository extends EntityRepository
                             $qb ->setParameter('search_email', '%'.$value.'%');
                             break;
                         case 'agency_name':
-                            $qb ->andWhere('agency.name = :search_agency_name');
+                            $qb ->andWhere('agency.name LIKE :search_agency_name');
                             $qb ->setParameter('search_agency_name', '%'.$value.'%');
+                            break;
+                        case 'agency':
+                            $qb ->andWhere('agency.id = :search_agency');
+                            $qb ->setParameter('search_agency', $value);
+                            $qb ->andWhere('agencies_end IS NULL');
+                            break;
+                        case 'agencies':
+
+                            $i = 0;
+                            $cond = '';
+                            if (count($value))
+                                foreach ($value as $v) {
+                                    if ($i != 0)
+                                        $cond .= ' OR ';
+                                    $i ++;
+                                    $cond .= 'agency.id = :search_agencies'.$i;
+                                    $qb ->setParameter('search_agencies'.$i, $v);
+                                }
+
+                            $qb ->andwhere($cond);
+                            $qb ->andWhere('agencies_end IS NULL');
+
                             break;
                     }
                 }

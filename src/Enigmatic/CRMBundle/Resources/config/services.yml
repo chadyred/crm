@@ -111,7 +111,7 @@ services:
         class: Enigmatic\CRMBundle\Form\AccountImportType
         tags:
             - { name: form.type, alias: enigmatic_crm_account_import }
-        arguments: []
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user]
 
     enigmatic_crm.form.contact:
         class: Enigmatic\CRMBundle\Form\ContactType

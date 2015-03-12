@@ -154,23 +154,36 @@ class AccountController extends Controller
 
                 $errors = $this->get('validator')->validate($account);
                 if (count($errors)) {
-                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error'));
-//                    foreach($errors as $error)
-//                        echo $error->getPropertyPath().' : '.$error->getMessage();
+                    $error_as_string = '';
+                    foreach($errors as $error) {
+                        $error_as_string .= '<br/>&nbsp;&nbsp;&nbsp;'.$this->get('translator')->trans('enigmatic.crm.account.field.'.$error->getPropertyPath().'.name').' : '.$error->getMessage();
+                    }
+                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('enigmatic.crm.account_import.messages.error.%account%.%errors%', array(
+                        '%account%' => $account->getName(),
+                        '%errors%'  => $error_as_string
+                    )));
+
                 }
                 else {
                     $account_manager->save($account);
-                    foreach($data['agency'] as $agency) {
-                        $this->get('enigmatic_crm.manager.agency_account')->save($this->get('enigmatic_crm.manager.agency_account')->create($account, $agency));
+
+                    if ($this->get('security.authorization_checker')->isGranted('ROLE_RS')) {
+                        if (count($data['agencies']))
+                            foreach($data['agencies'] as $agency) {
+                                $this->get('enigmatic_crm.manager.agency_account')->save($this->get('enigmatic_crm.manager.agency_account')->create($account, $agency));
+                            }
                     }
-                    foreach($data['owner'] as $user) {
+
+                    if (count($data['owners']))
+                    foreach($data['owners'] as $user) {
                         $this->get('enigmatic_crm.manager.account_owner')->save($this->get('enigmatic_crm.manager.account_owner')->create($account, $user));
                     }
-                    $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('success'));
+
+                    $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account_import.messages.success.%account%', array('%account%' => $account->getName())));
                 }
             }
 
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account.message.update'));
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.account_import.messages.success.import'));
             return $this->redirect($this->generateUrl('enigmatic_crm_account_import'));
         }
 

@@ -23,3 +23,11 @@ enigmatic_crm_user_remove:
     defaults: { _controller: EnigmaticCRMBundle:User:remove}
     requirements:
         user: \d+
+
+enigmatic_crm_user_search:
+    locales:  { fr: "/rechercher", en: "/search" }
+    defaults: { _controller: EnigmaticCRMBundle:User:search}
+    requirements:
+        _method: POST
+    options:
+        expose: true

@@ -65,6 +65,7 @@
         },
 
         setOrderBy: function (order_by, direction) {
+            this.parseSearch();
             this.order_by = {};
             this.order_by[order_by] = direction;
             this.getList();

@@ -4,6 +4,7 @@ namespace Enigmatic\CRMBundle\Controller;
 use Enigmatic\CRMBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -86,6 +87,30 @@ class UserController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('enigmatic.crm.user.message.remove'));
         return $this->redirect($this->generateUrl('enigmatic_crm_user_list'));
+    }
+
+    /**
+     * @Secure(roles={"ROLE_RS"})
+     */
+    public function searchAction() {
+
+        $params['search']['agencies'] = $this->get('request')->request->get('agencies');
+
+        $users = $this->get('enigmatic_crm.manager.user')->getList(0, null, $params);
+
+        $tab_result = array();
+        foreach ($users as $user) {
+            $tab_result[] = array (
+                'id'    => $user->getId(),
+                'firstname'  => $user->getFirstName(),
+                'name'  => $user->getName(),
+                'agency'  => $user->getAgency()->getName(),
+            );
+        }
+        return new Response(json_encode(array(
+            'success'  => true,
+            'result'   => $tab_result,
+        )), 200, array('Content-Type' => 'application/json'));
     }
 
 }

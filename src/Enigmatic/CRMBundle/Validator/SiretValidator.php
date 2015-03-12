@@ -10,7 +10,7 @@ class SiretValidator extends ConstraintValidator
 
     public function validate($value, Constraint $constraint)
     {
-        if (null !== $value) {
+        if (null !== $value && $value != '') {
             $siret = $value;
 
             $total = 0;

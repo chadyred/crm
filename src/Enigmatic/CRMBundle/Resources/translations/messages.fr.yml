@@ -113,8 +113,18 @@ enigmatic:
                         label: Fichier à importer
                     sync_societe_com:
                         label: Synchroniser avec Societe.com pendant l'import (non actif)
+                    agencies:
+                        label: Lier aux agences
+                    owners:
+                        label: Assigner à
             title:
                 import: Importer des comptes
+            messages:
+                success:
+                    import: L'import est terminé
+                    %account%: Le compte <strong>%account%</strong> a été importé
+                error:
+                    %account%.%errors%: Tentative d'ajout du compte <strong>%account%</strong> : %errors% <br/>Ce compte a été ignoré lors de l'import
         activity:
             action:
                 remove_confirm: Souhaitez-vous réellement supprimer cette activité ?
@@ -608,7 +618,7 @@ enigmatic:
                     update: Modifier l'utilisateur
             field:
                 agencies:
-                    name: Agence(s)
+                    name: Agence
                     empty: Aucune
                 name:
                     name: Nom
@@ -652,14 +662,14 @@ enigmatic:
                 head:
                     name: Nom
                     email: Email
-                    agency: Agence(s)
+                    agency: Agence
                     locked: Etat
                     lastLogin: Dernière connexion le
                     roles: Droits
             view:
                 titles:
                     details: Détail
-                    agencies: Agence(s)
+                    agencies: Agence
             title:
                 list: Utilisateurs
         service:
