@@ -45,15 +45,15 @@ class AccountImportType extends AbstractType
                     ),
                 )
             ))
-            ->add('sync_societe_com', 'choice', array(
-                'choices'       => array(
-                    true   =>   'enigmatic.crm.account_import.form.field.sync_societe_com.label',
-                ),
-                'required'      => false,
-                'multiple'      => true,
-                'expanded'      => true,
-                'label'         => null,
-            ))
+//            ->add('sync_societe_com', 'choice', array(
+//                'choices'       => array(
+//                    true   =>   'enigmatic.crm.account_import.form.field.sync_societe_com.label',
+//                ),
+//                'required'      => false,
+//                'multiple'      => true,
+//                'expanded'      => true,
+//                'label'         => null,
+//            ))
         ;
 
         if ($this->authorizationChecker->isGranted('ROLE_RS')) {

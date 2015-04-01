@@ -8,18 +8,20 @@
     {% import "AppBundle:macro:button.html.twig" as button %}
     {% import "AppBundle:macro:icon.html.twig" as icon %}
 
-    <h1>{{ account.getName() }}</h1>
-
-    <div class="action action_left">
+	<div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_list'), null, 'speednav') }}
     </div>
+	
+    <h1>{{ account.getName() }}</h1>
 
     <div class="action action_right">
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_account_update', {'account': account.getId()}), null, 'speednav') }}
         {% if is_granted('ROLE_RS') %}
             {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_account_remove', {'account': account.getId()}), 'return confirm("'~'enigmatic.crm.account.action.remove_confirm' | trans~'");') }}
         {% endif %}
+        <div style="display:none;">
         {{ button.create('sync', 'enigmatic.crm.account.action.sync_with_societe_com'|trans, null, 'alert("Cette fonctionnalité n\'est pas encore active."); return false;') }}
+        </div>
         {% if is_granted('ROLE_RS') %}
         {{ button.create('add', 'enigmatic.crm.account.action.add_agency'|trans, path('enigmatic_crm_agency_account_add', {'account': account.getId()}), null, 'speednav') }}
         {% endif %}
@@ -67,8 +69,8 @@
         <h2>{% if is_granted('ROLE_RS') %}{% trans %}enigmatic.crm.account.view.titles.agencies_infos{% endtrans %}{% else %}{% trans %}enigmatic.crm.account.view.titles.agency_infos{% endtrans %}{% endif %}</h2>
 
         {% if is_granted('ROLE_RS') %}
-            <ul>
-            {% for agency_account in account.getAgencies() %}
+		<p>{% for agency_account in account.getAgencies() %}</p>
+            <ul>           
                 <li> 
 				 <div class="infos_agence">  
 				    <a class="speednav agence_title" href="{{ path('enigmatic_crm_agency_view', {'agency': agency_account.getAgency().getId()}) }}" title="">{{ agency_account.getAgency().getName() }}</a> </p>
@@ -160,7 +162,7 @@
     {# ============ CONTACTS ============= #}
     {# =================================== #}
 
-    <aside id="account_contact">
+    <aside id="account_contact" class="view">
 
         {{ button.create('add', 'Add'|trans, path('enigmatic_crm_account_contact_add', {'account': account.getId()}), null, 'speednav') }}
 
