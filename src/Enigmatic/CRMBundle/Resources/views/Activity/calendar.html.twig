@@ -12,9 +12,10 @@
  
  <h1>{% trans %}enigmatic.crm.activity.title.calendar{% endtrans %}</h1>
  
-    <div class="action action_left">		
-        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_activity_add'), "return Event.add();") }}
-    </div>
+  <div class="action action_left">
+  {{ button.create('add', 'Add'|trans, path('enigmatic_crm_activity_add'), "return Event.add();") }}
+  </div>
+ 
 	<div class="action action_right">
 	<span class="speednav calendar" href="#">Calendrier</span> |
 	<a class="speednav liste" href="{{ path('enigmatic_crm_activity_list') }}">Liste</a>	

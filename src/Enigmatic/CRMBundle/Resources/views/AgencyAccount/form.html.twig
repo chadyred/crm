@@ -9,7 +9,7 @@
 
     <h1>{% if first %}{% trans %}enigmatic.crm.agency_account.title.first_add{% endtrans %}{% elseif agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.title.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.title.add{% endtrans %}{% endif %}</h1>
 
-    <div class="action action_left">
+    <div class="action action_right">
         {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav speednav_fix') }}
     </div>
 

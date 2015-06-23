@@ -22,7 +22,6 @@
 
 		{% if account == null %}
 		<div class="action action_right">
-		 {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
 			<a class="calendar speednav" href="{{ path('enigmatic_crm_activity_calendar') }}">Calendrier</a> |
 			<span class="liste speednav" href="#">Liste</span>
 		</div>

@@ -7,16 +7,17 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
-    <h1>{% trans %}enigmatic.crm.account_import.title.import{% endtrans %}</h1>
 
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_list'), null, 'speednav') }}
     </div>
 
+
+    <h1>{% trans %}enigmatic.crm.account_import.title.import{% endtrans %}</h1>
+
     <div class="view">
 
-        <a href="/bundles/enigmaticcrm/media/import.csv">{% trans %}enigmatic.crm.account_import.action.download_model{% endtrans %}</a>
-
+        <a class="ico ico_import" href="/bundles/enigmaticcrm/media/import.csv"><span>{% trans %}enigmatic.crm.account_import.action.download_model{% endtrans %}</span></a>
         <form method="post" action="" {{ form_enctype(form) }} id="import_compte">
 
             {{ form_widget(form) }}

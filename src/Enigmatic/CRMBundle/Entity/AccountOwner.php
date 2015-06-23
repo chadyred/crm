@@ -100,7 +100,7 @@ class AccountOwner
     {
         return $this->dateCreated;
     }
-
+    
     /**
      * Set user
      *

@@ -101,7 +101,9 @@
                         {% if owner.getUser().getAgency() == agency_account.getAgency() and owner.getEnd() == null %}
                             <li>
                                 <a class="speednav" href="{{ path('enigmatic_crm_user_view', {'user': owner.getUser().getId()}) }}" title="">{{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}</a>
+                                {% if is_granted('ROLE_RCA') or is_granted('ROLE_RS') %}
                                 {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_account_owner_remove', {'account_owner': owner.getId()}), 'return confirm("'~'enigmatic.crm.account_owner.action.remove_confirm' | trans~'");') }}
+                                {% endif %}
                             </li>
                         {% endif %}
                     {% endfor %}
@@ -149,7 +151,9 @@
                 {% if owner.getEnd() == null and owner.getUser().getAgency() == agency_account.getAgency() %}
                 <li>
                     {{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }}
+                    {% if is_granted('ROLE_RCA') or is_granted('ROLE_RS') %}
                     {{ icon.create('remove', 'Remove'|trans, path('enigmatic_crm_account_owner_remove', {'account_owner': owner.getId()}), 'return confirm("'~'enigmatic.crm.account_owner.action.remove_confirm' | trans~'");') }}
+                    {% endif %}
                 </li>
                 {% endif %}
             {% endfor %}

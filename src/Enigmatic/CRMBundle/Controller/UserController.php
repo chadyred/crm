@@ -95,7 +95,7 @@ class UserController extends Controller
     public function searchAction() {
 
         $params['search']['agencies'] = $this->get('request')->request->get('agencies');
-
+        
         $users = $this->get('enigmatic_crm.manager.user')->getList(0, null, $params);
 
         $tab_result = array();

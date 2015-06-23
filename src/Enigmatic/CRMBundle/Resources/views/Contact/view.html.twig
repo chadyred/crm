@@ -7,11 +7,11 @@
 
     {% import "AppBundle:macro:button.html.twig" as button %}
 
-    <h1>{{ contact.getName() }}</h1>
-
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_contact_list'), null, 'speednav') }}
     </div>
+	
+	<h1>{{ contact.getName() }}</h1>
 
     <div class="action action_right">
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_contact_update', {'contact': contact.getId()}), null, 'speednav') }}
@@ -19,7 +19,7 @@
             {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_contact_remove', {'contact': contact.getId()}), 'return confirm("'~'enigmatic.crm.contact.action.remove_confirm' | trans~'");') }}
         {% endif %}
     </div>
-
+    
     <div class="view">
 
         <div>

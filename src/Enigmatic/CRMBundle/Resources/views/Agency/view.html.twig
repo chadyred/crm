@@ -8,11 +8,12 @@
     {% import "AppBundle:macro:button.html.twig" as button %}
 	{% import "AppBundle:macro:icon.html.twig" as icon %}
 
-    <h1>{{ agency.getName() }}</h1>
-
+    
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, path('enigmatic_crm_agency_list'), null, 'speednav') }}
     </div>
+	
+	<h1>{{ agency.getName() }}</h1>
 
     <div class="action action_right">
         {{ button.create('update', 'Update'|trans, path('enigmatic_crm_agency_update', {'agency': agency.getId()}), null, 'speednav') }}

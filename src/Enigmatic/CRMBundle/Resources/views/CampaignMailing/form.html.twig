@@ -6,12 +6,12 @@
 {% block content %}
 
     {% import "AppBundle:macro:button.html.twig" as button %}
-
-    <h1>{% if campaign.getId() %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_add{% endtrans %}{% endif %}</h1>
-
+	
     <div class="action action_left">
         {{ button.create('back', 'Back'|trans, campaign.getId()?path('enigmatic_crm_campaign_mailing_view', {'campaign': campaign.getId()}):path('enigmatic_crm_campaign_mailing_list'), null, 'speednav') }}
     </div>
+
+    <h1>{% if campaign.getId() %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_add{% endtrans %}{% endif %}</h1>
 
     <form id="campaign_form" method="post" action="" {{ form_enctype(form) }}>
 

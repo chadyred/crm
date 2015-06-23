@@ -1,0 +1,11 @@
+user:
+    change_password:
+        title: Modification du mot de passe
+    login:
+        title: Connexion
+    resetting:
+        title: Envoyer
+
+#"Bad credentials": Nom d'utilisateur ou mot de passe incorrect
+#"User account is disabled.": Vous devez activer votre compte avant de vous connecter, veuillez consulter vos mails
+#"User account is locked.": Ce compte est bloqué

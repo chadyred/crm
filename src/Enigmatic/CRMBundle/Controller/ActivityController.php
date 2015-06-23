@@ -70,7 +70,7 @@ class ActivityController extends Controller
             $params['search']['agency'] = ($this->get('enigmatic_crm.manager.user')->getCurrent()?$this->get('enigmatic_crm.manager.user')->getCurrent()->getAgency():null);
             $params['search']['activity_account_owner'] = $this->get('enigmatic_crm.manager.user')->getCurrent();
         }
-
+        
         $activities = $this->get('enigmatic_crm.manager.activity')->getAllByDate(\DateTime::createFromFormat('Y-m-d H:i:s', $_GET['start'].'00:00:00'), \DateTime::createFromFormat('Y-m-d H:i:s', $_GET['end'].'00:00:00'), $params, true);
 
         $events = array();

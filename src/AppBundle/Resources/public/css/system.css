@@ -11,6 +11,12 @@ select.select2 {
     border:none;
 }
 
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    select.select2 {
+        /*visibility: visible;*/
+    }
+}
+
 /* GOOGLE MAP */
 .gmnoprint img {
     max-width: none;

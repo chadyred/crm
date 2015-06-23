@@ -2,7 +2,7 @@
 
 namespace AppBundle\Services;
 
-class CryptEmail extends \Twig_Extension
+class CryptEmail extends \Twig_Extension 
 {
     public function getFunctions() {
         return array(

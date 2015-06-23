@@ -2,7 +2,7 @@
 
 namespace AppBundle\Services;
 
-class PhoneFormat extends \Twig_Extension
+class PhoneFormat extends \Twig_Extension 
 {
     public function getFunctions() {
         return array(
