@@ -37,8 +37,16 @@
 
         var nav_active = '{% block nav_active %}{% endblock %}';
 
+        jQuery('h1').attr('class', '');
         jQuery('h1').addClass('h1_'+nav_active);
-        jQuery('h1').prepend('<span class="ico ico_'+nav_active+'"></span>');
+        //            jQuery('h1').prepend('<span class="ico ico_'+nav_active+'"></span>');
+
+        if (jQuery('h1').children('span').length) {
+            jQuery('h1 > span').attr('class', '');
+            jQuery('h1 > span').addClass('ico ico_' + nav_active);
+        }
+        else
+            jQuery('h1').prepend('<span class="ico ico_' + nav_active + '"></span>');
 
         if (jQuery('#header_nav_'+nav_active)) {
             jQuery('#header_nav_' + nav_active).addClass('active');

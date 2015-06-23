@@ -47,6 +47,10 @@ class AccountType extends AbstractType
                 'label'         => 'enigmatic.crm.account.form.field.addressCpl.label',
                 'required'      => false,
             ))
+            ->add('city', 'enigmatic_city', array(
+                'required'      => false,
+                'label'         => 'enigmatic.crm.account.form.field.city.label',
+            ))
             ->add('phone', 'text', array (
                 'label'         => 'enigmatic.crm.account.form.field.phone.label',
                 'required'      => false,
@@ -64,10 +68,6 @@ class AccountType extends AbstractType
             ->add('activity', 'text', array (
                 'label'         => 'enigmatic.crm.account.form.field.activity.label',
                 'required'      => false,
-            ))
-            ->add('city', 'enigmatic_city', array(
-                'required'      => false,
-                'label'         => 'enigmatic.crm.account.form.field.city.label',
             ))
         ;
         
