@@ -1,0 +1,51 @@
+<form>
+    {% set nb_page = (params['total'] / params['limit']) | number_format(0) %}
+    {% if params['page'] > nb_page %}
+        <script>
+            $(function() {
+                Table{{ params['entity'] }}Management.setPage(0);
+                Table{{ params['entity'] }}Management.getList(true);
+            });
+        </script>
+    {% endif %}
+
+    {% set page = params['page'] + 1 %}
+
+
+    {% if nb_page > 1 %}
+    <div class="pager_page">
+        {% if nb_page > 1 %}
+            <label for="select_page">{% trans %}enigmatic.app.pager.label{% endtrans %} :</label>
+        {% endif %}
+        {% if page > 1 %}
+            <a class="pager_previous" href="" onclick="Table{{ params['entity'] }}Management.setPage('{{ page - 2 }}');return Table{{ params['entity'] }}Management.getList();" title="">←</a>
+        {% endif %}
+        {% if nb_page > 1 %}
+            <select onchange="Table{{ params['entity'] }}Management.setPage($(this).val() - 1); return Table{{ params['entity'] }}Management.getList();">
+                {% for i in 1 .. nb_page %}
+                    <option value="{{ i }}" {% if page == i %}selected="selected"{% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select> / {{ nb_page }}
+        {% endif %}
+        {% if page < nb_page %}
+            <a class="pager_next" href="" onclick="Table{{ params['entity'] }}Management.setPage('{{ page }}');return Table{{ params['entity'] }}Management.getList();" title="">→</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="pager_params['limit']">
+        <label for="select_params['limit']">{% trans %}enigmatic.app.pager.limit.label{% endtrans %} :</label>
+        <select onchange="Table{{ params['entity'] }}Management.setNbByPage($(this).val()); return Table{{ params['entity'] }}Management.getList();">
+            <option value="1" {% if params['limit'] == 1 %}selected="selected"{% endif %}>1</option>
+            <option value="5" {% if params['limit'] == 5 %}selected="selected"{% endif %}>5</option>
+            <option value="10" {% if params['limit'] == 10 %}selected="selected"{% endif %}>10</option>
+            <option value="15" {% if params['limit'] == 15 %}selected="selected"{% endif %}>15</option>
+            <option value="20" {% if params['limit'] == 20 %}selected="selected"{% endif %}>20</option>
+            <option value="25" {% if params['limit'] == 25 %}selected="selected"{% endif %}>25</option>
+            <option value="30" {% if params['limit'] == 30 %}selected="selected"{% endif %}>30</option>
+            <option value="50" {% if params['limit'] == 50 %}selected="selected"{% endif %}>50</option>
+            <option value="100" {% if params['limit'] == 100 %}selected="selected"{% endif %}>100</option>
+            <option value="200" {% if params['limit'] == 200 %}selected="selected"{% endif %}>200</option>
+        </select>
+    </div>
+</form>

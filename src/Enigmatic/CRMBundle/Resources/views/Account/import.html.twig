@@ -1,0 +1,64 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.account_import{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}account{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% trans %}enigmatic.crm.account_import.title.import{% endtrans %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_account_list'), null, 'speednav') }}
+    </div>
+
+    <div class="view">
+
+        <a href="/bundles/enigmaticcrm/media/import.csv">{% trans %}enigmatic.crm.account_import.action.download_model{% endtrans %}</a>
+
+        <form method="post" action="" {{ form_enctype(form) }} id="import_compte">
+
+            {{ form_widget(form) }}
+
+            <input class="btn" type="submit" value="{% trans %}enigmatic.crm.account.form.submit.import{% endtrans %}">
+            {{ button.create('cancel', 'Cancel'|trans, path('enigmatic_crm_account_list'), null, 'speednav' ) }}
+        </form>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+        var agencies = jQuery('#enigmatic_crm_account_import_agencies');
+        var owners = jQuery('#enigmatic_crm_account_import_owners');
+
+        jQuery(agencies).on('change', function() {
+            jQuery.ajax({
+                type: "POST",
+                url: '{{ path('enigmatic_crm_user_search') }}',
+                dataType: "json",
+                data: {agencies: jQuery(agencies).val()},
+                cache: true,
+                success: function (code_html, statut) {
+                    if (code_html.success) {
+                        jQuery(owners).html('');
+                        data = code_html.result;
+                        jQuery.each(data, function(i, item) {
+                            jQuery(owners).append('<option value="'+data[i]['id']+'">'+data[i]['firstname']+' '+data[i]['name']+' ('+data[i]['agency']+')</option>');
+                        });
+                    }
+                },
+
+                error: function (resultat, statut, erreur) {
+                    alert('{% trans %}enigmatic.crm.account.errors.load{% endtrans %}');
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% if agency.getId() %}{% trans %}enigmatic.crm.header.titles.agency_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.agency_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}agency{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% if agency.getId() %}{% trans %}enigmatic.crm.header.titles.agency_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.agency_add{% endtrans %}{% endif %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, agency.getId()?path('enigmatic_crm_agency_view', {'agency': agency.getId()}):path('enigmatic_crm_agency_list'), null, 'speednav') }}
+    </div>
+
+    <form id="agence" class="speednav" method="post" action="" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% if agency.getId() %}{% trans %}enigmatic.crm.agency.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency.form.submit.add{% endtrans %}{% endif %}">
+    </form>
+{% endblock %}

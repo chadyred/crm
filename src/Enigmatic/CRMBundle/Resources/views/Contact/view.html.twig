@@ -1,0 +1,66 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.contact_view{% endtrans %} - {{ contact.getFirstname() }} {{ contact.getName() }} - {{ parent() }}{% endblock %}
+{% block nav_active %}contact{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{{ contact.getName() }}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_contact_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {{ button.create('update', 'Update'|trans, path('enigmatic_crm_contact_update', {'contact': contact.getId()}), null, 'speednav') }}
+        {% if is_granted('ROLE_RS') %}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_contact_remove', {'contact': contact.getId()}), 'return confirm("'~'enigmatic.crm.contact.action.remove_confirm' | trans~'");') }}
+        {% endif %}
+    </div>
+
+    <div class="view">
+
+        <div>
+            <p>{% trans %}enigmatic.crm.contact.field.account.name{% endtrans %} : <span><a href="{{ path('enigmatic_crm_account_view', {'account': contact.getAccount().getId()}) }}" title="">{{ contact.getAccount.getName() }}</a></span></p> 
+            <p>{% trans %}enigmatic.crm.contact.field.email.name{% endtrans %} : <span><a href="mailto:{{ contact.getEmail() }}" title="">{{ contact.getEmail() }}</a></span></p>
+            <p>{% trans %}enigmatic.crm.contact.field.function.name{% endtrans %} : <span>{{ contact.getFunction() }}</span></p>
+            <p>{% trans %}enigmatic.crm.contact.field.birthday.name{% endtrans %} : <span>{% if contact.getBirthday() %}{{ contact.getBirthday() | date('d/m/Y') }}{% endif %} </span></p>
+            <p>{% trans %}enigmatic.crm.contact.field.phone.name{% endtrans %} :
+			<ul>
+                {% for phone in contact.getPhones() %}
+                    <li>{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }} : <span>{{ phoneFormat(phone.getPhone()) }}</span></li>
+                {% endfor %}
+			</ul>
+			</p>
+			
+            <p>{% trans %}enigmatic.crm.contact.field.address.name{% endtrans %} :<span>
+            <address>
+                {{ contact.getAddress() }} <br/>
+                {% if contact.getAddressCpl() %}
+                    {{ contact.getAddressCpl() }} <br/>
+                {% endif %}
+                {% if contact.getCity() %}
+                {{ contact.getCity().getName() }} {{ contact.getCity().getCanonicalZipcode() }}
+                {% endif %}
+            </address>
+            </span>
+			</p>
+            {% if contact.getCity() %}
+                {% if map %}
+                    {{ google_map(map) }}
+                {% else %}
+                    <div class="map">{% trans %}enigmatic.crm.service.google.unavailable{% endtrans %}</div>
+                {% endif %}
+            {% endif %}
+            <br/>
+            <p>{% trans %}enigmatic.crm.contact.field.description.name{% endtrans %} : <span>{{ contact.getDescription() | nl2br }}</span></p>
+
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

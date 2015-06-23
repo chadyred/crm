@@ -1,0 +1,24 @@
+{% extends "EnigmaticCRMBundle::email.html.twig" %}
+
+{% block subject %}
+    Votre compte sur le CRM LIP Intérim
+{% endblock %}
+
+{% block content %}
+
+    Bonjour {{ user.getFirstname() | capitalize }} {{ user.getName() | upper }} ! <br/>
+    Votre compte a été créé sur le CRM LIP Intérim. <br/><br/>
+
+    Vos identitifiants de connexion sont : <br/>
+    Login : <strong>{{ user.getEmail() }}</strong><br/>
+    Mot de passe : <strong>{{ password }}</strong><br/>
+    <em>Le mot de passe a été généré aléatoirement et vous seul le connaissez, vous pouvez le modifier depuis votre espace personnel.</em><br/>
+    <em>Votre mot de passe est une information personnelle. Attention à ne pas le divulguer. Il ne vous sera jamais demandé par notre équipe.</em><br/><br/>
+
+    {% if user.isEnabled() == false %}
+        Pour activer votre compte, veuillez cliquer sur ce lien : <a href="{{ url('user_registration_confirm', {'token': user.getConfirmationToken() }) }}" title="Activer mon compte">{{ url('user_registration_confirm', {'token': user.getConfirmationToken() }) }}</a><br/>
+    {% else %}
+        Pour vous connecter, rendez vous sur <a href="{{ app.request.uriForPath(path('enigmatic_crm_home')) }}" title="Connexion">CRM LIP Intérim</a>.
+    {% endif %}
+
+{% endblock %}

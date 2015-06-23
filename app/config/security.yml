@@ -1,0 +1,52 @@
+security:
+
+    encoders:
+        FOS\UserBundle\Model\UserInterface:
+            algorithm:            pbkdf2
+            hash_algorithm:       sha512
+            encode_as_base64:     true
+            iterations:           1000
+
+    role_hierarchy:
+        ROLE_CA:                 [ROLE_USER]
+        ROLE_RCA:                [ROLE_CA]
+        ROLE_RS:                 [ROLE_RCA]
+        ROLE_ADMIN:              [ROLE_RS]
+        ROLE_SUPER_ADMIN:        [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt|error)|css|images|js|cache)/
+            security: false
+
+        login:
+            pattern: ^/(connexion|mot-de-passe)
+            security: false
+
+        main:
+            pattern:                                ^/
+            form_login:
+                login_path:                         login
+                check_path:                         login_check
+                provider:                           fos_userbundle
+                remember_me:                        true
+            remember_me:
+                key:                                "%secret%"
+                lifetime:                           604800 # 1 semaine
+                path:                               /
+                domain:                             ~
+            anonymous:                              false
+            logout:
+                path:                               logout
+                target:                             enigmatic_crm_home
+                invalidate_session:                 false
+            switch_user:                            { role: ROLE_SUPER_ADMIN, parameter: _user }
+
+    access_control:
+        - { path: ^/cron, roles: ROLE_SUPER_ADMIN, requires_channel: https }
+        - { path: ^/admin/, roles: ROLE_ADMIN, requires_channel: https }
+        - { path: ^/*$, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

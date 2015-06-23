@@ -1,0 +1,35 @@
+enigmatic_crm_contact_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:Contact:list }
+
+enigmatic_crm_contact_view:
+    path:     /{contact}
+    defaults: { _controller: EnigmaticCRMBundle:Contact:view }
+    requirements:
+        contact: \d+
+    options:
+        expose: true
+
+enigmatic_crm_contact_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:Contact:add }
+
+enigmatic_crm_contact_update:
+    locales:  { fr: "/modifier-{contact}", en: "/update-{contact}" }
+    defaults: { _controller: EnigmaticCRMBundle:Contact:update }
+    requirements:
+        contact: \d+
+
+enigmatic_crm_contact_remove:
+    locales:  { fr: "/supprimer-{contact}", en: "/remove-{contact}" }
+    defaults: { _controller: EnigmaticCRMBundle:Contact:remove}
+    requirements:
+        contact: \d+
+
+enigmatic_crm_contact_search:
+    locales:  { fr: "/rechercher", en: "/search" }
+    defaults: { _controller: EnigmaticCRMBundle:Contact:search}
+    requirements:
+        _method: POST
+    options:
+        expose: true

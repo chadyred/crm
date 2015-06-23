@@ -1,0 +1,9 @@
+avalanche_imagine:
+    source_root:  %kernel.root_dir%/../
+    web_root:     %kernel.root_dir%/../web
+    cache_prefix: cache/images/resize/
+    driver:       gd
+    filters:
+        thumb:
+            type:    thumbnail
+            options: { size: [100, 100], mode: outbound, quality: 100, format: png, cache_type: public, cache_expires: 7 day }

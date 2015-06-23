@@ -1,0 +1,4 @@
+{% extends "EnigmaticCRMBundle::email.html.twig" %}
+{% block subject %}{% endblock %}
+{% block no_subject %}{% endblock %}
+{% block content %}{% if content is defined %}{{ content|raw }}{% endif %}{% endblock %}

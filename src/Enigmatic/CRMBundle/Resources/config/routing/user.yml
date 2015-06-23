@@ -1,0 +1,33 @@
+enigmatic_crm_user_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:User:list }
+
+enigmatic_crm_user_view:
+    path:     /{user}
+    defaults: { _controller: EnigmaticCRMBundle:User:view }
+    requirements:
+        user: \d+
+
+enigmatic_crm_user_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:User:add }
+
+enigmatic_crm_user_update:
+    locales:  { fr: "/modifier-{user}", en: "/update-{user}" }
+    defaults: { _controller: EnigmaticCRMBundle:User:update }
+    requirements:
+        user: \d+
+
+enigmatic_crm_user_remove:
+    locales:  { fr: "/supprimer-{user}", en: "/remove-{user}" }
+    defaults: { _controller: EnigmaticCRMBundle:User:remove}
+    requirements:
+        user: \d+
+
+enigmatic_crm_user_search:
+    locales:  { fr: "/rechercher", en: "/search" }
+    defaults: { _controller: EnigmaticCRMBundle:User:search}
+    requirements:
+        _method: POST
+    options:
+        expose: true

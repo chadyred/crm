@@ -1,0 +1,27 @@
+services:
+
+# TRANSFORMER
+
+    enigmatic_city.transformer.default:
+        class: Enigmatic\CityBundle\DataTransformer\CityTransformer
+        arguments: [@doctrine.orm.entity_manager]
+
+# MANAGER
+
+    enigmatic_city.manager.city:
+        class: Enigmatic\CityBundle\Manager\CityManager
+        arguments: [@doctrine.orm.entity_manager]
+
+# SERVICE
+
+    enigmatic_city.service.city:
+        class: Enigmatic\CityBundle\Services\CityService
+        arguments: []
+
+# FORM TYPE
+
+    enigmatic_city.form_type.city:
+        class: Enigmatic\CityBundle\Form\Type\CityType
+        arguments: [@enigmatic_city.transformer.default]
+        tags:
+            - { name: form.type, alias: enigmatic_city }

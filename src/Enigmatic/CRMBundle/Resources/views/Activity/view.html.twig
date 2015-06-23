@@ -1,0 +1,71 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.activity_view{% endtrans %} - {{ activity.getType() }} - {{ parent() }}{% endblock %}
+{% block nav_active %}activities{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{{ activity.getAccount().getName() }} : {{ ('enigmatic.crm.activity_type.field.type.'~activity.getType().getType) | trans }}
+        {% if activity.getReplanned() %}
+            ({% trans %}enigmatic.crm.activity.field.replanned.name{% endtrans %} {{ activity.getReplanned().getDateStart() | localizeddate('full', 'short') }})
+        {% endif %}
+    </h1>
+
+    {% if box == false %}
+        <div class="action action_left">
+            {{ button.create('back', 'Back'|trans, path('enigmatic_crm_activity_list'), null, 'speednav') }}
+        </div>
+
+        <div class="action action_right">
+            {% if activity.getReplanned() == null %}
+                {{ button.create('update', 'Update'|trans, path('enigmatic_crm_activity_update', {'activity': activity.getId()}), null, 'speednav') }}
+                {% if is_granted('ROLE_RCA') %}
+                    {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), 'return confirm("'~'enigmatic.crm.activity.action.remove_confirm' | trans~'");') }}
+                {% endif %}
+                {{ button.create('replan', 'enigmatic.crm.activity.action.replann'|trans, path('enigmatic_crm_activity_replann', {'activity': activity.getId()}), null, 'speednav' ) }}
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="view">
+
+        <div>
+            <p>{% trans %}enigmatic.crm.activity.field.type.name{% endtrans %} : <span>{{ activity.getType().getTitle() }}</span></p>
+            <p>{% trans %}enigmatic.crm.activity.field.account.name{% endtrans %} : <span> <a class="speednav" href="{{ path('enigmatic_crm_account_view', {'account': activity.getAccount().getId() }) }}" title="">{{ activity.getAccount().getName() }}</a></span> </p>
+            <p>{% trans %}enigmatic.crm.activity.field.user.name{% endtrans %} : <span> {{ activity.getUser().getFirstname() }} {{ activity.getUser().getName() }} </span></p>
+            <p>{% trans %}enigmatic.crm.activity.field.dateStart.name{% endtrans %} : <span> {{ activity.getDateStart() | localizeddate('full', 'short') }}  </span></p>
+            <p>{% trans %}enigmatic.crm.activity.field.comment.name{% endtrans %} : <span>{{ activity.getComment() }} </span></p>
+        </div>
+        {#<div>#}
+            {#{% trans %}enigmatic.crm.contact.field.account.name{% endtrans %} : <a href="{{ path('enigmatic_crm_account_view', {'account': contact.getAccount().getId()}) }}" title="">{{ contact.getAccount.getName() }}</a> <br/>#}
+            {#{% trans %}enigmatic.crm.contact.field.email.name{% endtrans %} : {{ contact.getEmail() }} <br/>#}
+            {#{% trans %}enigmatic.crm.contact.field.function.name{% endtrans %} : {{ contact.getFunction() }} <br/>#}
+            {#{% trans %}enigmatic.crm.contact.field.birthday.name{% endtrans %} : {% if contact.getBirthday() %}{{ contact.getBirthday() | date('d/m/Y') }}{% endif %} <br/>#}
+            {#{% trans %}enigmatic.crm.contact.field.phone.name{% endtrans %} : <br/>#}
+            {#{% for phone in contact.getPhones() %}#}
+                {#<span class="ico_phone_{{ phone.getTYpe() }}">{{ ('enigmatic.crm.contact.field.phone.type.'~phone.getType()) | trans }}</span> : <span>{{ phone.getPhone() }}</span> <br/>#}
+            {#{% endfor %}#}
+            {#{% trans %}enigmatic.crm.contact.field.address.name{% endtrans %} :#}
+            {#<address>#}
+                {#{{ contact.getAddress() }} <br/>#}
+                {#{% if contact.getAddressCpl() %}#}
+                    {#{{ contact.getAddressCpl() }} <br/>#}
+                {#{% endif %}#}
+                {#{% if contact.getCity() %}#}
+                    {#{{ contact.getCity().getName() }} {{ contact.getCity().getCanonicalZipcode() }}#}
+                {#{% endif %}#}
+            {#</address>#}
+            {#<br/>#}
+            {#{% if contact.getCity() %}#}
+                {#{{ google_map(map) }}#}
+            {#{% endif %}#}
+            {#<br/>#}
+            {#{% trans %}enigmatic.crm.contact.field.description.name{% endtrans %} : <p>{{ contact.getDescription() | nl2br }}</p><br/>#}
+
+        {#</div>#}
+
+
+    </div>
+
+{% endblock %}

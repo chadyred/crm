@@ -1,0 +1,23 @@
+enigmatic:
+    crm:
+        account:
+            unique_entity: Ce compte existe déjà (Nom de l'entreprise et ville identique)
+        account_import:
+            file:
+                mime_type: Veuillez importer un fichier au format CSV
+        agency_account:
+            unique_entity: Cette agence est déjà liée au compte
+        campaign_faxing:
+            dateSended:
+                invalid: Veuillez choisir une date future pour l'envois
+            fax:
+                file:
+                    mimeTypes: Veuillez utiliser un format PDF
+        campaign_mailing:
+            dateSended:
+                invalid: Veuillez choisir une date future pour l'envoi*
+            files:
+                file:
+                    mimeTypes: Veuillez utiliser un format pdf, doc ou docx
+        phone:
+            invalid_format: Le numéro saisi n'est pas au bon format

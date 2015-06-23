@@ -1,0 +1,98 @@
+{#<div class="form_city_auto">#}
+
+    <input onkeyup="City.search(jQuery(this).val());" autocomplete="off" id="search_city_input_{{ id_form_city }}" type="text" value="{% if default_value %}{{ default_value.getName() }}, {{ default_value.getCanonicalZipcode() }}{% endif %}" {% if options['placeholder'] is defined %}placeholder="{{ options['placeholder'] }}"{% endif %}>
+
+    {% if options['placeholder'] is defined %}
+        <span class="required" title="Required">*</span>
+    {% endif %}
+
+        {% image '@EnigmaticCityBundle/Resources/public/images/loader.gif' %}
+    <img id="search_city_loader_{{ id_form_city }}" src="{{ asset_url }}" alt="{% trans %}enigmatic.city.loading{% endtrans %}" style="display:none;"/>
+    {% endimage %}
+    <div id="search_city_result_{{ id_form_city }}" class="city_choice" style="display:none;"></div>
+
+<script type="text/javascript">
+
+    var City = {
+        search_city_input: document.getElementById('search_city_input_{{ id_form_city }}'),
+        search_city_result: document.getElementById('search_city_result_{{ id_form_city }}'),
+        city_input: document.getElementById('{{ id_form_city }}'),
+        loader: document.getElementById('search_city_loader_{{ id_form_city }}'),
+
+        search: function ($search) {
+
+            if ($search.length > 1) {
+                $(City.loader).fadeIn();
+
+                jQuery.ajax({
+                    type: "GET",
+                    url: Routing.generate('enigmatic_city_search', {'search': $search}),
+                    dataType: "json",
+                    cache: false,
+                    success: function (code_html, statut) {
+                        if (code_html.success) {
+                            City.showSearchResult(code_html.content)
+                        }
+                    },
+
+                    error: function (resultat, statut, erreur) {
+                        alert('{% trans %}enigmatic.city.search.error{% endtrans %}');
+                    },
+
+                    complete: function (resultat, statut) {
+                        $(City.loader).fadeOut();
+                    }
+                });
+            }
+            else {
+                City.resetCityInput();
+                City.clearSearchCityResult();
+            }
+
+            return false;
+        },
+
+        showSearchResult: function ($result) {
+            City.resetCityInput();
+
+            $(City.search_city_result).html('');
+            $(City.search_city_result).fadeIn();
+            if ($result.length) {
+                $.each($result, function (i, item) {
+                    $(City.search_city_result).append('<div id="city_choice_' + item.id + '" data-id="' + item.id + '" class="city_choice_item city_choice_item_row_' + i % 2 + '" title=""><span class="city_name">' + item.name + '</span>, <span class="city_zipcode">' + item.zipcode + '</span></div>');
+                });
+            }
+            else
+                $(City.search_city_result).html('Aucun résultat');
+
+            jQuery('.city_choice_item').click(function () {
+                City.selectCity($(this).attr('data-id'));
+            });
+        },
+
+        selectCity: function ($id) {
+            $(City.city_input).val($id);
+            $(City.search_city_input).val(jQuery('#city_choice_' + $id + ' .city_name').html() + ', ' + jQuery('#city_choice_' + $id + ' .city_zipcode').html())
+            City.clearSearchCityResult();
+        },
+
+        resetCityInput: function () {
+            $(City.city_input).val('');
+        },
+
+        clearSearchCityResult: function () {
+            $(City.search_city_result).html('');
+            $(City.search_city_result).fadeOut();
+        }
+
+    };
+
+
+    {% if default_value %}
+    City.city_input.value = {{ default_value.getId() }};
+    City.search_city_input.value = '{{ default_value.getName() }}, {{ default_value.getCanonicalZipcode() }}';
+    {% endif %}
+
+</script>
+
+{#</div>#}

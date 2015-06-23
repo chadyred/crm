@@ -1,0 +1,48 @@
+enigmatic_crm_home:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:Default:index }
+
+enigmatic_crm_account:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/account.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/comptes", en: "/accounts" }
+
+enigmatic_crm_account_owner:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/accountOwner.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/comptes/utilisateur", en: "/accounts/user" }
+
+enigmatic_crm_contact:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/contact.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/contacts", en: "/contacts" }
+
+enigmatic_crm_activity:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/activity.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/activites", en: "/activities" }
+
+enigmatic_crm_agency:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/agency.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/agences", en: "/agencies" }
+
+enigmatic_crm_agency_account:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/agencyAccount.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/comptes/agences", en: "/accounts/agencies" }
+
+enigmatic_crm_user:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/user.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/utilisateurs", en: "/users" }
+
+enigmatic_crm_campaign_mailing:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/campaignMailing.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/campagnes/mailing", en: "/campaign/mailing" }
+
+enigmatic_crm_campaign_faxing:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing/campaignFaxing.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/campagnes/faxing", en: "/campaign/faxing" }

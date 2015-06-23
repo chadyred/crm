@@ -1,0 +1,39 @@
+enigmatic_crm_campaign_mailing_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:list }
+
+enigmatic_crm_campaign_mailing_view:
+    path:     /{campaign}
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:view }
+    requirements:
+        campaign: \d+
+    options:
+        expose: true
+
+enigmatic_crm_campaign_mailing_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:add }
+
+enigmatic_crm_campaign_mailing_update:
+    locales:  { fr: "/modifier-{campaign}", en: "/update-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:update }
+    requirements:
+        campaign: \d+
+
+enigmatic_crm_campaign_mailing_remove:
+    locales:  { fr: "/supprimer-{campaign}", en: "/remove-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:remove}
+    requirements:
+        campaign: \d+
+
+enigmatic_crm_campaign_mailing_send_test:
+    locales:  { fr: "/envoyer-mail-test-{campaign}", en: "/send-test-mail-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:sendTest}
+    requirements:
+        campaign: \d+
+
+enigmatic_crm_campaign_mailing_download:
+    locales:  { fr: "/telecharger-piece-jointe-{file}", en: "/download-attach-{file}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignMailing:download}
+    requirements:
+        file: \d+

@@ -1,0 +1,25 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_send_test{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_faxing{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% trans %}enigmatic.crm.header.titles.campaign_faxing_send_test{% endtrans %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_faxing_view', {'campaign': campaign.getId()}), null, 'speednav') }}
+    </div>
+
+    <form id="fax_test" class="speednav view" method="post" action="" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% trans %}enigmatic.crm.campaign_faxing.form.submit.send_test{% endtrans %}">
+        {{ button.create('cancel', 'Cancel'|trans, path('enigmatic_crm_campaign_faxing_view', {'campaign': campaign.getId}), null, 'speednav' ) }}
+
+    </form>
+
+{% endblock %}
