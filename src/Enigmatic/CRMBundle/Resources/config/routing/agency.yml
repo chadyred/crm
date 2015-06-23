@@ -1,0 +1,25 @@
+enigmatic_crm_agency_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:Agency:list }
+
+enigmatic_crm_agency_view:
+    path:     /{agency}
+    defaults: { _controller: EnigmaticCRMBundle:Agency:view }
+    requirements:
+        agency: \d+
+
+enigmatic_crm_agency_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:Agency:add }
+
+enigmatic_crm_agency_update:
+    locales:  { fr: "/modifier-{agency}", en: "/update-{agency}" }
+    defaults: { _controller: EnigmaticCRMBundle:Agency:update }
+    requirements:
+        agency: \d+
+
+enigmatic_crm_agency_remove:
+    locales:  { fr: "/supprimer-{agency}", en: "/remove-{agency}" }
+    defaults: { _controller: EnigmaticCRMBundle:Agency:remove}
+    requirements:
+        agency: \d+

@@ -1,0 +1,135 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.campaign_mailing_list{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_mailing{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% trans %}enigmatic.crm.campaign_mailing.title.list{% endtrans %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_campaign_mailing_add'), null, 'speednav') }}
+    </div>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+    <table class="table table_striped table_extended">
+        <thead>
+        <tr>
+            {{ table.th('name', 'enigmatic.crm.campaign_mailing.table.head.name'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('subject', 'enigmatic.crm.campaign_mailing.table.head.subject'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('dateSended', 'enigmatic.crm.campaign_mailing.table.head.dateSended'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('state', 'enigmatic.crm.campaign_mailing.table.head.state'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('owner', 'enigmatic.crm.campaign_mailing.table.head.owner'|trans, 20, params['order'], params['entity']) }}
+            {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
+        </tr>
+        <tr id="list_search">
+            {{ table.th_search_input('name', params['search']) }}
+            {{ table.th_search_input('subject', params['search']) }}
+            <th>
+                <input class="search_data" id="datepicker_dateSended" type="text" data="dateSended" value="{% if  params['search']['dateSended'] is defined %}{{  params['search']['dateSended'] }}{% endif %}" placeholder="{% trans %}enigmatic.crm.campaign_mailing.table.search.dateSended{% endtrans %}" />
+                <input class="search_data" id="datepicker_dateSendedEnd" type="text" data="dateSendedEnd" value="{% if  params['search']['dateSendedEnd'] is defined %}{{  params['search']['dateSendedEnd'] }}{% endif %}" placeholder="{% trans %}enigmatic.crm.campaign_mailing.table.search.dateSendedEnd{% endtrans %}" />
+            </th>
+            <th>
+                <select class="search_data" data="state">
+                    <option value="">Tous</option>
+                    <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignMailing::CAMPAIGN_MAILING_SENDED') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignMailing::CAMPAIGN_MAILING_SENDED') }}">{% trans %}enigmatic.crm.campaign_mailing.field.state.sended.name{% endtrans %}</option>
+                    <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignMailing::CAMPAIGN_MAILING_WAITING') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignMailing::CAMPAIGN_MAILING_WAITING') }}">{% trans %}enigmatic.crm.campaign_mailing.field.state.waiting.name{% endtrans %}</option>
+                    <option {% if params['search']['state'] is defined %}{% if params['search']['state'] == constant('Enigmatic\\CRMBundle\\Entity\\CampaignMailing::CAMPAIGN_MAILING_LOCKED') and params['search']['state'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\CampaignMailing::CAMPAIGN_MAILING_LOCKED') }}">{% trans %}enigmatic.crm.campaign_mailing.field.state.locked.name{% endtrans %}</option>
+                </select>
+            </th>
+            {{ table.th_search_input('owner', params['search']) }}
+            {{ table.search_link(params['entity']) }}
+        </tr>
+        </thead>
+        <tbody>
+        {% for campaign in campaigns %}
+            <tr data-id="{{ campaign.getId() }}" id="item_{{ campaign.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                <td class="onclick">{{ campaign.getName() }}</td>
+                <td class="onclick">{{ campaign.getEmailSubject() }}</td>
+                <td class="onclick">{{ campaign.getDateSended() | localizeddate('full', 'short') }}</td>
+                <td class="onclick">
+                    {% if campaign.getState() == constant('CAMPAIGN_MAILING_LOCKED', campaign) %}
+                        <span class="text-warning">{% trans %}enigmatic.crm.campaign_mailing.field.state.locked.name{% endtrans %}</span>
+                    {% elseif campaign.getState() == constant('CAMPAIGN_MAILING_WAITING', campaign) %}
+                        <span class="text-success">{% trans %}enigmatic.crm.campaign_mailing.field.state.waiting.name{% endtrans %}</span>
+                    {% elseif campaign.getState() == constant('CAMPAIGN_MAILING_SENDED', campaign) %}
+                        <span class="text-success">{% trans %}enigmatic.crm.campaign_mailing.field.state.sended.name{% endtrans %}</span>
+                    {% endif %}
+                </td>
+                <td class="onclick">{{ campaign.getOwner().getFirstname() }} {{ campaign.getOwner().getName() }}</td>
+                <td></td>
+            </tr>
+        {% else %}
+            <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.campaign_mailing.table.empty{% endtrans %}</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_campaign_mailing_list') }}');
+        });
+    </script>
+
+    <script type="text/javascript">
+        jQuery('.onclick').click(function() {
+            Nav.get(Routing.generate('enigmatic_crm_campaign_mailing_view.{{ app.request.locale }}', {'campaign': $(this).parent().attr('data-id') }));
+        })
+    </script>
+
+    <script type="text/javascript">
+
+        var date_start = jQuery('#datepicker_dateSended');
+        var date_end = jQuery('#datepicker_dateSendedEnd');
+
+        jQuery(function(){
+            date_start.datetimepicker({
+                format:'d-m-Y H:i',
+                dayOfWeekStart : 1,
+                lang:'fr',
+                step:5,
+                onShow:function( ct ){
+                    this.setOptions({
+                        maxDate:date_end.val()?date_end.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
+                    })
+                },
+                timepicker:false
+            });
+            date_end.datetimepicker({
+                format:'d-m-Y H:i',
+                dayOfWeekStart : 1,
+                lang:'fr',
+                step:5,
+                onShow:function( ct ){
+                    this.setOptions({
+                        minDate:date_start.val()?date_start.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
+                    })
+                },
+                timepicker:false
+            });
+        });
+    </script>
+
+{% endblock %}

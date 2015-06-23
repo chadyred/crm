@@ -1,0 +1,3 @@
+{% macro create(name, title, href, onclick, class, data) %}
+    <a class="ico ico_{{ name }} {{ class }}" {% if data %}data-type={{ data }}{% endif %} href="{{ href }}" title="{{ title }}" onclick="{% if onclick == 'Nav' %}return Nav.get('{{ href }}');{% else %}{{ onclick }}{% endif %}"><span>{{ title }}</span></a>
+{% endmacro %}

@@ -1,0 +1,57 @@
+enigmatic_crm_account_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:Account:list }
+
+enigmatic_crm_account_list_param:
+    path:     /{potential}-{agency}-{user}
+    defaults: { _controller: EnigmaticCRMBundle:Account:list }
+    requirements:
+        potential: \d+
+        agency: \d+
+        user: \d+
+
+enigmatic_crm_account_view:
+    path:     /{account}
+    defaults: { _controller: EnigmaticCRMBundle:Account:view }
+    requirements:
+        account: \d+
+    options:
+        expose: true
+
+enigmatic_crm_account_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:Account:add }
+
+enigmatic_crm_account_update:
+    locales:  { fr: "/modifier-{account}", en: "/update-{account}" }
+    defaults: { _controller: EnigmaticCRMBundle:Account:update }
+    requirements:
+        account: \d+
+
+enigmatic_crm_account_remove:
+    locales:  { fr: "/supprimer-{account}", en: "/remove-{account}" }
+    defaults: { _controller: EnigmaticCRMBundle:Account:remove}
+    requirements:
+        account: \d+
+
+enigmatic_crm_account_import:
+    locales:  { fr: "/importer", en: "/import" }
+    defaults: { _controller: EnigmaticCRMBundle:Account:import }
+
+enigmatic_crm_account_activity_list:
+    locales:  { fr: "/activites-{account}", en: "/activities-{account}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:list }
+    requirements:
+        account: \d+
+
+enigmatic_crm_account_activity_add:
+    locales:  { fr: "/ajouter-activite-{account}", en: "/add-activity-{account}" }
+    defaults: { _controller: EnigmaticCRMBundle:Activity:add, activity: 0 }
+    requirements:
+        account: \d+
+
+enigmatic_crm_account_contact_add:
+    locales:  { fr: "/ajouter-contact-{account}", en: "/add-contact-{account}" }
+    defaults: { _controller: EnigmaticCRMBundle:Contact:add }
+    requirements:
+        account: \d+

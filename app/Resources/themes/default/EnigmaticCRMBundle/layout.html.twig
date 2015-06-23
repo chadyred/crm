@@ -1,0 +1,160 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block font %}
+    <link type="text/css" rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic">{% endblock %}
+
+{% block stylesheets %}
+
+    {% stylesheets filter='cssrewrite' output='cache/themes/default/css/style.css'
+    'bundles/app/css/select2.css'
+    'bundles/enigmaticcrm/css/fullcalendar.min.css'
+    'bundles/app/css/datetimepicker.css'
+    'bundles/enigmaticcrm/css/system.css'
+    'bundles/app/css/system.css'
+    'bundles/app/css/style.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+
+    {% stylesheets filter='cssrewrite' output='cache/themes/default/css/print.css'
+    'bundles/enigmaticcrm/css/fullcalendar.print.css' %}
+    <link type="text/css" rel="stylesheet" href="{{ asset_url }}" media="print"/>
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block body %} 
+<div class="wrapper">
+        <header id="header">
+            <div class="header_right">
+			 <span class="nom_user">{{ render(controller('EnigmaticCRMBundle:Default:getUserWelcome')) }}</span>
+                {% if app.user %}
+                <a class="ico ico_logout" href="{{ path('logout') }}" title="{% trans %}enigmatic.crm.header.logout.title{% endtrans %}"><span>{% trans %}enigmatic.crm.header.logout.name{% endtrans %}</span></a>
+                {% endif %}
+            </div>
+        </header>
+   
+
+    <aside class="sidebar">
+        <a id="logo" class="speednav" href="{{ path('enigmatic_crm_home') }}" title=""></a>
+		{% if app.user %}
+        <nav>
+            <ul>
+                <li id="header_nav_home">
+                    <a class="speednav nav_link" href="{{ path('enigmatic_crm_home') }}"
+                       title="{% trans %}enigmatic.crm.header.nav.home.title{% endtrans %}">
+                        <span class="nav_ico"><i class="ico ico_stats-bars"></i></span>
+                        {% trans %}enigmatic.crm.header.nav.home.link{% endtrans %}
+                    </a>
+                </li>
+
+                <li id="header_nav_account">
+                    <a class="speednav nav_link" href="{{ path('enigmatic_crm_account_list') }}"
+                       title="{% trans %}enigmatic.crm.header.nav.accounts.title{% endtrans %}">
+                        <span class="nav_ico"><i class="ico ico_credit-card"></i></span>
+                        {% trans %}enigmatic.crm.header.nav.accounts.link{% endtrans %}
+                    </a>
+                </li>
+
+                <li id="header_nav_contact">
+                    <a class="speednav nav_link" href="{{ path('enigmatic_crm_contact_list') }}" href=""
+                       title="{% trans %}enigmatic.crm.header.nav.contacts.title{% endtrans %}">
+                        <span class="nav_ico"><i class="ico ico_user-tie"></i></span>
+                        {% trans %}enigmatic.crm.header.nav.contacts.link{% endtrans %}
+                    </a>
+                </li>
+                <li id="header_nav_activities">
+                    <a class="speednav nav_link" href="{{ path('enigmatic_crm_activity_calendar') }}"
+                       title="{% trans %}enigmatic.crm.header.nav.activities.title{% endtrans %}">
+                        <span class="nav_ico"><i class="ico ico_calendar"></i></span>
+                        {% trans %}enigmatic.crm.header.nav.activities.link{% endtrans %}
+                    </a>
+                </li>
+
+                <li id="header_nav_mailing" class="nav_collapsible">
+                    <a class="nav_link" href="">
+                        <span class="nav_ico"><i class="ico ico_printer"></i></span>
+                        {% trans %}enigmatic.crm.header.nav.campaign.link{% endtrans %}
+                    </a>
+                    <ul class="submenu">
+                        <li id="header_nav_campaign_mailing"><a class="speednav" href="{{ path('enigmatic_crm_campaign_mailing_list') }}"
+                               title="{% trans %}enigmatic.crm.header.nav.campaign.mailing.title{% endtrans %}">{% trans %}
+                                enigmatic.crm.header.nav.campaign.mailing.link{% endtrans %}</a></li>
+                        <li id="header_nav_campaign_faxing"><a class="speednav" href="{{ path('enigmatic_crm_campaign_faxing_list') }}"
+                               title="{% trans %}enigmatic.crm.header.nav.campaign.faxing.title{% endtrans %}">{% trans %}
+                                enigmatic.crm.header.nav.campaign.faxing.link{% endtrans %}</a></li>
+                    </ul>
+                </li>
+
+                    <li id="header_nav_config" class="nav_collapsible">
+                        <a class="nav_link" href="">
+                            <span class="nav_ico"><i class="ico ico_cog"></i></span>
+                            {% trans %}enigmatic.crm.header.nav.system.link{% endtrans %}
+                        </a>
+                        <ul class="submenu">
+                            {% if is_granted('ROLE_RS') %}
+                            <li id="header_nav_agency"><a class="speednav" href="{{ path('enigmatic_crm_agency_list') }}"
+                                   title="{% trans %}enigmatic.crm.header.nav.system.agencys.title{% endtrans %}">{% trans %}
+                                    enigmatic.crm.header.nav.system.agencys.link{% endtrans %}</a></li>
+                            <li id="header_nav_user"><a class="speednav" href="{{ path('enigmatic_crm_user_list') }}"
+                                   title="{% trans %}enigmatic.crm.header.nav.system.users.title{% endtrans %}">{% trans %}
+                                    enigmatic.crm.header.nav.system.users.link{% endtrans %}</a></li>
+                            {% endif %}
+                            <li id="header_nav_change_password"><a class="speednav" href="{{ path('user_change_password') }}"
+                                                        title="{% trans %}enigmatic.crm.header.nav.system.change_password.title{% endtrans %}">{% trans %}
+                                    enigmatic.crm.header.nav.system.change_password.link{% endtrans %}</a></li>
+                        </ul>
+                    </li>
+            </ul>
+        </nav>
+		{% endif %}
+    </aside>
+
+    <div id="content">
+        {{ parent() }}
+
+        {% block content %}{% endblock %}
+    </div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    {% javascripts output='cache/themes/default/js/system.js'
+    '@AppBundle/Resources/public/js/nav.js'
+    '@AppBundle/Resources/public/js/collection.js'
+    '@AppBundle/Resources/public/js/datetimepicker.js'
+    '@AppBundle/Resources/public/js/select2.min.js'
+    '@AppBundle/Resources/public/js/system.js'
+    '@AppBundle/Resources/public/js/chart.min.js'
+    '@FOSJsRoutingBundle/Resources/public/js/router.js'
+    '@EnigmaticCRMBundle/Resources/public/js/moment.min.js'
+    '@EnigmaticCRMBundle/Resources/public/js/fullcalendar.min.js'
+    '@EnigmaticCRMBundle/Resources/public/js/lang-all.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+    <script type="text/javascript">
+
+        function OnNavLoad() {
+            dateTimePicker();
+            runSelect2();
+            $('.form_collection').each(function () {
+                collectionStart($(this).attr('id'), true);
+            });
+        }
+
+        jQuery(function () {
+            OnNavLoad();
+        });
+        jQuery('body').on('NavLoad', function () {
+            OnNavLoad();
+        })
+    </script>
+
+{% endblock %}

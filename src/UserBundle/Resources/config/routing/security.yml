@@ -1,0 +1,12 @@
+login:
+    pattern:   /connexion
+    defaults: { _controller: FOSUserBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+    defaults: { _controller: FOSUserBundle:Security:check }
+    requirements:
+        _method: POST
+
+logout:
+    pattern:   /deconnexion

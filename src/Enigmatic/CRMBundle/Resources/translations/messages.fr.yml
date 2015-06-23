@@ -1,0 +1,677 @@
+enigmatic:
+    crm:
+        account:
+            action:
+                add_agency: Lier à une agence
+                add_user: Assigné à
+                sync_with_societe_com: Synchroniser avec Societe.com
+                remove_confirm: Souhaitez-vous réellement supprimer ce compte ?
+            contact:
+                empty: Aucun contact n'est disponible pour ce compte
+            field:
+                activity:
+                    name: Secteur d'activité
+                address:
+                    name: Adresse
+                addressCpl:
+                    name: Complément d'adresse
+                city:
+                    name: Ville
+                fax:
+                    name: Fax
+                name:
+                    name: Nom de l'entreprise
+                phone:
+                    name: Téléphone
+                siret:
+                    name: Numéro SIRET
+                owners:
+                    name: Assigné à
+                agencies:
+                    name: Agences
+                potential:
+                    name: Potentiel TT
+                    1: TOP 100
+                    2: TOP 150
+                    3: Autre
+                description:
+                    name: Commentaire
+                turnover:
+                    name: Chiffre d'affaire
+            form:
+                field:
+                    activity:
+                        label: Secteur d'activité
+                    address:
+                        label: Adresse
+                    addressCpl:
+                        label: Complément d'adresse
+                    city:
+                        label: Ville
+                    description:
+                        label: Autre informations
+                    fax:
+                        label: Fax
+                    name:
+                        label: Nom de l'entreprise
+                    phone:
+                        label: Téléphone pricipal
+                    siret:
+                        label: Numéro SIRET
+                    agencies:
+                        label: Agences
+                submit:
+                    add: Ajouter le compte
+                    import: Importer
+                    update: Modifier le compte
+            message:
+                add: Le compte a été ajouté
+                remove: Le compte a été supprimé
+                update: Le compte a été modifié
+            table:
+                empty: Aucun compte n'est disponible
+                empty_owner: Aucune agence n'est assigné à ce compte
+                head:
+                    address: Adresse
+                    name: Société
+                    owner: Chargé d'affaires
+                    phone: Téléphone
+                    potential: Potentiel TT
+                    turnover: Chiffre d'affaire
+            view:
+                titles:
+                    activities: Activités
+                    contacts: Contacts
+                    details: Informations du compte
+                    agencies_infos: Informations des agences
+                    agency_infos: Chargés d'affaires / Potentiel TT / CA
+            title:
+                list: Comptes
+        account_owner:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette asignation ?
+            message:
+                add: Le compte a été lié à un nouvel utilisateur
+                remove: L'utilisateur n'est plus assigné à ce compte
+            form:
+                field:
+                    user:
+                        label: Utilisateur
+                        empty_value: Selectionnez un utilisateur
+                submit:
+                    add: Lier l'utilisateur
+            title:
+                add: Lier le compte à un utilisateur
+                first_add: Etape 3 : Lier le compte à un utilisateur
+                first_add_rca: Etape 2 : Lier le compte à un utilisateur
+        account_import:
+            action:
+                download_model: Télécharger le model d'import
+            form:
+                field:
+                    file:
+                        label: Fichier à importer
+                    sync_societe_com:
+                        label: Synchroniser avec Societe.com pendant l'import (non actif)
+                    agencies:
+                        label: Lier aux agences
+                    owners:
+                        label: Assigner à
+            title:
+                import: Importer des comptes
+            messages:
+                success:
+                    import: L'import est terminé
+                    %account%: Le compte <strong>%account%</strong> a été importé
+                error:
+                    %account%.%errors%: Tentative d'ajout du compte <strong>%account%</strong> : %errors% <br/>Ce compte a été ignoré lors de l'import
+        activity:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette activité ?
+                replann: Replannifier
+            field:
+                account:
+                    name: Lié au compte
+                comment:
+                    name: Commentaire
+                dateStart:
+                    name: Date de l'activité
+                type:
+                    name: Type d'activité
+                user:
+                    name: Utilisateur
+                replanned:
+                    name: Replanifié le
+            form:
+                field:
+                    account:
+                        empty_value: Selectionnez un compte
+                        label: Lier au compte
+                    comment:
+                        label: Commentaire
+                    dateEnd:
+                        label: Date de fin
+                    dateStart:
+                        label: Date de l'activité
+                        replann:
+                            label: Nouvelle date
+                    type:
+                        label: Type d'activité
+                        empty_value: Selectionnez un type d'activité
+                    user:
+                        empty_value: Selectionnez un utilisateur
+                        label: Utilisateur
+                submit:
+                    add: Ajouter
+                    update: Modifier l'activité
+                    replan: Replanifier l'activité
+            message:
+                add: L'activité a été ajoutée
+                confirm:
+                    remove: Voulez-vous vraiment supprimer cette activité ?
+                remove: L'activité a été supprimée
+                replanned: L'activité à été replanifiée
+                update: L'activité a été modifiée
+            table:
+                empty: Aucune activité
+                head:
+                    type: Type d'activité
+                    account: Compte
+                    user: Utilisateur
+                    dateStart: Date
+                    comment: Commentaire
+                search:
+                    dateStart: De
+                    dateStartEnd: à
+            title:
+                list: Activités
+                calendar: Calendrier
+        activity_type:
+            field:
+                type:
+                    1: Appel
+                    2: Rendez-vous
+                    3: Mailing / Faxing
+        activity_user:
+            form:
+                field:
+                    agency:
+                        label: Agence
+                        empty_value: Selectionnez une agence
+        agency:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette agence ? \n\nAttention ! Toutes les données en lien avec cette agence seront supprimées (utilisateurs, activités)
+            field:
+                address:
+                    name: Adresse
+            form:
+                field:
+                    address:
+                        label: Adresse
+                    addressCpl:
+                        label: Complément d'adresse
+                    city:
+                        label: Ville
+                    name:
+                        label: Nom de l'agence
+                submit:
+                    add: Ajouter l'agence
+                    update: Modifier l'agence
+            message:
+                add: L'agence a été ajoutée
+                remove: L'agence a été supprimée
+                update: L'agence a été modifiée
+            table:
+                empty: Aucune agence
+                head:
+                    name: Nom
+                    address: Adresse
+            title:
+                list: Agences
+        agency_account:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer la laison avec cette agence ?
+            message:
+                add: Le compte a été lié à une nouvelle agence
+                update: Les informations ont été modifiées
+                remove: Le lien entre le compte et l'agence a été rompu
+                link_account: Le compte est lié à votre agence
+                link_account_error: Une erreur est survenue, le compte n'a pas été lié à votre agence
+            form:
+                field:
+                    agency:
+                        label: Agence
+                        empty_value: Selectionnez une agence
+                    potential:
+                        label: Potentiel TT
+                        1: TOP 100
+                        2: TOP 150
+                        3: Autre
+                    description:
+                        label: Commentaire
+                    turnovers:
+                        label: Chiffre d'affaire
+                        turnover:
+                            placeholder: Chiffre d'affaire
+                submit:
+                    add: Lier l'agence
+                    update: Modifier
+            title:
+                add: Lier le compte à une agence
+                update: Modifier les infos
+                first_add: Etape 2 : Lier le compte à une agence
+        calendar:
+            error_load: Une erreur est survenue, impossible de récupérer les données ou la requête n'a pas pu aboutir ...
+            event:
+                by: Par
+                replannified_to: Replannifié le
+            load: Chargement ...
+        campaign_faxing:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette campagne de faxing ?
+            errors:
+                config_ecofax: Attention, le paramétrage pour l'envoi de fax est invalide. Les fax ne pourront seront pas envoyés
+                load: Une erreur est survenue, impossible de charger les contacts.
+            field:
+                dateSended:
+                    name: Date d'envois
+                fax:
+                    name: Fax
+                    empty: Aucun
+                state:
+                    name: Etat
+                    locked:
+                        name: En attente de confirmation
+                    waiting:
+                        name: Prêt à envoyé
+                    sended:
+                        name: Envoyé
+            form:
+                contacts:
+                    available:
+                        description: Cliquez sur les cases pour selectionner
+                        title: Contacts disponibles
+                    enabled:
+                        description: Cliquez sur les cases pour annuler la selection
+                        title: Contacts selectionnés
+                    title: Contacts
+                    search:
+                        account_name:
+                            placeholder: Compte
+                        name:
+                            placeholder: Nom / Prénom
+                        city:
+                            placeholder: Ville / Code postal
+
+                field:
+                    contact:
+                        label: Contacts
+                    name:
+                        label: Nom de la campagne
+                    fax:
+                        label: Fax
+                        file:
+                            label: Fichier (pdf)
+                    dateSended:
+                        label: Date de l'envois
+                    owner:
+                        label: Créé par
+                        empty_value: Sélectionnez un utilisateur
+                    state:
+                        label: Configuration
+                        locked:
+                            label: Bloqué - Le faxing ne sera pas envoyé
+                        waiting:
+                            label: Prêt - Le faxing sera envoyé à la date indiqué
+                    test:
+                        phone:
+                            label: Numéro de fax
+                submit:
+                    add: Ajouter la campagne
+                    update: Modifier la campagne
+                    send_test: Envoyer le fax
+            message:
+                add: La campagne a été ajoutée
+                remove: La campagne a été supprimée
+                update: La campagne a été modifiée
+                send_test: Le fax a été envoyé
+            table:
+                empty: Aucune campagne
+                head:
+                    name: Nom
+                    dateSended: Date d'envois
+                    state: Etat
+                    owner: Créé par
+                search:
+                    dateSended: De
+                    dateSendedEnd: à
+            view:
+                title:
+                    config: Configuration du faxing
+                    contacts: Contacts
+                    fax: Fax
+            title:
+                list: Campagne de faxing
+
+        campaign_mailing:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cette campagne de mailing ?
+            errors:
+                load: Une erreur est survenue, impossible de charger les contacts.
+            field:
+                dateSended:
+                    name: Date d'envois
+                emailBody:
+                    name: Contenu du mail (sans mise en forme)
+                emailSubject:
+                    name: Suject du mail
+                state:
+                    name: Etat
+                    locked:
+                        name: En attente de confirmation
+                    waiting:
+                        name: Prêt à envoyé
+                    sended:
+                        name: Envoyé
+                files:
+                    name: Pièces jointes
+                    empty: Aucune
+            form:
+                contacts:
+                    available:
+                        description: Cliquez sur les cases pour selectionner
+                        title: Contacts disponibles
+                    enabled:
+                        description: Cliquez sur les cases pour annuler la selection
+                        title: Contacts selectionnés
+                    title: Contacts
+                    search:
+                        account_name:
+                            placeholder: Compte
+                        name:
+                            placeholder: Nom / Prénom
+                        city:
+                            placeholder: Ville / Code postal
+
+                field:
+                    contact:
+                        label: Contacts
+                    name:
+                        label: Nom de la campagne
+                    emailSubject:
+                        label: Sujet du mailing
+                    emailBody:
+                        label: Contenu du mailing
+                    dateSended:
+                        label: Date de l'envois
+                    owner:
+                        label: Créé par
+                        empty_value: Sélectionnez un utilisateur
+                    state:
+                        label: Configuration
+                        locked:
+                            label: Bloqué - Le mailing ne sera pas envoyé
+                        waiting:
+                            label: Prêt - Le mailing sera envoyé à la date indiqué
+                    files:
+                        label: Pièces jointes
+                        file:
+                            label: Fichier (pdf, doc, docx)
+                    test:
+                        email:
+                            label: Email
+                submit:
+                    add: Ajouter la campagne
+                    update: Modifier la campagne
+                    send_test: Envoyer le mail
+            message:
+                add: La campagne a été ajoutée
+                remove: La campagne a été supprimée
+                send_test: Le mail de test a été envoyé
+                update: La campagne a été modifiée
+            table:
+                empty: Aucune campagne
+                head:
+                    name: Nom
+                    subject: Sujet du mail
+                    dateSended: Date d'envois
+                    state: Etat
+                    owner: Créé par
+                search:
+                    dateSended: De
+                    dateSendedEnd: à
+            view:
+                title:
+                    config: Configuration du mailing
+                    contacts: Contacts
+                    mail: Mailing
+            title:
+                list: Campagne de mailing
+        contact:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer ce contact ?
+            field:
+                account:
+                    name: Lié au compte
+                address:
+                    name: Adresse
+                birthday:
+                    name: Date d'anniverssaire
+                description:
+                    name: Autres informations
+                email:
+                    name: Email
+                function:
+                    name: Fonction
+                phone:
+                    name: Téléphones
+                    type:
+                        1: Bureau
+                        2: Domicile
+                        3: Mobile
+                        4: Fax
+                        5: Autre
+            form:
+                field:
+                    account:
+                        empty_value: Selectionnez un compte
+                        label: Lier au compte
+                    address:
+                        label: Adresse
+                    addressCpl:
+                        label: Complément d'adresse
+                    birthday:
+                        label: Date de naissance
+                    city:
+                        label: Ville
+                    description:
+                        label: Commentaire
+                    email:
+                        label: Adresse mail
+                    firstname:
+                        label: Prénom
+                    function:
+                        label: Fonction
+                    name:
+                        label: Nom
+                    phones:
+                        label: Téléphones
+                        phone:
+                            label: Numéro
+                        type:
+                            empty_value: Type
+                            work:
+                                label: Bureau
+                            home:
+                                label: Domicile
+                            fax:
+                                label: Fax
+                            mobile:
+                                label: Mobile
+                            other:
+                                label: Autre
+
+                submit:
+                    add: Ajouter le contact
+                    update: Modifier le contact
+            message:
+                add: Le contact a été ajouté
+                remove: Le contact a été supprimé
+                update: Le contact a été modifié
+            table:
+                empty: Aucun contact n'est disponible
+                head:
+                    account: Comptes
+                    email: Email
+                    function: Fonction
+                    name: Nom
+                    phones: Téléphones
+            title:
+                list: Contacts
+        dashboard:
+            title: Synthèse
+        header:
+            nav:
+                accounts:
+                    link: Comptes
+                    title: ''
+                activities:
+                    link: Activités
+                    title: ''
+                campaign:
+                    link: Mailing / Faxing
+                    mailing:
+                        link: Mailing
+                        title: ''
+                    faxing:
+                        link: Faxing
+                        title: ''
+                contacts:
+                    link: Contacts
+                    title: ''
+                home:
+                    link: Synthèse
+                    title: ''
+                system:
+                    agencys:
+                        link: Agences
+                        title: ''
+                    link: Configuration
+                    users:
+                        link: Utilisateurs
+                        title: ''
+                    change_password:
+                        link: Mon compte
+                        title: ''
+            logout:
+                name: Déconnexion
+                title: Déconnexion
+            titles:
+                agencies_list: Agences
+                agency_add: Ajouter agence
+                agency_view: Agence
+                agency_update: Modifier agence
+                accounts_list: Comptes
+                account_add: Ajouter un compte
+                account_view: Compte
+                account_update: Modifier un compte
+                account_import: Importer
+                activities_list: Activités
+                activity_add: Ajouter une activité
+                activity_view: Activité
+                activity_update: Modifer une activité
+                activity_replan: Replannifier une activité
+                calendar: Calendrier
+                contacts_list: Contacts
+                contact_add: Ajouter un contact
+                contact_view: Contact
+                contact_update: Modifier un contact
+                campaign_faxing_list: Campagne de faxing
+                campaign_faxing_add: Ajouter une campagne de faxing
+                campaign_faxing_view: Campagne de faxing
+                campaign_faxing_update: Modifier une campagne de faxing
+                campaign_faxing_send_test: Envoyer un fax de test
+                campaign_mailing_list: Campagne de mailing
+                campaign_mailing_add: Ajouter une campagne de mailing
+                campaign_mailing_view: Campagne de mailing
+                campaign_mailing_update: Modifier une campagne de mailing
+                campaign_mailing_send_test: Envoyer un mail de test
+                home: Synthèse
+                users_list: Utilisateurs
+                user_add: Ajouter un utilisateur
+                user_view: Utilisateur
+                user_update: Modifier un utilisateur
+            welcome:
+                admin:    Administrateur
+                user:     Invité
+        user:
+            action:
+                remove_confirm: Souhaitez-vous réellement supprimer cet utilisateur ? \n\nAttention, toutes les activités de l'utilisateurs seront perdues
+            form:
+                field:
+                    firstname:
+                        label: Prénom
+                    name:
+                        label: Nom
+                submit:
+                    add: Ajouter l'utilisateur
+                    update: Modifier l'utilisateur
+            field:
+                agencies:
+                    name: Agence
+                    empty: Aucune
+                name:
+                    name: Nom
+                email:
+                    name: Email
+                role:
+                    name: Droits
+                    ca: Chargé d'affaire
+                    rca: Responsable d'agence
+                    rs: Responsable de secteur
+                    admin: Administrateur
+                locked:
+                    name: Actif
+                    1: Oui
+                    0: Non
+            message:
+                add: L'utilisateur a été ajouté
+                remove: L'utilisateur a été supprimé
+                update: L'utilisateur a été modifié
+            security:
+                form:
+                    field:
+                        locked:
+                            label: Actif
+                            unlock:
+                                label: Oui
+                            lock:
+                                label: Non
+
+                        roles:
+                            ca:
+                                label: Chargé d'affaires
+                            label: Droits
+                            rca:
+                                label: Resonsable de chargés d'affaires
+                            rs:
+                                label: Responsable de secteur
+
+            table:
+                empty: Aucun utilisateur
+                head:
+                    name: Nom
+                    email: Email
+                    agency: Agence
+                    locked: Etat
+                    lastLogin: Dernière connexion le
+                    roles: Droits
+            view:
+                titles:
+                    details: Détail
+                    agencies: Agence
+            title:
+                list: Utilisateurs
+        service:
+            google:
+                unavailable: Le service google map est indisponible temporairement

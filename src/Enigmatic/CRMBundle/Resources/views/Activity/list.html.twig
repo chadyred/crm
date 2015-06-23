@@ -1,0 +1,128 @@
+{% extends (app.request.isXmlHttpRequest() or account)?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.activities_list{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}activities{% endblock %}
+
+{% block content %}
+
+        {% import "AppBundle:macro:table.html.twig" as table %}
+        {% import "AppBundle:macro:icon.html.twig" as icon %}
+        {% import "AppBundle:macro:button.html.twig" as button %}
+
+
+        {% if account %}
+            <h2>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h2>
+        {% else %}
+            <h1>{% trans %}enigmatic.crm.activity.title.list{% endtrans %}</h1>
+        {% endif %}
+
+		 <div class="action action_left">
+            {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
+        </div>
+
+		{% if account == null %}
+		<div class="action action_right">
+		 {{ button.create('add', 'Add'|trans, account?path('enigmatic_crm_account_activity_add', {'account': account.getId()}):path('enigmatic_crm_activity_add'), null, 'speednav') }}
+			<a class="calendar speednav" href="{{ path('enigmatic_crm_activity_calendar') }}">Calendrier</a> |
+			<span class="liste speednav" href="#">Liste</span>
+		</div>
+		{% endif %}
+
+        <div class="table_pager">
+            {% include 'AppBundle:include:pager.html.twig' %}
+        </div>
+
+        <table class="table table_striped table_extended">
+            <thead>
+                <tr>
+                    {{ table.th('type', 'enigmatic.crm.activity.table.head.type'|trans, 30, params['order'], params['entity']) }}
+                    {{ table.th('account_name', 'enigmatic.crm.activity.table.head.account'|trans, 20, params['order'], params['entity']) }}
+                    {{ table.th('user_name', 'enigmatic.crm.activity.table.head.user'|trans, 20, params['order'], params['entity']) }}
+                    {{ table.th('dateStart', 'enigmatic.crm.activity.table.head.dateStart'|trans, 20, params['order'], params['entity']) }}
+                    {{ table.th('comment', 'enigmatic.crm.activity.table.head.comment'|trans, 40, null, params['entity']) }}
+                    {{ table.th('action', 'Action', 10, null, params['entity']) }}
+                </tr>
+                <tr id="list_search">
+                    {{ table.th_search_input('type', params['search']) }}
+                    {{ table.th_search_input('account_name', params['search']) }}
+                    {{ table.th_search_input('user_name', params['search']) }}
+                    <th>
+                        <input class="search_data" id="datepicker_dateStart" type="text" data="dateStart" value="{% if  params['search']['dateStart'] is defined %}{{  params['search']['dateStart'] }}{% endif %}" placeholder="{% trans %}enigmatic.crm.activity.table.search.dateStart{% endtrans %}" />
+                        <input class="search_data" id="datepicker_dateStartEnd" type="text" data="dateStartEnd" value="{% if  params['search']['dateStartEnd'] is defined %}{{  params['search']['dateStartEnd'] }}{% endif %}" placeholder="{% trans %}enigmatic.crm.activity.table.search.dateStartEnd{% endtrans %}" />
+                    </th>
+                    {{ table.th_search_input('comment', params['search']) }}
+                    {{ table.search_link(params['entity']) }}
+                </tr>
+            </thead>
+            <tbody>
+            {% for activity in activities %}
+                <tr onclick="Nav.get('{{ path('enigmatic_crm_activity_view', {'activity': activity.getId() }) }}')" id="item_{{ activity.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                    <td>{{ activity.getType().getTitle() }} {% if activity.getReplannedBy() %}<span class="text-replannication"> (Replannification)</span>{% endif %}</td>
+                    <td>{{ activity.getAccount().getName() }}</td>
+                    <td>{{ activity.getUser().getFirstname() }} {{ activity.getUser().getName() }}</td>
+                    <td>{{ activity.getDateStart() | date('d-m-Y H:i') }}</td>
+                    <td>{{ activity.getComment() | nl2br }}</td>
+                    <td></td>
+                </tr>
+            {% else %}
+                <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.activity.table.empty{% endtrans %}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="table_pager">
+            {% include 'AppBundle:include:pager.html.twig' %}
+        </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {% if account == null %}
+        {{ parent() }}
+    {% endif %}
+
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#{% if account %}account_activities{% else %}content{% endif %}'), '{% if account %}{{ path('enigmatic_crm_account_activity_list', {'account': account.getId()}) }}{% else %}{{ path('enigmatic_crm_activity_list') }}{% endif %}');
+        });
+    </script>
+
+    <script type="text/javascript">
+
+        var date_start = jQuery('#datepicker_dateStart');
+        var date_end = jQuery('#datepicker_dateStartEnd');
+
+        jQuery(function(){
+            date_start.datetimepicker({
+                format:'d-m-Y',
+                dayOfWeekStart : 1,
+                lang:'fr',
+                step:5,
+                onShow:function( ct ){
+                    this.setOptions({
+                        maxDate:date_end.val()?date_end.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
+                    })
+                },
+                timepicker:false
+            });
+            date_end.datetimepicker({
+                format:'d-m-Y',
+                dayOfWeekStart : 1,
+                lang:'fr',
+                step:5,
+                onShow:function( ct ){
+                    this.setOptions({
+                        minDate:date_start.val()?date_start.val().substr(0,10):false,
+                        formatDate: 'd-m-Y'
+                    })
+                },
+                timepicker:false
+            });
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+<script type="text/javascript">
+
+    var Table{{ params['entity'] }}Management = {
+        is_lock : false,
+        page: 0,
+        nb_by_page: {{ params['limit'] }},
+        order_by: {},
+        search: {},
+
+        container: null,
+        route_list: null,
+
+        init: function (container, route_list) {
+            this.container = container;
+            this.route_list = route_list;
+        },
+
+        getList : function (id, force) {
+
+            if ((!this.is_lock || force) && this.route_list && this.container) {
+
+                this.lock_on();
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: this.route_list,
+                    dataType: "json",
+                    data: {
+                        'page':         this.page,
+                        'limit':        this.nb_by_page,
+                        'order':        this.order_by,
+                        'search':       this.search
+                    },
+                    cache: false,
+                    success : function(code_html, statut){
+                        Table{{ params['entity'] }}Management.getContainer().html(code_html.content);
+                    },
+
+                    error : function(resultat, statut, erreur){
+                        alert('{% trans %}An error has occurred ...{% endtrans %}', 'error', false);
+                    },
+
+                    complete : function(resultat, statut){
+                        Table{{ params['entity'] }}Management.lock_off();
+//                        window.history.pushState(document.title,document.title,"/toto");
+                    }
+                });
+            }
+
+            return false;
+
+        },
+
+
+        getContainer: function() {
+            return this.container;
+        },
+
+        setPage: function (page) {
+            this.page = page;
+        },
+
+        setNbByPage: function (nb_by_page) {
+            this.nb_by_page = nb_by_page;
+        },
+
+        setOrderBy: function (order_by, direction) {
+            this.parseSearch();
+            this.order_by = {};
+            this.order_by[order_by] = direction;
+            this.getList();
+        },
+
+        setSearch: function (field, search) {
+            this.search = {};
+            this.search[field] = search;
+            this.getList();
+        },
+
+        parseSearch: function () {
+            $('#list_search > th').each(function() {
+                Table{{ params['entity'] }}Management.search[$(this).children().attr('data')] = $(this).children().val();
+            });
+
+            $('#list_search .search_data').each(function() {
+                Table{{ params['entity'] }}Management.search[$(this).attr('data')] = $(this).val();
+            });
+        },
+
+        reset: function () {
+            this.search = {};
+            this.order_by = {};
+            this.getList();
+        },
+
+        loader: function (visible) {
+            if (visible)
+                jQuery('.table').before('<div id="table_loading">{% trans %}Loading{% endtrans %}</div>')
+            else
+                jQuery('#table_loading').remove();
+        },
+
+        lock_on : function () {
+            this.is_lock = true;
+            this.loader(true);
+        },
+
+        lock_off : function () {
+            this.is_lock = false;
+            this.loader(false);
+        }
+    };
+
+    jQuery("input.search_data").keypress(function (event) {
+        if(event.keyCode == 13){
+            Table{{ params['entity'] }}Management.parseSearch();
+            Table{{ params['entity'] }}Management.getList();
+        }
+    });
+
+    jQuery("select.search_data").change(function (event) {
+        Table{{ params['entity'] }}Management.parseSearch();
+        Table{{ params['entity'] }}Management.getList();
+    });
+
+</script>

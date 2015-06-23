@@ -1,0 +1,26 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block content %}
+
+    <h1>{% trans %}user.resetting.title{% endtrans %}</h1>
+
+    <div class="view">
+
+    <form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+
+        {% if invalid_username is defined %}
+            <p class="text_error">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+        {% endif %}
+
+        <div class="form_row">
+            <label for="username">{{ 'resetting.request.username'|trans }}</label>
+            <input type="text" id="username" name="username" required="required" />
+        </div>
+        <div class="form_action">
+            <input class="btn" type="submit" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}" />
+        </div>
+    </form>
+
+    </div>
+{% endblock %}
+

@@ -1,0 +1,39 @@
+enigmatic_crm_campaign_faxing_list:
+    path:     /
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:list }
+
+enigmatic_crm_campaign_faxing_view:
+    path:     /{campaign}
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:view }
+    requirements:
+        campaign_faxing: \d+
+    options:
+        expose: true
+
+enigmatic_crm_campaign_faxing_add:
+    locales:  { fr: "/ajouter", en: "/add" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:add }
+
+enigmatic_crm_campaign_faxing_update:
+    locales:  { fr: "/modifier-{campaign}", en: "/update-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:update }
+    requirements:
+        campaign: \d+
+
+enigmatic_crm_campaign_faxing_remove:
+    locales:  { fr: "/supprimer-{campaign}", en: "/remove-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:remove}
+    requirements:
+        campaign: \d+
+
+enigmatic_crm_campaign_faxing_download:
+    locales:  { fr: "/telecharger-fax-{fax}", en: "/download-fax-{fax}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:download}
+    requirements:
+        fax: \d+
+
+enigmatic_crm_campaign_faxing_send_test:
+    locales:  { fr: "/envoyer-fax-test-{campaign}", en: "/send-test-fax-{campaign}" }
+    defaults: { _controller: EnigmaticCRMBundle:CampaignFaxing:sendTest}
+    requirements:
+        campaign: \d+

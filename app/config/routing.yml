@@ -1,0 +1,29 @@
+enigmatic_crm:
+    resource: "@EnigmaticCRMBundle/Resources/config/routing.yml"
+    prefix:   /
+
+enigmatic_city:
+    resource: "@EnigmaticCityBundle/Resources/config/routing.yml"
+    prefix:   /villes
+
+user:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: @AppBundle/Controller/
+    type:     annotation
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_imagine:
+    resource: .
+    type:     imagine
+
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+BCCCronManagerBundle:
+    resource: "@BCCCronManagerBundle/Resources/config/routing.xml"
+    prefix:   /cron

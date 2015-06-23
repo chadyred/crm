@@ -1,0 +1,6 @@
+fos_user_profile_show:
+    pattern:   /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /
+        permanent: true

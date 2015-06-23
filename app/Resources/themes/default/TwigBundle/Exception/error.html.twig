@@ -1,0 +1,32 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Erreur {{ status_code }}</title>
+
+    <link rel="shortcut icon" href="/favicon.ico"/>
+
+</head>
+
+<body>
+
+    {% if status_code == 404 %}
+        Désolé, la page demandé n'existe pas ... <br/>
+        <a href="/" title="">Retouner à l'accueil</a>
+    {% elseif status_code == 403 %}
+        Vous ne disposez pas des droits suffisant pour accéder à cette page.
+    {% elseif status_code == 500 %}
+        Une erreur est survenue sur le serveur. Votre demande n'a pas pu aboutir. <br/>
+        Nous avons bien été informé de cette erreur, merci de ressayer ultérieurement ... <br/>
+        Si le problème persiste, merci de nous contacter.
+    {% else %}
+        Une erreur {{ status_code }} est survenue : {{ status_text }} <br/>
+        Veuillez nous contacter pour plus d'informations.
+    {% endif %}
+
+</body>
+</html>

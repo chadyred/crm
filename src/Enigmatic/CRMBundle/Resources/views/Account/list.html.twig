@@ -1,0 +1,139 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.accounts_list{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}account{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% trans %}enigmatic.crm.account.title.list{% endtrans %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_account_add'), null, 'speednav') }}
+    </div>
+    {% if is_granted('ROLE_RCA') %}
+    <div class="action action_right">
+        {{ button.create('import', 'Import'|trans, path('enigmatic_crm_account_import'), null, 'speednav') }}
+    </div>
+    {% endif %}
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+    <table class="table table_striped table_extended">
+        <thead>
+            <tr>
+                {{ table.th('name', 'enigmatic.crm.account.table.head.name'|trans, 20, params['order'], params['entity']) }}
+                {{ table.th('address_full', 'enigmatic.crm.account.table.head.address'|trans, 40, null, params['entity']) }}
+                {{ table.th('phone', 'enigmatic.crm.account.table.head.phone'|trans, 20, null, params['entity']) }}
+                {{ table.th('owner', 'enigmatic.crm.account.table.head.owner'|trans, 20, null, params['entity']) }}
+                {% if is_granted('ROLE_RS') == false %}
+                {{ table.th('potential', 'enigmatic.crm.account.table.head.potential'|trans, 10, params['order'], params['entity']) }}
+                {{ table.th('turnover', 'enigmatic.crm.account.table.head.turnover'|trans, 10, params['order'], params['entity']) }}
+                {% endif %}
+                {{ table.th('action', 'Action'|trans, 10, null, params['entity']) }}
+            </tr>
+            <tr id="list_search">
+                {{ table.th_search_input('name', params['search']) }}
+                {{ table.th_search_input('address_full', params['search']) }}
+                {{ table.th_search_input('phone', params['search']) }}
+                {{ table.th_search_input('owner', params['search']) }}
+                {% if is_granted('ROLE_RS') == false %}
+                    <th>
+                        <select class="search_data" data="potential">
+                            <option value="">Tous</option>
+                            <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_100')) | trans }}</option>
+                            <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::TOP_150')) | trans }}</option>
+                            <option {% if params['search']['potential'] is defined %}{% if params['search']['potential'] == constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') and params['search']['potential'] != '' %}selected="selected"{% endif %}{% endif %} value="{{ constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER') }}">{{ ('enigmatic.crm.account.field.potential.'~constant('Enigmatic\\CRMBundle\\Entity\\AgencyAccount::OTHER')) | trans }}</option>
+                        </select>
+                    </th>
+                    {{ table.th_search_input('turnover', params['search']) }}
+                {% endif %}
+                {{ table.search_link(params['entity']) }}
+            </tr>
+        </thead>
+        <tbody>
+        {% for account in accounts %}
+            <tr data-id="{{ account.getId() }}" id="item_{{ account.getId() }}" class="{% if loop.index is divisibleby(2) %}even{% else %}odd{% endif %} cliquable">
+                <td class="onclick">{{ account.getName() }}</td>
+                <td class="onclick">
+                    {% if account.getCity() %}
+                        <address>
+                            {{ account.getAddress() }}{% if account.getAddress() %}<br/>{% endif %}
+                            {% if account.getAddressCpl() %}
+                                {{ account.getAddressCpl() }}<br/>
+                            {% endif %}
+                            {{ account.getCity().getName() }}, {{ account.getCity().getCanonicalZipcode() }}
+                        </address>
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td class="onclick">
+                    {% if account.getPhone() %}
+                        {{ phoneFormat(account.getPhone()) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td class="onclick">
+                    {% for owner in account.getOwners() %}
+                        {% if owner.getEnd() == null %}
+                            {{ owner.getUser().getFirstname() }} {{ owner.getUser().getName() }} <br/>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                {% if is_granted('ROLE_RS') == false %}
+                <td class="onclick">
+                    {% for account_agency in account.getAgencies() %}
+                        {{ ('enigmatic.crm.account.field.potential.'~account_agency.getPotential()) | trans }}
+                    {% endfor %}
+                </td>
+                <td class="onclick">
+                    {% for account_agency in account.getAgencies() %}
+                        {% for turnover in account_agency.getTurnovers() %}
+                            {% if turnover.getYear() == ("now" | date('Y')) %}
+                                {{ turnover.getTurnover() | number_format(2, ',', ' ') }}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </td>
+                {% endif %}
+                <td></td>
+            </tr>
+        {% else %}
+            <tr class="even"><td colspan="6">{% trans %}enigmatic.crm.account.table.empty{% endtrans %}</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="table_pager">
+        {% include 'AppBundle:include:pager.html.twig' %}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    {% include 'AppBundle:include:table.js.twig' %}
+
+    <script type="text/javascript">
+        jQuery(function () {
+            Table{{ params['entity'] }}Management.init(jQuery('#content'), '{{ path('enigmatic_crm_account_list') }}');
+        });
+    </script>
+
+    <script type="text/javascript">
+        jQuery('.onclick').click(function() {
+            Nav.get(Routing.generate('enigmatic_crm_account_view.{{ app.request.locale }}', {'account': $(this).parent().attr('data-id') }));
+        })
+    </script>
+
+{% endblock %}
+

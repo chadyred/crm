@@ -1,0 +1,3 @@
+{% extends "AppBundle::email.html.twig" %}
+{% block subject %}{% endblock %}
+{% block content %}{% if content is defined %}{{ content|raw }}{% endif %}{% endblock %}

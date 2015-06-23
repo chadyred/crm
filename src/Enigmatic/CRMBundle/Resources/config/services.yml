@@ -1,0 +1,270 @@
+parameters:
+    enigmatic_crm.ecofax.login: ~
+    enigmatic_crm.ecofax.password: ~
+
+services:
+
+# MANAGER
+
+    enigmatic_crm.manager.account:
+        class: Enigmatic\CRMBundle\Manager\AccountManager
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.manager.agency_account:
+        class: Enigmatic\CRMBundle\Manager\AgencyAccountManager
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user, @enigmatic_crm.manager.account_owner]
+
+    enigmatic_crm.manager.account_owner:
+        class: Enigmatic\CRMBundle\Manager\AccountOwnerManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.contact:
+        class: Enigmatic\CRMBundle\Manager\ContactManager
+        arguments: [@doctrine.orm.entity_manager, @security.authorization_checker, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.manager.activity:
+        class: Enigmatic\CRMBundle\Manager\ActivityManager
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.manager.activity_type:
+        class: Enigmatic\CRMBundle\Manager\ActivityTypeManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.agency:
+        class: Enigmatic\CRMBundle\Manager\AgencyManager
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.manager.user:
+        class: Enigmatic\CRMBundle\Manager\UserManager
+        arguments: [@doctrine.orm.entity_manager, @security.token_storage]
+
+    enigmatic_crm.manager.campaign_mailing:
+        class: Enigmatic\CRMBundle\Manager\CampaignMailingManager
+        arguments: [@doctrine.orm.entity_manager]
+
+    enigmatic_crm.manager.campaign_faxing:
+        class: Enigmatic\CRMBundle\Manager\CampaignFaxingManager
+        arguments: [@doctrine.orm.entity_manager]
+
+# MAILER
+
+    enigmatic_crm.mailer.user:
+        class: Enigmatic\CRMBundle\Mailer\UserMailer
+        arguments: [@doctrine.orm.entity_manager, @enigmatic_mailer, @templating]
+
+# LISTENER
+
+    enigmatic_crm.listener.account.doctrine:
+        class: Enigmatic\CRMBundle\Listener\AccountListener
+        arguments: []
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+
+    enigmatic_crm.listener.user.doctrine:
+        class: Enigmatic\CRMBundle\Listener\UserListener
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+
+    enigmatic_crm.listener.campaign_faxing_fax.doctrine:
+        class: Enigmatic\CRMBundle\Listener\CampaignFaxingFaxListener
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+            - { name: doctrine.event_listener, event: postRemove }
+
+    enigmatic_crm.listener.campaign_mailing_file.doctrine:
+        class: Enigmatic\CRMBundle\Listener\CampaignMailingFileListener
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+            - { name: doctrine.event_listener, event: postRemove }
+
+# FORM
+
+    enigmatic_crm.form.account:
+        class: Enigmatic\CRMBundle\Form\AccountType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_account }
+        arguments: [@security.authorization_checker]
+
+    enigmatic_crm.form.account_owner:
+        class: Enigmatic\CRMBundle\Form\AccountOwnerType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_account_owner }
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.form.account_import:
+        class: Enigmatic\CRMBundle\Form\AccountImportType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_account_import }
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.form.contact:
+        class: Enigmatic\CRMBundle\Form\ContactType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_contact }
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user]
+
+    enigmatic_crm.form.contact_phone:
+        class: Enigmatic\CRMBundle\Form\ContactPhoneType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_contact_phone }
+        arguments: []
+
+    enigmatic_crm.form.activity:
+        class: Enigmatic\CRMBundle\Form\ActivityType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_activity }
+        arguments: [@security.authorization_checker, @enigmatic_crm.manager.user, @enigmatic_crm.manager.activity_type, @translator.default]
+
+    enigmatic_crm.form.agency:
+        class: Enigmatic\CRMBundle\Form\AgencyType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency }
+        arguments: []
+
+    enigmatic_crm.form.agency_account:
+        class: Enigmatic\CRMBundle\Form\AgencyAccountType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency_account }
+        arguments: []
+
+    enigmatic_crm.form.agency_account_turnover:
+        class: Enigmatic\CRMBundle\Form\AgencyAccountTurnoverType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency_account_turnover }
+        arguments: []
+
+    enigmatic_crm.form.agency_user:
+        class: Enigmatic\CRMBundle\Form\AgencyUserType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_agency_user }
+        arguments: []
+
+    enigmatic_crm.form.user:
+        class: Enigmatic\CRMBundle\Form\UserType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_user }
+        arguments: []
+
+    enigmatic_crm.form.user_security:
+        class: Enigmatic\CRMBundle\Form\UserSecurityType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_user_security }
+        arguments: []
+
+    enigmatic_crm.form.campaign_mailing:
+        class: Enigmatic\CRMBundle\Form\CampaignMailingType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_mailing }
+        arguments: []
+
+    enigmatic_crm.form.campaign_mailing_file:
+        class: Enigmatic\CRMBundle\Form\CampaignMailingFileType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_mailing_file }
+        arguments: []
+
+    enigmatic_crm.form.campaign_mailing_test:
+        class: Enigmatic\CRMBundle\Form\CampaignMailingTestType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_mailing_test }
+        arguments: []
+
+    enigmatic_crm.form.campaign_faxing:
+        class: Enigmatic\CRMBundle\Form\CampaignFaxingType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_faxing }
+        arguments: []
+
+    enigmatic_crm.form.campaign_faxing_test:
+        class: Enigmatic\CRMBundle\Form\CampaignFaxingTestType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_faxing_test }
+        arguments: []
+
+    enigmatic_crm.form.campaign_faxing_fax:
+        class: Enigmatic\CRMBundle\Form\CampaignFaxingFaxType
+        tags:
+            - { name: form.type, alias: enigmatic_crm_campaign_faxing_fax }
+        arguments: []
+
+# SERVICES
+
+    enigmatic_crm.service.list:
+        class: Enigmatic\CRMBundle\Services\ListService
+        arguments: []
+
+    enigmatic_crm.service.map:
+        class: Enigmatic\CRMBundle\Services\MapService
+        arguments: []
+
+    enigmatic_crm.service.grant:
+        class: Enigmatic\CRMBundle\Services\GrantService
+        arguments: [@enigmatic_crm.manager.user, @security.authorization_checker]
+
+    enigmatic_crm.service.calendar:
+        class: Enigmatic\CRMBundle\Services\CalendarService
+        arguments: [@enigmatic_crm.manager.user, @security.authorization_checker, , @translator.default]
+
+    enigmatic_crm.service.account:
+        class: Enigmatic\CRMBundle\Services\AccountService
+        arguments: [@enigmatic_crm.manager.account, @enigmatic_crm.manager.user]
+
+# PARAM CONVERTER
+
+    enigmatic_crm.param_converter.account:
+        class: Enigmatic\CRMBundle\ParamConverter\AccountParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.contact:
+        class: Enigmatic\CRMBundle\ParamConverter\ContactParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.activity:
+        class: Enigmatic\CRMBundle\ParamConverter\ActivityParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.agency:
+        class: Enigmatic\CRMBundle\ParamConverter\AgencyParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.user:
+        class: Enigmatic\CRMBundle\ParamConverter\UserParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.campaign_mailing:
+        class: Enigmatic\CRMBundle\ParamConverter\CampaignMailingParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }
+
+    enigmatic_crm.param_converter.campaign_faxing:
+        class: Enigmatic\CRMBundle\ParamConverter\CampaignFaxingParamConverter
+        arguments: [@doctrine.orm.entity_manager]
+        tags:
+            - { name: request.param_converter, priority: 20 }

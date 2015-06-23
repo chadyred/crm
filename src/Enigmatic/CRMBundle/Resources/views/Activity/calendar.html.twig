@@ -1,0 +1,254 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.calendar{% endtrans %} - {{ parent() }}{% endblock %}
+{% block nav_active %}activities{% endblock %}
+{% block body_class %}{{ parent() }} calendar{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:table.html.twig" as table %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+    {% import "AppBundle:macro:button.html.twig" as button %}
+ 
+ <h1>{% trans %}enigmatic.crm.activity.title.calendar{% endtrans %}</h1>
+ 
+    <div class="action action_left">		
+        {{ button.create('add', 'Add'|trans, path('enigmatic_crm_activity_add'), "return Event.add();") }}
+    </div>
+	<div class="action action_right">
+	<span class="speednav calendar" href="#">Calendrier</span> |
+	<a class="speednav liste" href="{{ path('enigmatic_crm_activity_list') }}">Liste</a>	
+	
+	</div>
+
+    <div id="script-warning" style="display:none;">
+        <div class="alert_message alert_message_error">
+            {% trans %}enigmatic.crm.calendar.error_load{% endtrans %}
+            <a class="close" href="" onclick="$(this).parent().fadeOut(1500, function() {$(this).remove();} );return false;" title="{% trans %}Close{% endtrans %}">x</a>
+        </div>
+    </div>
+
+    <div id="loader" style="display:none;">{% trans %}enigmatic.crm.calendar.load{% endtrans %}</div>
+
+<div class="parent" style="display:none;">
+<div class="children">
+    <a href="javascript:Event.back()"></a>
+<div id="calendar_popup"></div>
+</div>
+</div>
+
+    <div id="calendar"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                now: '{{ "now"|date('c') }}',
+                scrollTime: '08:00:00',
+                minTime: '00:00:00',
+                maxTime: '24:00:00',
+                slotDuration: '00:15:00',
+                defaultView: 'agendaWeek',
+                businessHours: {
+                    start: '08:00',
+                    end: '18:00',
+                    dow: [ 1, 2, 3, 4, 5 ]
+                },
+                start: '10:00',
+                end: '18:00',
+                lang: '{{ app.request.locale }}',
+//                defaultDate: '2015-02-12',
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: {
+                    url: '{{ path('enigmatic_crm_activity_calendar_event') }}',
+                    error: function() {
+                        $('#script-warning').show();
+                    }
+                },
+                loading: function(bool) {
+                    $('#loader').toggle(bool);
+                },
+                eventClick: function(calEvent, jsEvent, view) {
+                    Event.update(calEvent.id);
+                },
+                dayClick: function(date, jsEvent, view) {
+                    Event.add(date.format('DD-MM-YYYY HH:mm'));
+                },
+                eventDrop: function( event, jsEvent, ui, view ) {
+                    Event.saveDate(event.id, event.start.format('DD-MM-YYYY HH:mm'), event.end.format('DD-MM-YYYY HH:mm'));
+                },
+                eventResize: function(event, delta, revertFunc) {
+                    Event.saveDate(event.id, event.start.format('DD-MM-YYYY HH:mm'), event.end.format('DD-MM-YYYY HH:mm'));
+                },
+                eventRender: function(event, element) {
+                    element.find('.fc-title').html('<strong style="font-size:1.2em">' + event.title + '</strong> ('+event.activity_type+')');
+                    if (event.activity_author)
+                        element.find('.fc-title').append('<br/>{% trans %}enigmatic.crm.calendar.event.by{% endtrans %} : ' + event.activity_author + '');
+                    {% if is_granted('ROLE_RS') %}
+                    if (event.activity_agency)
+                        element.find('.fc-title').append('<br/>(' + event.activity_agency + ')');
+                    {% endif %}
+                    element.find('.fc-title').append('<br/><em>' + event.activity_type_name + '</em>');
+                    if (event.activity_replanned)
+                        element.find('.fc-title').append('<br/>{% trans %}enigmatic.crm.calendar.event.replannified_to{% endtrans %} : ' + event.activity_replanned + '');
+                    if (event.description)
+                        element.find('.fc-title').append('<br/><br/>' + event.description);
+                }
+            });
+
+        });
+
+        var Event = {
+            saveDate: function(event_id, start, end) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: Routing.generate('enigmatic_crm_activity_calendar_event_save.{{ app.request.locale }}', {activity: event_id}),
+                    dataType: "json",
+                    data: {'date_start': start, 'date_end': end},
+                    cache: true,
+                    success : function(code_html, statut) {
+                        if (!code_html.success)
+                            $('#script-warning').show();
+                    },
+
+                    error : function(resultat, statut, erreur) {
+                        $('#script-warning').show();
+                    }
+                });
+            },
+
+            add: function(date) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: Routing.generate('enigmatic_crm_activity_add.{{ app.request.locale }}'),
+                    dataType: "json",
+                    data: {'date_start': date},
+                    cache: true,
+                    success : function(code_html, statut) {
+                        $('#calendar_popup').html(code_html.content);
+                        $('#calendar_popup').parent().parent().fadeIn('250');
+                    },
+                    error : function(resultat, statut, erreur) {
+                        $('#script-warning').show();
+                    },
+                    complete : function(resultat, statut) {
+                        $('#form_activity').submit(function() {
+                            submitActivity();
+                            return false;
+                        });
+                        $('#calendar_popup .btn_back').click(function() {
+                            return Event.back();
+                        });
+                        jQuery('body').trigger("NavLoad")
+                    }
+                });
+                return false;
+            },
+
+            update: function(event_id) {
+                jQuery.ajax({
+                    type: "GET",
+                    url: Routing.generate('enigmatic_crm_activity_update_box.{{ app.request.locale }}', {activity: event_id}),
+                    dataType: "json",
+                    cache: true,
+                    success : function(code_html, statut) {
+                        $('#calendar_popup').html(code_html.content);
+                        $('#calendar_popup').parent().parent().fadeIn('250');
+                    },
+                    error : function(resultat, statut, erreur) {
+                        $('#script-warning').show();
+                    },
+                    complete : function(resultat, statut) {
+                        $('#form_activity').submit(function() {
+                            submitActivity();
+                            return false;
+                        });
+                        $('#calendar_popup .btn_back').click(function() {
+                            return Event.back();
+                        });
+                        $('#form_activity .btn_replan').click(function() {
+                            return Event.replann(event_id);
+                        });
+                        jQuery('body').trigger("NavLoad")
+                    }
+                });
+            },
+
+            replann: function(event_id) {
+                jQuery.ajax({
+                    type: "POST",
+                    url: Routing.generate('enigmatic_crm_activity_replann.{{ app.request.locale }}', {'activity': event_id}),
+                    dataType: "json",
+                    cache: true,
+                    success : function(code_html, statut) {
+                        $('#calendar_popup').html(code_html.content);
+                        $('#calendar_popup').parent().parent().fadeIn('250');
+                    },
+                    error : function(resultat, statut, erreur) {
+                        $('#script-warning').show();
+                    },
+                    complete : function(resultat, statut) {
+                        $('#form_activity').submit(function() {
+                            submitActivity();
+                            return false;
+                        });
+                        $('#calendar_popup .btn_back').click(function() {
+                            return Event.back();
+                        });
+                        jQuery('body').trigger("NavLoad")
+
+                    }
+                });
+                return false;
+            },
+
+            back: function () {
+                $('#calendar_popup').parent().parent().fadeOut('250');
+                return false;
+            }
+        }
+
+        function submitActivity() {
+            $.ajax({
+                type: "POST",
+                url: $('#form_activity').attr('action'),
+                dataType: "json",
+                cache: true,
+                data: $('#form_activity').serialize(),
+                success : function(code_html, statut){
+                    if (code_html.success) {
+                        Event.back();
+                        $('#calendar').fullCalendar('refetchEvents');
+                    }
+                    else {
+                        $('#calendar_popup').html(code_html.content);
+                        $('#form_activity').submit(function() {
+                            submitActivity();
+                            return false;
+                        });
+                    }
+                },
+
+                error : function(resultat, statut, erreur){
+                    $('#script-warning').show();
+                },
+
+                complete : function(resultat, statut){
+                    jQuery('body').trigger("NavLoad")
+                }
+            });
+        }
+
+    </script>
+
+{% endblock %}

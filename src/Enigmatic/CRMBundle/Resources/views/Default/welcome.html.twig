@@ -1,0 +1,19 @@
+{% if app.user %}
+    {% if user %}
+        {{ user.getFirstname() }} {{ user.getName() }}
+        (
+        {% if user.hasRole('ROLE_ADMIN') %}
+            {% trans %}enigmatic.crm.user.field.role.admin{% endtrans %}
+        {% elseif user.hasRole('ROLE_RS') %}
+            {% trans %}enigmatic.crm.user.field.role.rs{% endtrans %}
+        {% elseif user.hasRole('ROLE_RCA') %}
+            {% trans %}enigmatic.crm.user.field.role.rca{% endtrans %}
+        {% elseif user.hasRole('ROLE_CA') %}
+            {% trans %}enigmatic.crm.user.field.role.ca{% endtrans %}
+        {% else %}
+            {% trans %}enigmatic.crm.user.field.role.empty{% endtrans %}
+        {% endif %})
+    {% else %}
+        {% if is_granted('ROLE_ADMIN') %}{% trans %}enigmatic.crm.header.welcome.admin{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.welcome.user{% endtrans %}{% endif %}
+    {% endif %}
+{% endif %}

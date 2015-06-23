@@ -1,0 +1,45 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% if replan %}{% trans %}enigmatic.crm.header.titles.activity_replan{% endtrans %}{% elseif activity.getId() %}{% trans %}enigmatic.crm.header.titles.activity_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.activity_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}activities{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% if replan %}{% trans %}enigmatic.crm.header.titles.activity_replan{% endtrans %}{% elseif activity.getId() %}{% trans %}enigmatic.crm.header.titles.activity_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.activity_add{% endtrans %}{% endif %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav') }}
+    </div>
+
+    {% if activity.getReplanned() %}
+        <div class="alert_message alert_message_info">
+            {% trans %}enigmatic.crm.activity.message.replanned{% endtrans %}
+        </div>
+    {% endif %}
+
+    <form class="speednav" id="form_activity" method="post" action="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) }}" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+
+        <input class="btn" type="submit" value="{% if replan %}{% trans %}enigmatic.crm.activity.form.submit.replan{% endtrans %}{% elseif activity.getId() %}{% trans %}enigmatic.crm.activity.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.activity.form.submit.add{% endtrans %}{% endif %}">
+
+        {% if activity.getId() and activity.getReplanned() == false and box == true %}
+            {{ button.create('replan', 'enigmatic.crm.activity.action.replann'|trans, path('enigmatic_crm_activity_replann', {'activity': activity.getId()}), null, 'speednav' ) }}
+        {% endif %}
+
+        {% if activity.getId() and box == true %}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_activity_remove', {'activity': activity.getId()}), 'return confirm("'~'enigmatic.crm.activity.action.remove_confirm' | trans~'");') }}
+
+            <script type="text/javascript">
+                function confirmRemove() {
+                    if (confirm('{% trans %}enigmatic.crm.activity.message.confirm.remove{% endtrans %}'))
+                        Nav.get('{{ path('enigmatic_crm_activity_remove', {'activity': activity.getId()}) }}');
+                    else
+                        return false;
+                }
+            </script>
+
+        {% endif %}
+    </form>
+{% endblock %}

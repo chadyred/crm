@@ -1,0 +1,37 @@
+Action: Action
+Add: Ajouter
+Back: Retour
+Calendar: Calendrier
+Cancel: Annuler
+Close: Fermer
+Download: Télécharger
+Export: Exporter
+Import: Importer
+List: Liste
+Loading: Chargement ...
+Remove: Supprimer
+Send test mail: Envoyer un mail de test
+Send test fax: Envoyer un fax de test
+Sync: Synchroniser
+Update: Modifier
+
+Month1: Janvier
+Month2: Février
+Month3: Mars
+Month4: Avril
+Month5: Mai
+Month6: Juin
+Month7: Juillet
+Month8: Août
+Month9: Septembre
+Month10: Octobre
+Month11: Novembre
+Month12: Décembre
+
+
+enigmatic:
+    app:
+        pager:
+            label: Page
+            limit:
+                label: Nombre par page

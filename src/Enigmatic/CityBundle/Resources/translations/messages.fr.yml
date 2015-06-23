@@ -1,0 +1,5 @@
+enigmatic:
+    city:
+        loading: Chargement
+        search:
+            error: Une erreur est survenue

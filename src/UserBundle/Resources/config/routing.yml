@@ -1,0 +1,27 @@
+user_security:
+    resource: "@UserBundle/Resources/config/routing/security.yml"
+    prefix:   /
+
+user_resetting:
+    resource: "@UserBundle/Resources/config/routing/resetting.yml"
+    prefix: /mot-de-passe-oublie
+
+user_registration:
+    resource: "@UserBundle/Resources/config/routing/registration.yml"
+    type: be_simple_i18n
+    prefix:  { fr: "/inscription", en: "/registration" }
+
+user_change:
+    resource: "@UserBundle/Resources/config/routing/change_password.yml"
+    prefix: /modifier-mot-de-passe
+
+user_confirmation:
+    pattern: /user-confirmation
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /
+        permanent: true
+
+user_profile:
+    resource: "@UserBundle/Resources/config/routing/profile.yml"
+    prefix: /profil

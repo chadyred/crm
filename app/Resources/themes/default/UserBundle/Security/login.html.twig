@@ -1,0 +1,36 @@
+{% extends "UserBundle::layout.html.twig" %}
+
+{% block body_class %}login{% endblock %}
+
+{% block content %}
+    {% if error %}
+        <p class="text_error">{{ error|trans({}, 'FOSUserBundle') }}</p>
+    {% endif %}
+	
+	<div class="row">
+    <h1>{% trans %}user.login.title{% endtrans %}</h1>
+    <form action="{{ path("login_check") }}" method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+		<div class="form_row">
+        <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" placeholder="{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}" />
+		</div>
+		
+		<div class="form_row">
+        <input type="password" id="password" name="_password" required="required" placeholder="{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}" />
+		</div>
+		
+		<div class="form_row">
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+        <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
+		</div>
+		
+		<div class="form_row">
+        <input class="btn" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+        <a href="{{ path('fos_user_resetting_request') }}" title="">Mot de passe oublié</a>
+		</div>
+		
+    </form>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% if user.getId() %}{% trans %}enigmatic.crm.header.titles.user_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.user_add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}user{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% if user.getId() %}{% trans %}enigmatic.crm.header.titles.user_update{% endtrans %}{% else %}{% trans %}enigmatic.crm.header.titles.user_add{% endtrans %}{% endif %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, user.getId()?path('enigmatic_crm_user_view', {'user': user.getId()}):path('enigmatic_crm_user_list'), null, 'speednav') }}
+    </div>
+
+    <form id="user" class="speednav" method="post" action="" {{ form_enctype(form) }}>
+
+        {{ form_row(form.firstname) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.user.email) }}
+        {{ form_row(form.user.newRole) }}
+        {{ form_row(form.user.locked) }}
+
+        <span class="text-info">Attention, en modifiant l'agence, ce compte n'aura plus accès aux comptes auquel il est lié actuellement.</span>
+        {{ form_row(form.newAgency) }}
+
+        {{ form_rest(form) }}
+
+        <input class="btn" type="submit" value="{% if user.getId() %}{% trans %}enigmatic.crm.user.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.user.form.submit.add{% endtrans %}{% endif %}">
+    </form>
+{% endblock %}

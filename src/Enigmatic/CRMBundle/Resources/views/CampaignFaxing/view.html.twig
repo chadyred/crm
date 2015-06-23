@@ -1,0 +1,63 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}enigmatic.crm.header.titles.campaign_faxing_view{% endtrans %} - {{ campaign.getName() }} - {{ parent() }}{% endblock %}
+{% block nav_active %}campaign_faxing{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+    {% import "AppBundle:macro:icon.html.twig" as icon %}
+
+    <h1>{% trans %}enigmatic.crm.header.titles.campaign_faxing_view{% endtrans %} : {{ campaign.getName() }}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, path('enigmatic_crm_campaign_faxing_list'), null, 'speednav') }}
+    </div>
+
+    <div class="action action_right">
+        {% if campaign.getState() != constant('CAMPAIGN_FAXING_SENDED', campaign) %}
+            {{ button.create('update', 'Update'|trans, path('enigmatic_crm_campaign_faxing_update', {'campaign': campaign.getId()}), null, 'speednav') }}
+            {{ button.create('send', 'Send test fax'|trans, path('enigmatic_crm_campaign_faxing_send_test', {'campaign': campaign.getId()}), null, 'speednav') }}
+        {% endif %}
+        {% if is_granted('ROLE_RCA') %}
+            {{ button.create('remove', 'Remove'|trans, path('enigmatic_crm_campaign_faxing_remove', {'campaign': campaign.getId()}), 'return confirm("'~'enigmatic.crm.campaign_faxing.action.remove_confirm' | trans~'");') }}
+        {% endif %}
+    </div>
+
+    <div class="view">
+        <h2>{% trans %}enigmatic.crm.campaign_faxing.view.title.fax{% endtrans %}</h2>
+        <ul class="faxing_contact" style="max-height:200px;overflow:auto;">
+            {% for fax in campaign.getFaxs() %}
+                <li>{{ icon.create('download', 'Download'|trans, path('enigmatic_crm_campaign_faxing_download', {'fax': fax.getId()})) }}</li>
+            {% else %}
+                <li>{% trans %}enigmatic.crm.campaign_faxing.field.fax.empty{% endtrans %}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>{% trans %}enigmatic.crm.campaign_faxing.view.title.config{% endtrans %}</h2>
+        {% trans %}enigmatic.crm.campaign_faxing.field.dateSended.name{% endtrans %} : {{ campaign.getDateSended() | localizeddate('full', 'short') }}<br/>
+        {% trans %}enigmatic.crm.campaign_faxing.field.state.name{% endtrans %} :
+        {% if campaign.getState() == constant('CAMPAIGN_FAXING_LOCKED', campaign) %}
+            <span class="text-warning">{% trans %}enigmatic.crm.campaign_faxing.field.state.locked.name{% endtrans %}</span>
+        {% elseif campaign.getState() == constant('CAMPAIGN_FAXING_WAITING', campaign) %}
+            <span class="text-success">{% trans %}enigmatic.crm.campaign_faxing.field.state.waiting.name{% endtrans %}</span>
+        {% elseif campaign.getState() == constant('CAMPAIGN_FAXING_SENDED', campaign) %}
+            <span class="text-success">{% trans %}enigmatic.crm.campaign_faxing.field.state.sended.name{% endtrans %}</span>
+        {% endif %}
+        <br/>
+
+
+        <h2>{% trans %}enigmatic.crm.campaign_faxing.view.title.contacts{% endtrans %}</h2>
+
+        <ul class="faxing_contact" style="max-height:200px;overflow:auto;">
+            {% for contact in campaign.getContacts() %}
+                <li>{{ contact.getAccount().getName() }} ({{ contact.getFirstname() }} {{ contact.getName() }})</li>
+            {% else %}
+                <li>Aucun</li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+
+{% endblock %}

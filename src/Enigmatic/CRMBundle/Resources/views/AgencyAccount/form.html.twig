@@ -1,0 +1,61 @@
+{% extends app.request.isXmlHttpRequest()?"AppBundle::empty.html.twig":'EnigmaticCRMBundle::layout.html.twig' %}
+
+{% block title %}{% if first %}{% trans %}enigmatic.crm.agency_account.title.first_add{% endtrans %}{% elseif agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.title.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.title.add{% endtrans %}{% endif %} - {{ parent() }}{% endblock %}
+{% block nav_active %}agency_account{% endblock %}
+
+{% block content %}
+
+    {% import "AppBundle:macro:button.html.twig" as button %}
+
+    <h1>{% if first %}{% trans %}enigmatic.crm.agency_account.title.first_add{% endtrans %}{% elseif agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.title.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.title.add{% endtrans %}{% endif %}</h1>
+
+    <div class="action action_left">
+        {{ button.create('back', 'Back'|trans, app.request.headers.get('referer'), null, 'speednav speednav_fix') }}
+    </div>
+
+    <form id="agency_account" class="view speednav speednav_fix" method="post" action="{% if agency_account.getId() %}{{ path('enigmatic_crm_agency_account_update', {'agency_account': agency_account.getId()}) }}{% else %}{% endif %}" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <input class="btn" type="submit" value="{% if agency_account.getId() %}{% trans %}enigmatic.crm.agency_account.form.submit.update{% endtrans %}{% else %}{% trans %}enigmatic.crm.agency_account.form.submit.add{% endtrans %}{% endif %}">
+    </form>
+{% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script type="text/javascript">
+
+        function addTurnover(year) {
+            var turnover_list = jQuery('#enigmatic_crm_agency_account_turnovers');
+            var newWidget = turnover_list.attr('data-prototype');
+            newWidget = newWidget.replace(/__turnover__/g, year);
+            turnover_list.prepend(newWidget);
+            jQuery('#enigmatic_crm_agency_account_turnovers_'+year).find('.turnover_year').val(year);
+            jQuery('#enigmatic_crm_agency_account_turnovers_'+year).find('.turnover_year').parent().hide();
+            jQuery('#enigmatic_crm_agency_account_turnovers_'+year).find('.turnover').parent().find('label').html(jQuery('#enigmatic_crm_agency_account_turnovers_'+year).find('.turnover_year').val()+' : <span class="required" title="Required">*</span></label>');
+        }
+
+        var date_n = false;
+        var date_n_1 = false;
+
+        jQuery('.turnover_year').each(function() {
+
+            jQuery(this).parent().parent().find('.turnover').parent().find('label').html('<label>'+jQuery(this).val()+' : <span class="required" title="Required">*</span></label>');
+            jQuery(this).parent().hide();
+            if (jQuery(this).val() == '{{ "now" | date('Y') }}')
+                date_n = true;
+            if (jQuery(this).val() == '{{ ("now" | date('Y')) - 1 }}')
+                date_n_1 = true;
+        });
+
+        if (!date_n_1)
+            addTurnover({{ ("now" | date('Y')) - 1 }});
+        if (!date_n)
+            addTurnover({{ "now" | date('Y') }});
+
+        jQuery('.form_turnover > .form_row > label').remove();
+
+
+    </script>
+
+{% endblock %}

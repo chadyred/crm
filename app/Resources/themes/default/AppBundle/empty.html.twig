@@ -1,0 +1,42 @@
+{% extends '::empty.html.twig' %}
+{% block title %}CRM LIP Intérim{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        var body_class = '{% block body_class %}{% endblock %}';
+        jQuery('body').attr('class', body_class);
+    </script>
+
+    <script type="text/javascript">
+        var nav_active = '{% block nav_active %}{% endblock %}';
+
+        if (nav_active != 'null') {
+            jQuery('.nav_collapsible').removeClass('nav_open');
+
+            jQuery('aside.sidebar li').each(function () {
+                jQuery(this).removeClass('active');
+            });
+
+            jQuery('h1').attr('class', '');
+
+            jQuery('h1').addClass('h1_'+nav_active);
+//            jQuery('h1').prepend('<span class="ico ico_'+nav_active+'"></span>');
+
+            if (jQuery('h1').children('span').length) {
+                jQuery('h1 > span').attr('class', '');
+                jQuery('h1 > span').addClass('ico ico_' + nav_active);
+            }
+            else
+                jQuery('h1').prepend('<span class="ico ico_' + nav_active + '"></span>');
+
+            if (jQuery('#header_nav_' + nav_active)) {
+                jQuery('#header_nav_' + nav_active).addClass('active');
+                if (jQuery('#header_nav_' + nav_active).parent().parent().hasClass('nav_collapsible'))
+                    jQuery('#header_nav_' + nav_active).parent().parent().addClass('active nav_open');
+            }
+        }
+    </script>
+
+    {{ parent() }}
+{% endblock %}
